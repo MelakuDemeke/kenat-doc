@@ -1,3 +1,3 @@
 export default {
-    installation: "Installation",
+    installation: "📦 Installation",
 }
