@@ -1,6 +1,10 @@
 export default {
-  doc: {
-    title: 'Documentation',
-    type: 'page' // Show in navbar
-  },
+    index: {
+        title: 'Home',
+        type: 'page'
+    },
+    doc: {
+        title: 'Documentation',
+        type: 'page'
+    },
 }
