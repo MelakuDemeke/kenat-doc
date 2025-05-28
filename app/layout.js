@@ -1,6 +1,8 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import { FaTelegram } from 'react-icons/fa';
+
 import 'nextra-theme-docs/style.css'
 import './globals.css';
 
@@ -16,6 +18,10 @@ const navbar = (
       <img src="/logo.png" alt="Kenat Logo" className="h-6 w-auto" />
       <span className="font-bold text-lg">Kenat</span>
     </div>}
+
+    projectLink='https://github.com/MelakuDemeke/kenat'
+    chatLink='https://t.me/kenat_tool_kit'
+    chatIcon={<FaTelegram size={24}/>}
   />
 )
 const footer = <Footer>MIT {new Date().getFullYear()} © Kenat by &nbsp; <a target='_blank' href="https://github.com/MelakuDemeke/"> @MelakuDemeke</a>.</Footer>
