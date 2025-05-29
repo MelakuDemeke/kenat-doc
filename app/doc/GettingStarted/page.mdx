@@ -1,32 +1,42 @@
 # 🚀 Getting Started
 
-```js filename="app.js"
+Kenat makes it simple to work with Ethiopian calendar dates in JavaScript.  
+You can create a date instance, convert between calendars, and format dates easily.
+
+## Basic usage with today's date
+
+```js filename="app.js" showLineNumbers {3}
 import Kenat, { gregorianToEthiopian, ethiopianToGregorian } from 'kenat';
 
 const date = new Kenat(); // defaults to today
 console.log(date);
 console.log(date.getEthiopian());
 console.log(date.getGregorian());
+````
+
+**What the imports do:**
+
+* `Kenat`: A class that wraps Ethiopian date logic and provides useful methods.
+* `gregorianToEthiopian(year, month, day)`: Converts a Gregorian date to an Ethiopian one.
+* `ethiopianToGregorian(year, month, day)`: Converts an Ethiopian date to a Gregorian one.
+
+---
+
+## Creating a Kenat instance
+
+If no date string is passed, `new Kenat()` defaults to the current system date (in Gregorian) and converts it to the Ethiopian calendar internally.
+
+```js
+const date = new Kenat();
 ```
 
-* `Kenat`: A class that provides Ethiopian calendar utilities.
-* `gregorianToEthiopian(date)`: A helper function to convert a Gregorian date to an Ethiopian one.
-* `ethiopianToGregorian(date)`: A helper function to convert an Ethiopian date to a Gregorian one.
+Internally, it stores both the Ethiopian and Gregorian representations of the date.
 
 ---
 
-### 🔹 `const date = new Kenat();`
+## Viewing the output
 
-This creates a new instance of the `Kenat` class.
-
-* If no date is provided, it uses the **current system date** (in Gregorian calendar) and converts it to the Ethiopian calendar internally.
-* Under the hood, it stores both versions: Gregorian and Ethiopian.
-
----
-
-### 🔹 `console.log(date);`
-
-This logs the `Kenat` instance, which might output the internal state, typically including:
+Logging the Kenat instance will show its internal state:
 
 ```js
 Kenat {
@@ -34,35 +44,27 @@ Kenat {
 }
 ```
 
-This shows the **Ethiopian date** corresponding to **today’s Gregorian date**.
-
----
-
-### 🔹 `console.log(date.getEthiopian());`
-
-Returns just the Ethiopian date object:
+To get the date as an object:
 
 ```js
-{ year: 2017, month: 9, day: 20 }
+console.log(date.getEthiopian()); // { year: 2017, month: 9, day: 20 }
+console.log(date.getGregorian()); // { year: 2025, month: 5, day: 28 }
 ```
-
-This means the Ethiopian date equivalent of May 28, 2025 (Gregorian) is 20/09/2017 (E.C).
 
 ---
 
-### 🔹 `console.log(date.getGregorian());`
+## Using a custom Ethiopian date
 
-Returns the Gregorian date object:
+You can also initialize the class with a specific Ethiopian date in `'yyyy/mm/dd'` format:
 
 ```js
-{ year: 2025, month: 5, day: 28 }
+const custom = new Kenat('2016/6/10');
+console.log(custom.getGregorian()); // { year: 2024, month: 2, day: 18 }
 ```
-
-This confirms the Gregorian input date used in the conversion, which in this case is today’s date (May 28, 2025).
 
 ---
 
-## 🧾 Output Summary
+## Output summary
 
 ```js
 Kenat { ethiopian: { year: 2017, month: 9, day: 20 } }
@@ -70,12 +72,10 @@ Kenat { ethiopian: { year: 2017, month: 9, day: 20 } }
 { year: 2025, month: 5, day: 28 }
 ```
 
-| Output                       | Meaning                                                          |
-| ---------------------------- | ---------------------------------------------------------------- |
-| `Kenat { ethiopian: {...} }` | Shows the internal Ethiopian date stored in the `Kenat` instance |
-| `getEthiopian()`             | Returns the Ethiopian date as an object                          |
-| `getGregorian()`             | Returns the Gregorian date used to initialize the instance       |
-
-
+| Output                       | Meaning                                                        |
+| ---------------------------- | -------------------------------------------------------------- |
+| `Kenat { ethiopian: {...} }` | Shows the internal Ethiopian date stored in the Kenat instance |
+| `getEthiopian()`             | Returns the Ethiopian date as an object                        |
+| `getGregorian()`             | Returns the Gregorian date used to initialize the instance     |
 
 ---

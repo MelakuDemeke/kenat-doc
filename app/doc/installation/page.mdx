@@ -1,26 +1,97 @@
 import { Tabs } from 'nextra/components'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # 📦 Installation
 
-<Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+      <SiJavascript size={16} /> JavaScript
+    </div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+      <SiDart size={16} /> Dart
+    </div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+      <SiPython size={16} /> Python
+    </div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+      <SiPhp size={16} /> PHP
+    </div>
+  ]}
+>
   <Tabs.Tab>
-    ```bash
-    pnpm add kenat
+    <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+      <Tabs.Tab>
+        ```bash
+        npm install kenat
+        ```
+      </Tabs.Tab>
+      <Tabs.Tab>
+        ```bash
+        pnpm add kenat
+        ```
+      </Tabs.Tab>
+      <Tabs.Tab>
+        ```bash
+        yarn add kenat
+        ```
+      </Tabs.Tab>
+      <Tabs.Tab>
+        ```bash
+        bun add kenat
+        ```
+      </Tabs.Tab>
+    </Tabs>
+
+    ## ✅ Supported Environments
+
+    - Node.js ≥ 14  
+    - Modern browsers (ES6+)  
+    - Works with frameworks like React, Vue (via wrappers), Svelte  
+    - Not tested on IE11 or legacy browsers
+
+    ## 📥 Import & Basic Usage
+
+    ```js
+    import Kenat from 'kenat';
+
+    const date = new Kenat();
+    console.log(date.getEthiopian()); // { year: 2017, month: 9, day: 15 }
     ```
+
+    ## 🌀 Dynamic Import (CommonJS)
+
+    If you're using `require()` or CommonJS modules:
+
+    ```js
+    (async () => {
+      const { default: Kenat } = await import('kenat');
+      console.log(new Kenat().toString());
+    })();
+    ```
+    ## 🔍 Verify Installation
+
+    Quick one-liner to check if it's working:
+
+    ```bash
+    node -e "import('kenat').then(m => console.log(new m.default().toString()))"
+    ```
+    Output
+    ```bash
+    Ethiopian: 2017-9-21
+    ```
+
   </Tabs.Tab>
+
   <Tabs.Tab>
-    ```bash
-    npm install kenat
-    ```
+    🚧 Dart version coming soon...
   </Tabs.Tab>
+
   <Tabs.Tab>
-    ```bash
-    yarn add kenat
-    ```
+    🚧 Python version coming soon...
   </Tabs.Tab>
+
   <Tabs.Tab>
-    ```bash
-    bun add kenat
-    ```
+    🚧 PHP version coming soon...
   </Tabs.Tab>
 </Tabs>
