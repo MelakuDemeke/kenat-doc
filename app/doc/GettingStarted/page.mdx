@@ -1,70 +1,89 @@
 # 🚀 Getting Started
 
 Kenat makes it simple to work with Ethiopian calendar dates in JavaScript.  
-You can create a date instance, convert between calendars, and format dates easily.
+You can create a date instance, convert between calendars, do date arithmetic, and format dates using modern or traditional Ethiopian conventions.
 
-## Basic usage with today's date
+---
 
-```js filename="app.js" showLineNumbers {3}
-import Kenat, { gregorianToEthiopian, ethiopianToGregorian } from 'kenat';
+## 📦 Installation
 
-const date = new Kenat(); // defaults to today
-console.log(date);
-console.log(date.getEthiopian());
-console.log(date.getGregorian());
+Install via npm:
+
+```bash
+npm install kenat
 ````
 
-**What the imports do:**
+Or load in the browser using ESM:
 
-* `Kenat`: A class that wraps Ethiopian date logic and provides useful methods.
-* `gregorianToEthiopian(year, month, day)`: Converts a Gregorian date to an Ethiopian one.
-* `ethiopianToGregorian(year, month, day)`: Converts an Ethiopian date to a Gregorian one.
-
----
-
-## Creating a Kenat instance
-
-If no date string is passed, `new Kenat()` defaults to the current system date (in Gregorian) and converts it to the Ethiopian calendar internally.
-
-```js
-const date = new Kenat();
-```
-
-Internally, it stores both the Ethiopian and Gregorian representations of the date.
-
----
-
-## Viewing the output
-
-Logging the Kenat instance will show its internal state:
-
-```js
-Kenat {
-  ethiopian: { year: 2017, month: 9, day: 20 }
-}
-```
-
-To get the date as an object:
-
-```js
-console.log(date.getEthiopian()); // { year: 2017, month: 9, day: 20 }
-console.log(date.getGregorian()); // { year: 2025, month: 5, day: 28 }
+```html
+<script type="module">
+  import Kenat from 'https://cdn.jsdelivr.net/npm/kenat/+esm';
+</script>
 ```
 
 ---
 
-## Using a custom Ethiopian date
+## ✨ Quick Usage
 
-You can also initialize the class with a specific Ethiopian date in `'yyyy/mm/dd'` format:
+```js filename="app.js" showLineNumbers {3}
+import Kenat, { toEC, toGC } from 'kenat';
+
+const date = new Kenat(); // defaults to today
+console.log(date);                       // Internal state
+console.log(date.getEthiopian());       // → { year: 2017, month: 9, day: 20 }
+console.log(date.getGregorian());       // → { year: 2025, month: 5, day: 28 }
+```
+
+---
+
+## 🔍 What the Imports Do
+
+* `Kenat`: Class wrapper around Ethiopian calendar logic
+* `toEC(gYear, gMonth, gDay)`: Convert a Gregorian date to an Ethiopian date
+* `toGC(eYear, eMonth, eDay)`: Convert an Ethiopian date to a Gregorian date
+
+---
+
+## 🎯 Creating a Kenat Instance
+
+By default, `new Kenat()` uses the current system date (Gregorian), and internally converts it to Ethiopian:
+
+```js
+const date = new Kenat(); // ← today’s Ethiopian equivalent
+```
+
+Or initialize it with a custom Ethiopian date:
 
 ```js
 const custom = new Kenat('2016/6/10');
-console.log(custom.getGregorian()); // { year: 2024, month: 2, day: 18 }
+console.log(custom.getGregorian()); 
+// → { year: 2024, month: 2, day: 18 }
 ```
 
 ---
 
-## Output summary
+## 🧾 Viewing the Output
+
+```js
+Kenat {
+  ethiopian: { year: 2017, month: 9, day: 20 },
+  time: { hour: 12, minute: 0, period: 'day' }
+}
+```
+
+To access the values as objects:
+
+```js
+console.log(date.getEthiopian());
+// → { year: 2017, month: 9, day: 20 }
+
+console.log(date.getGregorian());
+// → { year: 2025, month: 5, day: 28 }
+```
+
+---
+
+## 🧪 Output Summary
 
 ```js
 Kenat { ethiopian: { year: 2017, month: 9, day: 20 } }
@@ -74,8 +93,8 @@ Kenat { ethiopian: { year: 2017, month: 9, day: 20 } }
 
 | Output                       | Meaning                                                        |
 | ---------------------------- | -------------------------------------------------------------- |
-| `Kenat { ethiopian: {...} }` | Shows the internal Ethiopian date stored in the Kenat instance |
-| `getEthiopian()`             | Returns the Ethiopian date as an object                        |
-| `getGregorian()`             | Returns the Gregorian date used to initialize the instance     |
+| `Kenat { ethiopian: {...} }` | Shows internal Ethiopian date state                            |
+| `getEthiopian()`             | Returns the Ethiopian date object                              |
+| `getGregorian()`             | Returns the Gregorian equivalent of the current Ethiopian date |
 
 ---
