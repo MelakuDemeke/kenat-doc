@@ -1,36 +1,84 @@
-# Introduction
+---
+title: 🌍 Introduction
+description: Kenat – the Ethiopian Calendar Toolkit for all platforms.
+---
 
-## 📘 Kenat (ቀናት) Documentation
+import { Tabs } from 'nextra/components'
+import { SiJavascript, SiPython, SiDart, SiPhp } from 'react-icons/si'
 
-Kenat is a modern JavaScript library for working with the Ethiopian calendar, providing utilities for conversion, formatting, calendar grids, arithmetic, and Geez numeral rendering.
+# 🌍 Introduction
 
-![Alt text](/kenatbanner.png)
+**Kenat** (Amharic: ቀናት) is a multi-language toolkit for working with the **Ethiopian calendar system** — including support for conversion, date arithmetic, calendar grids, Geez numerals, and more.
 
-## 🧠 Core Concepts
-
-* **Ethiopian Calendar Support**: 13 months, leap year every 4 years when `year % 4 === 3`.
-* **Dual-Calendar Awareness**: Supports both Gregorian and Ethiopian calendars.
-* **Localized Formatting**: Supports Amharic, English, and Geez numeral displays.
-* **Arithmetic**: Add/subtract days, months, years; calculate differences.
+Whether you're building a web app, desktop utility, backend scheduler, or mobile experience, **Kenat gives you consistent tools** across languages.
 
 ---
 
-## 🧭 Table of Contents
+## 🔧 Key Features
 
-1. [Installation](doc/installation)
-2. [Getting Started](doc/getting-started)
-3. [Core Concepts](doc/core-concepts)
-4. [API Reference](doc/api-reference)
-
-   * [Kenat Class](doc/kenat-class)
-   * [Conversion Utilities](doc/conversion-utilities)
-   * [Date Arithmetic](doc/date-arithmetic)
-   * [Formatting Functions](doc/formatting-functions)
-   * [Calendar Grid](doc/calendar-grid)
-5. [Localized Support](doc/localized-support)
-6. [Geez Numerals](doc/geez-numerals)
-7. [Examples](doc/examples)
-8. [Contributing](doc/contributing)
-9. [License](doc/license)
+- 🔄 Convert between **Ethiopian ↔ Gregorian** dates
+- 📅 Full **13-month** Ethiopian calendar support (with Pagume)
+- 🧮 **Add/subtract** days, months, and years
+- 🔢 Format numbers and dates in **Geez numerals**
+- 🕒 Work with traditional **Ethiopian time**
+- 🗓 Generate **calendar grids**
+- 🏛️ Detect and label **holidays**
+- 🌍 Localized output in Amharic, English, and more
 
 ---
+
+## ⚡ Example in Action
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    import Kenat from 'kenat';
+
+    const date = new Kenat();
+    console.log(date.getEthiopian()); 
+    // { year: 2017, month: 9, day: 25 }
+
+    console.log(date.formatInGeezAmharic()); 
+    // ግንቦት ፳፭ ፳፻፲፯
+    ```
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+    🚧 Dart version coming soon...
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+    🚧 Python version coming soon...
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+    🚧 PHP version coming soon...
+  </Tabs.Tab>
+</Tabs>
+
+---
+
+## 📦 What You Can Build
+
+- 📅 Ethiopian calendar UIs and date pickers
+- 🕒 Time-aware components using ከሰዓት vs ጠዋት
+- 🏫 School & holiday-based scheduling tools
+- 📆 Calendar grids for mobile & web
+- 🛠 Backend utilities for cultural or religious apps
+- 📈 Timeline/data visualizations with EC date mapping
+
+---
+
+## 📚 Continue
+
+- 📦 [Installation](./installation)
+- 🧭 [Getting Started](./getting-started)
+- ⚙️ [API Reference](./api/kenat-class)
+- 🧠 [Advanced Features](./advanced/calendar-grid)
