@@ -18,22 +18,16 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-16 bg-gray-50 dark:bg-[#111] text-black dark:text-white">
+      <section className="py-20 bg-white dark:bg-black text-black dark:text-white">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-12">Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 border border-gray-300 dark:border-gray-700 rounded-lg shadow hover:shadow-lg transition bg-white dark:bg-black">
-              <h3 className="text-xl font-semibold mb-2">Date Conversion</h3>
-              <p>Seamlessly convert between Ethiopian and Gregorian dates.</p>
-            </div>
-            <div className="p-6 border border-gray-300 dark:border-gray-700 rounded-lg shadow hover:shadow-lg transition bg-white dark:bg-black">
-              <h3 className="text-xl font-semibold mb-2">Calendar Grid View</h3>
-              <p>Visualize full-month calendars with accurate day alignments.</p>
-            </div>
-            <div className="p-6 border border-gray-300 dark:border-gray-700 rounded-lg shadow hover:shadow-lg transition bg-white dark:bg-black">
-              <h3 className="text-xl font-semibold mb-2">Geez Numerals Support</h3>
-              <p>Display dates using traditional Geez numerals for authenticity.</p>
-            </div>
+          <h2 className="text-3xl font-bold mb-12">Why Kenat?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            <Feature title="🔄 Bidirectional Date Conversion" desc="Convert seamlessly between Ethiopian and Gregorian dates." />
+            <Feature title="📅 Month Calendar Grids" desc="Generate and render accurate Ethiopian month layouts." />
+            <Feature title="🔢 Geez Numerals Support" desc="Display dates in traditional Ethiopian script for cultural precision." />
+            <Feature title="🕒 Ethiopian Time System" desc="Format and convert between 12-hour Geez time and 24-hour standard." />
+            <Feature title="🕌 Holidays Included" desc="Supports major national, religious, and cultural holidays." />
+            <Feature title="📐 Date Arithmetic" desc="Add or subtract days, months, or years with accuracy." />
           </div>
         </div>
       </section>
@@ -61,5 +55,14 @@ export default function Home() {
       </section>
     </>
 
+  );
+}
+
+function Feature({ title, desc }) {
+  return (
+    <div className="p-6 border border-gray-300 dark:border-gray-700 rounded-lg shadow hover:shadow-lg transition bg-white dark:bg-black">
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p>{desc}</p>
+    </div>
   );
 }
