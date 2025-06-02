@@ -1,100 +1,60 @@
+---
+title: Getting Started
+description: Learn how to create and work with Ethiopian dates using Kenat.
+---
+
+import { Tabs } from 'nextra/components'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
+
 # 🚀 Getting Started
 
-Kenat makes it simple to work with Ethiopian calendar dates in JavaScript.  
-You can create a date instance, convert between calendars, do date arithmetic, and format dates using modern or traditional Ethiopian conventions.
+Kenat helps you create and manipulate Ethiopian dates using intuitive and language-consistent APIs.
+
+It supports both current and custom dates, and lets you easily switch between Ethiopian and Gregorian formats.
 
 ---
 
-## 📦 Installation
+## 📆 Create a New Date (Today’s Date)
 
-Install via npm:
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    import Kenat from 'kenat';
 
-```bash
-npm install kenat
-````
+    const date = new Kenat(); // uses today's Gregorian date
+    console.log(date.getEthiopian()); 
+    // → { year: 2017, month: 9, day: 25 }
 
-Or load in the browser using ESM:
+    console.log(date.getGregorian());
+    // → { year: 2025, month: 6, day: 2 }
+    ```
+  </Tabs.Tab>
 
-```html
-<script type="module">
-  import Kenat from 'https://cdn.jsdelivr.net/npm/kenat/+esm';
-</script>
-```
+  <Tabs.Tab>
+    🚧 Dart version coming soon...
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+    🚧 Python version coming soon...
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+    🚧 PHP version coming soon...
+  </Tabs.Tab>
+</Tabs>
 
 ---
 
-## ✨ Quick Usage
-
-```js filename="app.js" showLineNumbers {3}
-import Kenat, { toEC, toGC } from 'kenat';
-
-const date = new Kenat(); // defaults to today
-console.log(date);                       // Internal state
-console.log(date.getEthiopian());       // → { year: 2017, month: 9, day: 20 }
-console.log(date.getGregorian());       // → { year: 2025, month: 5, day: 28 }
-```
-
----
-
-## 🔍 What the Imports Do
-
-* `Kenat`: Class wrapper around Ethiopian calendar logic
-* `toEC(gYear, gMonth, gDay)`: Convert a Gregorian date to an Ethiopian date
-* `toGC(eYear, eMonth, eDay)`: Convert an Ethiopian date to a Gregorian date
-
----
-
-## 🎯 Creating a Kenat Instance
-
-By default, `new Kenat()` uses the current system date (Gregorian), and internally converts it to Ethiopian:
-
-```js
-const date = new Kenat(); // ← today’s Ethiopian equivalent
-```
-
-Or initialize it with a custom Ethiopian date:
+## ✏️ Create from a Custom Ethiopian Date
 
 ```js
 const custom = new Kenat('2016/6/10');
-console.log(custom.getGregorian()); 
+console.log(custom.getGregorian());
 // → { year: 2024, month: 2, day: 18 }
-```
-
----
-
-## 🧾 Viewing the Output
-
-```js
-Kenat {
-  ethiopian: { year: 2017, month: 9, day: 20 },
-  time: { hour: 12, minute: 0, period: 'day' }
-}
-```
-
-To access the values as objects:
-
-```js
-console.log(date.getEthiopian());
-// → { year: 2017, month: 9, day: 20 }
-
-console.log(date.getGregorian());
-// → { year: 2025, month: 5, day: 28 }
-```
-
----
-
-## 🧪 Output Summary
-
-```js
-Kenat { ethiopian: { year: 2017, month: 9, day: 20 } }
-{ year: 2017, month: 9, day: 20 }
-{ year: 2025, month: 5, day: 28 }
-```
-
-| Output                       | Meaning                                                        |
-| ---------------------------- | -------------------------------------------------------------- |
-| `Kenat { ethiopian: {...} }` | Shows internal Ethiopian date state                            |
-| `getEthiopian()`             | Returns the Ethiopian date object                              |
-| `getGregorian()`             | Returns the Gregorian equivalent of the current Ethiopian date |
-
----
