@@ -1,0 +1,109 @@
+---
+title: Kenat Class API
+description: Full reference for the Kenat Ethiopian calendar class and its methods.
+---
+
+import { Tabs } from 'nextra/components'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
+
+# ⚙️ Kenat Class
+
+The `Kenat` class provides a high-level API for working with Ethiopian calendar dates. You can create instances, format dates, manipulate them, and print calendars.
+
+---
+
+## 🏗 Constructor
+
+### `new Kenat(dateString?)`
+
+Creates a new instance of an Ethiopian date.
+
+- If no argument is passed, it uses the current Gregorian system date.
+- If a string like `'2015/6/10'` is passed, it's parsed as an Ethiopian date.
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    const k = new Kenat();
+    const custom = new Kenat('2016/6/10');
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>🚧 Dart version coming soon...</Tabs.Tab>
+  <Tabs.Tab>🚧 Python version coming soon...</Tabs.Tab>
+  <Tabs.Tab>🚧 PHP version coming soon...</Tabs.Tab>
+</Tabs>
+
+---
+
+## 📆 Date Access Methods
+
+| Method            | Returns                          | Description                          |
+|-------------------|-----------------------------------|--------------------------------------|
+| `getEthiopian()`  | `{ year, month, day }`            | Current Ethiopian date               |
+| `getGregorian()`  | `{ year, month, day }`            | Equivalent Gregorian date            |
+| `toString()`      | `"Ethiopian: yyyy-mm-dd"`         | String format                        |
+| `format(lang?)`   | `"መስከረም 5 2016"` or similar       | Human-readable string                |
+| `formatInGeezAmharic()` | `"መስከረም ፭ ፳፻፲፮"`         | Geez-styled output                   |
+
+---
+
+## 🕒 Time Handling
+
+| Method               | Description                                        |
+|----------------------|----------------------------------------------------|
+| `getCurrentTime()`   | Gets current time in Ethiopian format              |
+| `setTime(hour, min, period)` | Sets Ethiopian time manually (e.g., 3:30 night)  |
+
+---
+
+## ➕ Date Arithmetic
+
+| Method              | Description                              |
+|---------------------|------------------------------------------|
+| `addDays(n)`        | Move n days forward/backward             |
+| `addMonths(n)`      | Adjust by n Ethiopian months             |
+| `addYears(n)`       | Move by n Ethiopian years                |
+
+```js
+const k = new Kenat('2014/5/5');
+k.addDays(10);
+k.addMonths(-1);
+console.log(k.getEthiopian());
+````
+
+---
+
+## 📏 Compare Dates
+
+| Method                | Description      |
+| --------------------- | ---------------- |
+| `diffInDays(other)`   | Day difference   |
+| `diffInMonths(other)` | Month difference |
+| `diffInYears(other)`  | Year difference  |
+
+```js
+const a = new Kenat('2015/6/10');
+const b = new Kenat('2012/6/10');
+console.log(a.diffInYears(b)); // → 3
+```
+
+---
+
+## 🗓 Calendar Tools
+
+| Method                     | Description                                  |
+| -------------------------- | -------------------------------------------- |
+| `getMonthCalendar()`       | Full info for every day in the current month |
+| `printThisMonth(useGeez?)` | Console grid printer for current month       |
+
+```js
+const k = new Kenat('2016/1/1');
+k.printThisMonth(true);
+```
