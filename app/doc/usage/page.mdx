@@ -1,0 +1,125 @@
+---
+title: 🧰 Usage Examples
+description: Learn how to convert, print, and format dates with Kenat.
+---
+
+import { Tabs } from 'nextra/components'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
+
+# 🧰 Usage Examples
+
+This page demonstrates common date operations using Kenat: conversion, formatting, calendar grids, holidays, and more.
+
+---
+
+## 🔄 Convert Dates (Gregorian ↔ Ethiopian)
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    import { toEC, toGC } from 'kenat';
+
+    const eth = toEC(2025, 6, 2);
+    console.log(eth); 
+    // → { year: 2017, month: 9, day: 25 }
+
+    const gc = toGC(2017, 9, 25);
+    console.log(gc); 
+    // → { year: 2025, month: 6, day: 2 }
+    ```
+  </Tabs.Tab>
+
+  <Tabs.Tab>🚧 Dart version coming soon...</Tabs.Tab>
+  <Tabs.Tab>🚧 Python version coming soon...</Tabs.Tab>
+  <Tabs.Tab>🚧 PHP version coming soon...</Tabs.Tab>
+</Tabs>
+
+---
+
+## 🖨 Print Calendar (Console Grid)
+
+```js
+const k = new Kenat();
+k.printThisMonth();       // Default
+k.printThisMonth(true);   // Use Geez numerals
+````
+
+Example Output:
+
+```
+  ግንቦት ፳፻፲፯
+Mo Tu We Th Fr Sa Su
+       1  2  3  4  5
+ 6  7  8  9 10 11 12
+...
+```
+
+---
+
+## 🧠 Format in Geez
+
+```js
+const k = new Kenat('2016/10/5');
+console.log(k.formatInGeezAmharic());
+// → መስከረም ፭ ፳፻፲፮
+```
+
+---
+
+## 🧮 Date Arithmetic
+
+```js
+const k = new Kenat('2015/6/10');
+
+k.addDays(5);
+k.addMonths(-1);
+k.addYears(2);
+
+console.log(k.getEthiopian());
+// → { year: 2017, month: 5, day: 15 }
+```
+
+---
+
+## 📏 Difference Between Dates
+
+```js
+const a = new Kenat('2015/5/15');
+const b = new Kenat('2012/5/15');
+
+console.log(a.diffInDays(b));    // 1095
+console.log(a.diffInMonths(b));  // 39
+console.log(a.diffInYears(b));   // 3
+```
+
+---
+
+## 🗓 Generate a Month Grid
+
+```js
+const grid = Kenat.getMonthGrid({ year: 2017, month: 9, useGeez: true });
+
+console.log(grid.headers);
+// → [ "እሑድ", "ሰኞ", "ማክሰኞ", ... ]
+
+console.log(grid.days[0]);
+// → { ethiopian: { day: 1 }, gregorian: { day: 9 }, holiday: null }
+```
+
+---
+
+## 🕌 Built-in Holidays
+
+```js
+import { getHoliday } from 'kenat';
+
+console.log(getHoliday({ year: 2017, month: 1, day: 1 }));
+// → { name: 'አዲስ ዓመት', type: 'national', lang: { am: 'አዲስ ዓመት', en: 'New Year' } }
+```
