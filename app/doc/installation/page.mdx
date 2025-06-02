@@ -1,3 +1,8 @@
+---
+title: Installation
+description: How to install Kenat in JavaScript, Python, Dart, and PHP.
+---
+
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
@@ -5,21 +10,15 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-      <SiJavascript size={16} /> JavaScript
-    </div>,
-    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-      <SiDart size={16} /> Dart
-    </div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-      <SiPython size={16} /> Python
-    </div>,
-    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-      <SiPhp size={16} /> PHP
-    </div>
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
+    ## 🛠 Install with a Package Manager
+
     <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
       <Tabs.Tab>
         ```bash
@@ -47,21 +46,19 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
     - Node.js ≥ 14  
     - Modern browsers (ES6+)  
-    - Works with frameworks like React, Vue (via wrappers), Svelte  
-    - Not tested on IE11 or legacy browsers
+    - Works with React, Vue, Svelte, etc.  
+    - Not tested on legacy browsers like IE11
 
-    ## 📥 Import & Basic Usage
+    ## 📥 Basic Import & Usage
 
     ```js
     import Kenat from 'kenat';
 
     const date = new Kenat();
-    console.log(date.getEthiopian()); // { year: 2017, month: 9, day: 15 }
+    console.log(date.getEthiopian()); 
     ```
 
-    ## 🌀 Dynamic Import (CommonJS)
-
-    If you're using `require()` or CommonJS modules:
+    ## 🔄 Dynamic Import (CommonJS)
 
     ```js
     (async () => {
@@ -69,29 +66,29 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
       console.log(new Kenat().toString());
     })();
     ```
-    ## 🔍 Verify Installation
 
-    Quick one-liner to check if it's working:
+    ## 🧪 Verify Installation
 
     ```bash
     node -e "import('kenat').then(m => console.log(new m.default().toString()))"
     ```
-    Output
+
+    Expected Output:
+
     ```bash
     Ethiopian: 2017-9-21
     ```
-
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 Dart version coming soon...
+    🚧 Dart support is in progress. Planned via pub.dev.
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 Python version coming soon...
+    🚧 Python version coming soon (via PyPI).
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 PHP version coming soon...
+    🚧 PHP version planned (via Composer).
   </Tabs.Tab>
 </Tabs>
