@@ -1,19 +1,20 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { MonthGrid } from "kenat"
+import Kenat, { MonthGrid } from "kenat"
 import { FiCalendar, FiChevronLeft, FiChevronRight } from "react-icons/fi"
 
 export default function EthiopianDatePicker() {
     const [instance, setInstance] = useState(null)
     const [grid, setGrid] = useState(null)
-    const [selectedDate, setSelectedDate] = useState(null)
+    const [selectedDate, setSelectedDate] = useState(() => Kenat.now().getEthiopian())
     const [open, setOpen] = useState(false)
 
     const inputRef = useRef(null)
 
     useEffect(() => {
-        const m = new MonthGrid({ weekdayLang: "amharic" })
+        const { year, month } = Kenat.now().getEthiopian()
+        const m = new MonthGrid({ year, month, weekdayLang: "amharic" })
         setInstance(m)
         setGrid(m.generate())
     }, [])
