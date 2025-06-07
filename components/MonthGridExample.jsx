@@ -13,7 +13,9 @@ export default function MonthGridExample() {
     const containerRef = useRef(null)
 
     useEffect(() => {
-        const instance = new MonthGrid({})
+        const instance = new MonthGrid({
+            weekdayLang: 'amharic',
+        })
         setGridInstance(instance)
         setGridData(instance.generate())
     }, [])
@@ -68,7 +70,7 @@ export default function MonthGridExample() {
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 mb-8 text-white">
                 <Toggle label="Ge'ez Numerals" enabled={gridInstance.useGeez} onChange={toggleGeez} />
                 <Toggle
-                    label={`Language (${gridInstance.weekdayLang === 'amharic' ? 'AM' : 'EN'})`}
+                    label={`Language (${gridInstance.weekdayLang === 'amharic' ? 'amharic' : 'english'})`}
                     enabled={gridInstance.weekdayLang === 'english'}
                     onChange={toggleLang}
                 />

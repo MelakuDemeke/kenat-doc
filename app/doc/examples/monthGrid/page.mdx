@@ -1,6 +1,45 @@
 import MonthGridExample from '../../../../components/MonthGridExample'
-// import MonthGridExample from '@components/MonthGridExample'
 
 # 📅 Month Grid Example
 
-<MonthGridExample />
+This is an interactive Ethiopian calendar component with holiday highlighting, localized weekday headers, and support for Ge’ez numerals.
+
+<div className="flex justify-center my-8">
+  <MonthGridExample />
+</div>
+
+---
+
+## 🧠 How It Works
+
+This calendar is powered by the `kenat` library’s `MonthGrid` class, which generates Ethiopian month data including weekdays, holidays, and Gregorian equivalents.
+
+### 🔧 Key Features
+
+- **Ethiopian calendar rendering** using `MonthGrid`
+- **Toggle switches** for:
+  - Ge’ez numerals
+  - Language (Amharic / English)
+  - Week start day (Sunday / Monday)
+- **Navigation buttons** (next/prev) to switch between months
+- **Holiday support** with confetti animation via [`react-confetti`](https://www.npmjs.com/package/react-confetti)
+- **Today highlight** with a green fill
+- **Glassmorphic UI** with Tailwind CSS and full dark mode support
+
+### 📦 Libraries Used
+
+- [`kenat`](https://www.npmjs.com/package/kenat): Ethiopian calendar logic
+- `react-confetti`: animated particles for holidays
+- `@headlessui/react`: for toggle switches
+- `clsx`: for conditional Tailwind classes
+- `react-icons`: for modern navigation icons
+
+---
+
+## ✨ Want to Customize?
+
+You can modify:
+- Colors (Tailwind class tweaks)
+- Switches (add a date picker or year dropdown)
+- Confetti styles
+- Language support (add more locales)
