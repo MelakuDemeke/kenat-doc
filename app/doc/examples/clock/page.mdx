@@ -1,0 +1,31 @@
+import ClockExample from '../../../../components/ClockExample'
+
+# 🕒 Ethiopian Clock Example
+
+<div className="flex justify-center my-8">
+  <ClockExample />
+</div>
+
+---
+
+## 🧠 How It Works
+
+This clock displays both **analog and digital** Ethiopian time using the `kenat` library.
+
+### 🔁 Features
+
+- Real-time ticking with animation
+- Accurate **Ethiopian time** conversion via `Time.fromGregorian(...)`
+- Toggle to display time using **Ge’ez numerals**
+- Styled analog face with hour, minute, and second hands
+
+### ⚙️ Powered by
+
+- `kenat` — Ethiopian time system
+- `toGeez` — numeral conversion
+- React hooks + `canvas` for animation
+- Tailwind for layout and theme
+
+---
+
+> Tip: The analog clock runs at `requestAnimationFrame` speed and is sync’d with Ethiopian time logic every second.
