@@ -1,0 +1,21 @@
+import DateConverterExample from '../../../../components/DateConverterExample'
+
+# 🔄 EC ↔ GC Date Converter
+
+<div className="flex justify-center my-8">
+  <DateConverterExample />
+</div>
+
+---
+
+## 🧠 How It Works
+
+This converter demonstrates how to use `kenat`'s date conversion utilities to go between Ethiopian (EC) and Gregorian (GC) calendars.
+
+### 🔁 Function Signatures
+
+- **Convert GC to EC**  
+  ```js
+  import { toEC } from 'kenat'
+  const eth = toEC(2024, 6, 7)
+  // → { year: 2016, month: 10, day: 30 }
