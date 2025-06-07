@@ -10,6 +10,9 @@
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "clsx": "^2.1.1",
+    "kenat": "^1.4.1",
     "next": "15.3.2",
     "nextra": "^4.2.17",
     "nextra-theme-docs": "^4.2.17",
