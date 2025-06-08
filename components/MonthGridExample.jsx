@@ -154,7 +154,7 @@ function Toggle({ label, enabled, onChange }) {
         onChange={onChange}
         className={clsx(
           'relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300',
-          enabled ? 'bg-indigo-500' : 'bg-white/30 dark:bg-zinc-500'
+          enabled ? 'bg-indigo-500' : 'bg-zinc-300 dark:bg-zinc-500'
         )}
       >
         <span
