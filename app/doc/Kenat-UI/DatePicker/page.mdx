@@ -1,0 +1,60 @@
+# Date Picker UI
+## 📆 `useDatePicker()`
+
+`useDatePicker` is a headless hook for building an Ethiopian date picker. It manages:
+
+* Selection state
+* Dropdown toggle
+* Grid navigation
+* Formatted display
+
+### ✅ Usage
+
+```js
+import { useDatePicker } from 'kenat-ui'
+
+const { state, actions } = useDatePicker()
+```
+
+### ✅ `state` object
+
+* `selectedDate`: `{ year, month, day }`
+* `formatted`: `"YYYY/MM/DD"` string
+* `open`: `true | false` (dropdown status)
+* `grid`: Full month grid
+* `headers`, `days`: Grid data
+* `inputRef`: Ref for the input field
+
+### ✅ `actions` object
+
+* `toggleOpen()`, `close()`
+* `selectDate(day)`
+* `nextMonth()`, `prevMonth()`
+* `nextYear()`, `prevYear()`
+
+### ✅ Example
+
+```jsx
+<input
+  type="text"
+  readOnly
+  ref={state.inputRef}
+  value={state.formatted}
+  onClick={actions.toggleOpen}
+/>
+
+{state.open && (
+  <div className="calendar-dropdown">
+    <div>{state.grid.monthName} {state.grid.year}</div>
+    <div className="grid grid-cols-7">
+      {state.days.map((day, i) =>
+        day ? (
+          <button key={i} onClick={() => actions.selectDate(day)}>
+            {day.ethiopian.day}
+          </button>
+        ) : <div key={i} />
+      )}
+    </div>
+  </div>
+)}
+```

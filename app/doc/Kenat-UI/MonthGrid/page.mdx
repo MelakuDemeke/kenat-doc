@@ -1,0 +1,44 @@
+
+# Month Grid UI
+## 📅 `useMonthGrid()`
+
+The `useMonthGrid` hook generates an Ethiopian calendar grid with headers and date objects — ready to be rendered however you want.
+
+### ✅ Usage
+
+```js
+import { useMonthGrid } from 'kenat-ui'
+
+const { grid, controls, state } = useMonthGrid({
+  useGeez: false,
+  weekdayLang: 'amharic',
+  weekStart: 1 // 0 for Sunday, 1 for Monday
+})
+```
+
+### ✅ Returned Values
+
+* `grid.headers`: Array of weekday names (localized)
+* `grid.days`: Array of day objects (with holidays, date mapping, etc.)
+* `controls`:
+
+  * `goNext()` — go to next month
+  * `goPrev()` — go to previous month
+  * `rerender(overrides)` — change options dynamically
+* `state`: Current `year`, `month`, and config flags
+
+### ✅ Example
+
+```jsx
+<div>
+  <h2>{grid.monthName} {grid.year}</h2>
+  <div>{grid.headers.join(' | ')}</div>
+  <div className="grid grid-cols-7">
+    {grid.days.map((day, i) => (
+      <div key={i}>
+        {day?.ethiopian.day ?? ''}
+      </div>
+    ))}
+  </div>
+</div>
+```
