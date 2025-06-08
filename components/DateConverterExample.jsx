@@ -88,8 +88,12 @@ function safeToGC(y, m, d) {
   try {
     const { year, month, day } = toGC(y, m, d)
     return `${year}/${month}/${day}`
-  } catch {
-    return '❌ Invalid EC date'
+  } catch (err) {
+    if (err?.toJSON) {
+      const e = err.toJSON()
+      return `❌ ${e.message}`
+    }
+    return "❌ Invalid EC date"
   }
 }
 
@@ -97,7 +101,11 @@ function safeToEC(y, m, d) {
   try {
     const { year, month, day } = toEC(y, m, d)
     return `${year}/${month}/${day}`
-  } catch {
-    return '❌ Invalid GC date'
+  } catch (err) {
+    if (err?.toJSON) {
+      const e = err.toJSON()
+      return `❌ ${e.message}`
+    }
+    return "❌ Invalid GC date"
   }
 }
