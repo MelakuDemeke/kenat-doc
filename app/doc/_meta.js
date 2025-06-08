@@ -4,5 +4,6 @@ export default {
     usage: "🧰 Usage Examples",
     apiref: "⚙️ Kenat Class",
     formating: "🖌️ Formatting",
-
+    "Kenat-UI": "🎨 Kenat UI",
+    examples: "📚 Examples",
 }
