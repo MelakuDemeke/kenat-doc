@@ -1,0 +1,98 @@
+---
+title: The Holiday System
+description: Understanding how Kenat handles fixed, movable, and tagged holidays in the Ethiopian calendar.
+---
+
+import { Tabs } from 'nextra/components'
+import { SiJavascript } from 'react-icons/si'
+
+# The Ethiopian Holiday System in Kenat
+
+The `kenat` library has a comprehensive system for calculating and categorizing the many holidays observed in Ethiopia. This system understands the nuances between fixed holidays, movable Christian feasts, and movable Islamic holidays, and provides a powerful tagging system for filtering them.
+
+---
+
+## Holiday Types
+
+Kenat processes three distinct types of holidays to ensure accurate date reporting.
+
+### 1. Fixed Holidays
+
+These are holidays that occur on the same date in the Ethiopian calendar every year.
+
+* **Examples**:
+    * *Enkutatash* (New Year): Meskerem 1 
+    * *Meskel* (Finding of the True Cross): Meskerem 17 
+    * *Gena* (Ethiopian Christmas): Tahsas 29 
+    * *Adwa Victory Day*: Yekatit 23 
+* **Implementation**: These dates are stored in a `fixedHolidays` map within the library for direct lookup. 
+
+### 2. Movable Christian Holidays
+
+These are holidays whose dates change each year. Their calculation is based on the date of Easter (`Tinsaye`), which is determined by the ancient *Bahire Hasab* computational system. 
+
+* **Examples**:
+    * *Nineveh* (Fast of Nineveh)
+    * *Abiy Tsome* (Great Lent)
+    * *Fasika* (Easter)
+* **Implementation**: The library first calculates the date of the Fast of Nineveh for the given year, and all other movable feasts are determined by adding a fixed number of days from that date. 
+
+### 3. Movable Islamic Holidays
+
+These holidays are based on the Islamic Hijri calendar, which is a lunar calendar. Because the lunar year is shorter than the solar Ethiopian year, the dates of these holidays shift annually and can sometimes occur twice within a single Ethiopian year.
+
+* **Examples**:
+    * *Eid al-Fitr* (End of Ramadan)
+    * *Eid al-Adha* (Feast of the Sacrifice)
+    * *Moulid* (The Prophet's Birthday)
+* **Implementation**: The library calculates all possible Gregorian occurrences of a Hijri date within the span of an Ethiopian year and converts them to their Ethiopian calendar equivalents.
+
+---
+
+## Filtering with `HolidayTags`
+
+To make it easy to find specific types of holidays, every holiday in `kenat` is categorized with one or more tags. These are available in the exported `HolidayTags` object.
+
+The available tags are:
+* `PUBLIC`: A public national holiday. 
+* `RELIGIOUS`: A holiday of religious significance. 
+* `CHRISTIAN`: A Christian holiday. 
+* `MUSLIM`: A Muslim holiday. 
+* `STATE`: A state holiday commemorating a civic event. 
+* `CULTURAL`: A holiday of cultural significance. 
+* `OTHER`: Any other type of observance. 
+
+### Example: Using the `filter` Option
+
+You can pass a tag (string) or an array of tags to the `filter` option in functions like `getHolidaysForYear` and `getHolidaysInMonth`. 
+
+When you provide an array of tags, the filter returns holidays that match **at least one** of the tags provided (an "OR" search). 
+
+<Tabs
+  items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>]}
+>
+  <Tabs.Tab>
+    ```js
+    import { getHolidaysForYear, HolidayTags } from 'kenat';
+
+    const year = 2017; // E.C.
+
+    // Example 1: Get only public holidays by passing a single tag.
+    const publicHolidays = getHolidaysForYear(year, {
+    filter: HolidayTags.PUBLIC
+    });
+
+    console.log(`Found ${publicHolidays.length} public holidays in ${year} E.C.`);
+    // Expected: Lists all holidays tagged as 'public'.
+
+
+    // Example 2: Get holidays that are 'MUSLIM' OR 'STATE'.
+    // Pass an array of tags to the filter option.
+    const muslimOrStateHolidays = getHolidaysForYear(year, {
+        filter: [HolidayTags.MUSLIM, HolidayTags.STATE]
+    });
+
+    console.log(`Found ${muslimOrStateHolidays.length} holidays that are either Muslim or State holidays.`);
+    ```
+  </Tabs.Tab>
+</Tabs>
