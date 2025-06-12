@@ -6,12 +6,43 @@ import { clsx } from 'clsx'
 import Confetti from 'react-confetti'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
+// +++ START: Add Modal Component +++
+function HolidayModal({ holiday, onClose }) {
+  if (!holiday) return null;
+
+  return (
+    // Backdrop
+    <div
+      className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      {/* Modal Content */}
+      <div
+        className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-8 max-w-md w-full relative"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+      >
+        <h3 className="text-2xl font-bold mb-3 text-zinc-900 dark:text-white">{holiday.name}</h3>
+        <p className="text-zinc-600 dark:text-zinc-300 mb-6">{holiday.description}</p>
+        <button
+          onClick={onClose}
+          className="w-full px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+}
+// +++ END: Add Modal Component +++
+
 export default function MonthGridExample() {
   const [gridInstance, setGridInstance] = useState(null)
   const [gridData, setGridData] = useState(null)
   const containerRef = useRef(null)
-  // Add state for holiday filtering
   const [holidayFilter, setHolidayFilter] = useState(null)
+  // +++ START: Add State for Modal +++
+  const [selectedHoliday, setSelectedHoliday] = useState(null);
+  // +++ END: Add State for Modal +++
 
   useEffect(() => {
     const instance = new MonthGrid({
@@ -28,7 +59,7 @@ export default function MonthGridExample() {
       useGeez: overrides.useGeez ?? gridInstance.useGeez,
       weekStart: overrides.weekStart ?? gridInstance.weekStart,
       weekdayLang: overrides.weekdayLang ?? gridInstance.weekdayLang,
-      holidayFilter: overrides.holidayFilter !== undefined ? overrides.holidayFilter : holidayFilter, // <-- Pass the filter
+      holidayFilter: overrides.holidayFilter !== undefined ? overrides.holidayFilter : holidayFilter,
     })
     setGridInstance(updated)
     setGridData(updated.generate())
@@ -52,7 +83,6 @@ export default function MonthGridExample() {
     setHolidayFilter(newFilter);
     rerender({ holidayFilter: newFilter });
   };
-
   const toggleGeez = () => rerender({ useGeez: !gridInstance.useGeez })
   const toggleLang = () =>
     rerender({ weekdayLang: gridInstance.weekdayLang === 'amharic' ? 'english' : 'amharic' })
@@ -68,6 +98,7 @@ export default function MonthGridExample() {
       ref={containerRef}
       className="max-w-4xl mx-auto p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg"
     >
+      
       {/* Header */}
       <div className="flex items-center justify-between mb-6 text-zinc-900 dark:text-white">
         <button onClick={goPrev} className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md">
@@ -77,7 +108,7 @@ export default function MonthGridExample() {
           {gridData.monthName} {gridData.year}
         </h2>
         <button onClick={goNext} className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md">
-          <FiChevronRight className="text-2xl" />
+           <FiChevronRight className="text-2xl" />
         </button>
       </div>
 
@@ -96,7 +127,8 @@ export default function MonthGridExample() {
         />
       </div>
 
-      {/* NEW: Holiday Filter Controls */}
+      
+      {/* Holiday Filter Controls */}
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mb-8 p-3 rounded-xl bg-white/10 dark:bg-zinc-800/30">
         <span className="text-sm font-medium text-zinc-900 dark:text-white">Filter Holidays:</span>
         <FilterCheckbox label="All" value="all" checked={!holidayFilter} onChange={() => handleFilterChange('all')} />
@@ -105,6 +137,7 @@ export default function MonthGridExample() {
         ))}
       </div>
 
+      
       {/* Headers */}
       <div className="grid grid-cols-7 text-center text-sm font-medium text-zinc-700 dark:text-white/80 mb-2">
         {gridData.headers.map((h, i) => ( <div key={i} className="py-1"> {h} </div> ))}
@@ -121,14 +154,17 @@ export default function MonthGridExample() {
           return (
             <div
               key={i}
+              // +++ START: Add Click Handler and Cursor Style +++
+              onClick={() => isHoliday && setSelectedHoliday(day.holidays[0])}
               className={clsx(
                 'relative rounded-xl p-2 border backdrop-blur-md transition shadow-inner overflow-hidden',
                 isToday
                   ? '!bg-emerald-900 text-white ring-2 ring-emerald-300 dark:ring-emerald-400 shadow-lg z-10'
                   : isHoliday
-                  ? '!bg-indigo-900 text-white border-indigo-500 shadow-md'
+                  ? '!bg-indigo-900 text-white border-indigo-500 shadow-md cursor-pointer'
                   : 'bg-white/10 dark:bg-zinc-800/30 hover:bg-white/20 dark:hover:bg-zinc-700/50'
               )}
+              // +++ END: Add Click Handler and Cursor Style +++
             >
               {isHoliday && (
                 <Confetti numberOfPieces={30} recycle={false} gravity={0.1} wind={0} width={80} height={60} scalar={0.2} style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }} />
@@ -146,6 +182,12 @@ export default function MonthGridExample() {
           )
         })}
       </div>
+      
+      {/* +++ START: Render Modal Conditionally +++ */}
+      {selectedHoliday && (
+        <HolidayModal holiday={selectedHoliday} onClose={() => setSelectedHoliday(null)} />
+      )}
+      {/* +++ END: Render Modal Conditionally +++ */}
     </div>
   )
 }
