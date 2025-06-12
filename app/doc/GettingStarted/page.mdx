@@ -8,53 +8,92 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # 🚀 Getting Started
 
-Kenat helps you create and manipulate Ethiopian dates using intuitive and language-consistent APIs.
-
-It supports both current and custom dates, and lets you easily switch between Ethiopian and Gregorian formats.
+Kenat helps you create and manipulate Ethiopian dates using the intuitive `Kenat` class. It supports creating dates from various sources and lets you easily switch between Ethiopian and Gregorian formats.
 
 ---
 
-## 📆 Create a New Date (Today’s Date)
+## 🏗️ Creating a New Date Instance
+
+The `Kenat` constructor is flexible. Here are the ways you can create a new date.
+
+### From the Current Date
+
+If you create a `Kenat` instance with no arguments, it will automatically represent the current system date.
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
-    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
-    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
   ]}
 >
   <Tabs.Tab>
     ```js
     import Kenat from 'kenat';
 
-    const date = new Kenat(); // uses today's Gregorian date
-    console.log(date.getEthiopian()); 
-    // → { year: 2017, month: 9, day: 25 }
+    const today = new Kenat(); 
 
-    console.log(date.getGregorian());
-    // → { year: 2025, month: 6, day: 2 }
+    console.log('ET:', today.getEthiopian());
+    // Example Output ET: { year: 2017, month: 10, day: 5 }
+
+    console.log('GC:', today.getGregorian());
+    // Example Output GC: { year: 2025, month: 6, 13 }
     ```
-  </Tabs.Tab>
-
-  <Tabs.Tab>
-    🚧 Dart version coming soon...
-  </Tabs.Tab>
-
-  <Tabs.Tab>
-    🚧 Python version coming soon...
-  </Tabs.Tab>
-
-  <Tabs.Tab>
-    🚧 PHP version coming soon...
   </Tabs.Tab>
 </Tabs>
 
----
+### From a String
 
-## ✏️ Create from a Custom Ethiopian Date
+You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
 
-```js
-const custom = new Kenat('2016/6/10');
-console.log(custom.getGregorian());
-// → { year: 2024, month: 2, day: 18 }
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    const customDate = new Kenat('2016/10/05');
+
+    console.log(customDate.getGregorian());
+    // Output: { year: 2024, month: 6, day: 13 }
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### From a JavaScript `Date` Object
+
+You can pass a native JavaScript `Date` object directly to the constructor.
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    const gcDate = new Date('2024-08-22');
+    const fromDate = new Kenat(gcDate);
+
+    console.log(fromDate.getEthiopian());
+    // Output: { year: 2016, month: 12, day: 16 }
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### From a Plain Object
+
+You can also construct an Ethiopian date by passing a plain object with `year`, `month`, and `day` keys.
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    const fromObject = new Kenat({ year: 2015, month: 13, day: 5 });
+
+    console.log(fromObject.getGregorian());
+    // Output: { year: 2023, month: 9, day: 10 }
+    ```
+  </Tabs.Tab>
+</Tabs>
