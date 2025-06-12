@@ -1,0 +1,102 @@
+---
+title: Bahire Hasab (ባሕረ ሐሳብ)
+description: An exploration of the ancient Ethiopian calendar calculation system, Bahire Hasab, and how Kenat automates it.
+---
+
+# Bahire Hasab (ባሕረ ሐሳብ)
+
+**Bahire Hasab** (Amharic: ባሕረ ሐሳብ), which translates to the "Sea of Ideas," is the ancient and intricate chronological system used by the Ethiopian Orthodox Tewahedo Church. It serves as the computational backbone for determining the dates of movable feasts and fasts throughout the year, such as the Great Lent (`ዐቢይ ጾም`) and Easter (`ፋሲካ`). This system is also known as **Abushakir** (አቡሻኪር).
+
+While it shares common roots with the Coptic-Egyptian calendar, the Ethiopian system is distinct, especially in its observance of Saints' days. Its core purpose is to align the lunar and solar cycles to accurately schedule religious observances.
+
+## Core Concepts
+
+The calculation is based on the belief that the world was created 5500 years before the birth of Jesus Christ. All calculations begin from this starting point, known as **Amete Alem (ዓመተ ዓለም)**, or "the years of the world".
+
+Key components of the system include:
+
+* **Amete Alem (ዓመተ ዓለም):** The total years since creation, calculated by adding 5500 to the current Ethiopian year.
+* **The Four Evangelists:** Each year in a four-year cycle is named after one of the evangelists: Matthew, Mark, Luke, and John. This cycle is crucial for determining leap years.
+* **The 19-Year Cycle:** Bahire Hasab uses a 19-year cycle to reconcile the solar and lunar calendars. The values **Medeb (መደብ)** and **Wenber (ወንበር)** represent a year's position within this cycle.
+* **Nineveh (ጾመ ነነዌ):** The Fast of Nineveh is the anchor point for all other movable holidays. Once its date is found, all other dates can be calculated by adding a fixed number of days.
+
+## The Calculation Process
+
+The traditional calculation of Bahire Hasab involves a sequence of steps. The `kenat` library fully automates this process, but understanding the steps provides insight into the calendar's logic.
+
+### 1. Amete Alem (ዓመተ ዓለም) & Metene Rabiet (መጠነ ራብዒት)
+
+* **Amete Alem** = `5500 + Ethiopian Year`. For 2017 E.C., it's `5500 + 2017 = 7517`.
+* **Metene Rabiet** is the quotient of `Amete Alem / 4`. For 7517, it's `floor(7517 / 4) = 1879`. This is implemented in Kenat as `Math.floor(ameteAlem / 4)`.
+
+### 2. Evangelist of the Year (ወንጌላዊ)
+
+The remainder of `Amete Alem / 4` determines the year's name:
+* **1:** Matthew
+* **2:** Mark
+* **3:** Luke
+* **0:** John
+
+For 2017 E.C., `7517 % 4 = 1`, making it the year of Matthew. This matches the logic in Kenat: `const evangelistRemainder = ameteAlem % 4;`.
+
+### 3. Medeb (መደብ) & Wenber (ወንበር)
+
+These values determine the year's place in the 19-year lunar cycle.
+* **Medeb** is the remainder of `Amete Alem / 19`. For 2017 E.C., `7517 % 19 = 12`.
+* **Wenber** is `Medeb - 1`. So, `12 - 1 = 11`. (If Medeb is 0, Wenber is 18).
+Kenat calculates this as `const medeb = ameteAlem % 19;`  and `const wenber = medeb === 0 ? 18 : medeb - 1;`.
+
+### 4. Metqi (መጥቅ)
+
+**Metqi** is a key number that determines the day the new lunar cycle is proclaimed.
+* **Metqi** is the remainder of `(Wenber * 19) / 30`. For 2017 E.C., `(11 * 19) % 30 = 209 % 30 = 29`.
+Kenat calculates this as `const metqi = (wenber * 19) % 30;`.
+
+### 5. The Fast of Nineveh (ጾመ ነነዌ)
+
+The date of Nineveh is the cornerstone for all movable fasts and holidays. It is found by combining `Metqi` with a value called `Tewsak` (ቴውሳክ).
+* The month for Nineveh depends on the value of Metqi. If Metqi > 14, the fast is typically in Tir ; if Metqi < 14, it is in Yekatit.
+* Kenat automates this complex step to find the exact date of Nineveh, which serves as the base for all other calculations.
+
+### 6. Calculating Movable Holidays
+
+All other movable Christian holidays are found by adding a specific number of days (the holiday's `Tewsak`) to the start date of Nineveh.
+
+| Holiday | Days after Nineveh | Tewsak from Kenat | Source |
+| :--- | :--- | :--- | :--- |
+| **Abiy Tsome** (Great Lent) | 14 days | 14 |  |
+| **Debre Zeit** (Mid-Lent) | 41 days | 41 |  |
+| **Siklet** (Good Friday) | 67 days | 67 |  |
+| **Tinsaye** (Easter) | 69 days | 69 |  |
+| **Erget** (Ascension) | 108 days | 108 |  |
+| **Paraclete** (Pentecost) | 118 days | 118 |  |
+
+Kenat uses this exact logic, adding the `Tewsak` value for each holiday to the calculated date of Nineveh using the `addDays` function.
+
+## Using `getBahireHasab()` in Kenat
+
+The `Kenat` class provides a `getBahireHasab()` method that performs all these calculations and returns a comprehensive object with all the results.
+
+```js
+import Kenat from 'kenat';
+
+// Create a Kenat instance for the year you want to check
+const date = new Kenat('2017/1/1'); // Using any date in 2017 E.C.
+
+// Get the Bahire Hasab data for that year
+const bahireHasab = date.getBahireHasab();
+
+console.log('--- Bahire Hasab for 2017 E.C. ---');
+console.log(`Amete Alem: ${bahireHasab.ameteAlem}`); // 7517
+console.log(`Evangelist: ${bahireHasab.evangelist.name}`); // Matthew
+console.log(`Wenber: ${bahireHasab.wenber}`); // 11
+console.log(`Metqi: ${bahireHasab.metqi}`); // 29
+
+// The base date for all movable holidays
+console.log('Fast of Nineveh:', bahireHasab.nineveh);
+// { year: 2017, month: 5, day: 22 }
+
+// Get the date for Easter (Fasika)
+const fasika = bahireHasab.movableFeasts.fasika;
+console.log(`${fasika.name}:`, fasika.ethiopian);
+// Fasika: { year: 2017, month: 8, day: 1 }
