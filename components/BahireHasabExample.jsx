@@ -1,7 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import Kenat from 'kenat' // Corrected: Kenat is a default export
+// +++ START: Corrected Import +++
+// Import both the default Kenat class and the named getBahireHasab function
+import Kenat, { getBahireHasab } from 'kenat'
+// +++ END: Corrected Import +++
 import { clsx } from 'clsx'
 import { FiChevronDown, FiAlertCircle } from 'react-icons/fi'
 
@@ -10,15 +13,12 @@ export default function BahireHasabExample() {
   const [lang, setLang] = useState('amharic')
   const [bahireHasabData, setBahireHasabData] = useState(null)
   const [openFeast, setOpenFeast] = useState(null)
-  // +++ START: Add state for error handling +++
   const [error, setError] = useState('')
-  // +++ END: Add state for error handling +++
 
   const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base'
 
-  // +++ START: Updated calculation function with error handling +++
   const calculateBahireHasab = () => {
-    setError('') // Reset error on each attempt
+    setError('') 
 
     if (isNaN(year) || year < 1 || year > 9999) {
       setError('Please enter a valid Ethiopian year (e.g., 2017).')
@@ -27,13 +27,14 @@ export default function BahireHasabExample() {
     }
 
     try {
-      const k = new Kenat({ year, month: 1, day: 1 })
-      const data = k.getBahireHasab({ lang }) // This can throw an error
+      // +++ START: Corrected Function Call +++
+      // Call the standalone getBahireHasab function directly, passing the year and language option.
+      const data = getBahireHasab(year, { lang })
+      // +++ END: Corrected Function Call +++
       setBahireHasabData(data)
 
       if (data?.movableFeasts) {
         const feastKeys = Object.keys(data.movableFeasts)
-        // Keep the current feast open if it exists in the new language, otherwise open the first one
         if (!openFeast || !feastKeys.includes(openFeast)) {
           setOpenFeast(feastKeys[0])
         }
@@ -44,14 +45,11 @@ export default function BahireHasabExample() {
       setBahireHasabData(null)
     }
   }
-  // +++ END: Updated calculation function +++
 
-  // Effect to run calculation when year or language changes
   useEffect(() => {
-    // Debounce input to avoid calculations on every keystroke
     const handler = setTimeout(() => {
       calculateBahireHasab()
-    }, 300); // Wait 300ms after user stops typing
+    }, 300);
 
     return () => {
       clearTimeout(handler);
@@ -95,7 +93,6 @@ export default function BahireHasabExample() {
         </div>
       </div>
       
-      {/* +++ START: Conditional rendering for Error or Results +++ */}
       {error && (
         <div className="flex items-center justify-center gap-3 p-4 rounded-lg bg-red-500/10 text-red-700 dark:text-red-300 border border-red-500/20">
             <FiAlertCircle className="text-2xl" />
@@ -154,7 +151,6 @@ export default function BahireHasabExample() {
             </div>
         </div>
       )}
-      {/* +++ END: Conditional rendering +++ */}
     </div>
   )
 }
