@@ -12,7 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "clsx": "^2.1.1",
-    "kenat": "^2.0.0",
+    "kenat": "^2.0.1",
     "next": "15.3.2",
     "nextra": "^4.2.17",
     "nextra-theme-docs": "^4.2.17",

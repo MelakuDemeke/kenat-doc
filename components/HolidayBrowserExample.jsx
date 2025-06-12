@@ -2,21 +2,9 @@
 
 import React, { useState, useEffect, useMemo } from 'react'
 // +++ START: Import 'toGC' to handle missing dates +++
-import Kenat, { getHolidaysForYear, HolidayTags, toGC } from 'kenat'
+import Kenat, { getHolidaysForYear, HolidayTags, toGC, monthNames } from 'kenat'
 // +++ END: Import 'toGC' +++
 import { FiCalendar, FiTag } from 'react-icons/fi'
-
-
-const monthNames = {
-  english: [
-    "Meskerem", "Tikimt", "Hidar", "Tahsas", "Tir", "Yekatit",
-    "Megabit", "Miazia", "Ginbot", "Sene", "Hamle", "Nehase", "Pagume"
-  ],
-  amharic: [
-    "መስከረም", "ጥቅምት", "ህዳር", "ታህሳስ", "ጥር", "የካቲት",
-    "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሀምሌ", "ነሐሴ", "ጳጉሜ"
-  ]
-};
 
 const tagColors = {
   [HolidayTags.PUBLIC]: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
