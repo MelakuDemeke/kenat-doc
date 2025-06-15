@@ -14,10 +14,10 @@ import {
 import { SiNpm } from "react-icons/si";
 
 import { useHasMounted } from "@/hooks/useHasMounted";
-import { BackgroundEffects } from "@/components/Landing/BackgroundEffects";
 import { GlassCard } from "@/components/Landing/GlassCard";
 import { LiveAmharicDateTime } from "@/components/Landing/LiveAmharicDateTime";
 import { FeatureCard } from "@/components/Landing/FeatureCard";
+import { SectionBackground } from "@/components/Landing/SectionBackground";
 
 export default function Home() {
   const hasMounted = useHasMounted();
@@ -30,16 +30,16 @@ export default function Home() {
         const endDate = new Date().toISOString().split('T')[0];
 
         const [kenatRes, kenatUiRes] = await Promise.all([
-            fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat`),
-            fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat-ui`)
+          fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat`),
+          fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat-ui`)
         ]);
-        
+
         const kenatData = await kenatRes.json();
         const kenatUiData = await kenatUiRes.json();
 
         const totalKenatDownloads = kenatData.downloads ? kenatData.downloads.reduce((sum, day) => sum + day.downloads, 0) : 0;
         const totalKenatUiDownloads = kenatUiData.downloads ? kenatUiData.downloads.reduce((sum, day) => sum + day.downloads, 0) : 0;
-        
+
         setDownloads(totalKenatDownloads + totalKenatUiDownloads);
 
       } catch (error) {
@@ -57,9 +57,8 @@ export default function Home() {
 
   return (
     <div className="bg-gray-100 dark:bg-zinc-900 text-zinc-900 dark:text-white selection:bg-purple-500/50 relative overflow-x-hidden">
-      <BackgroundEffects />
       <main className="relative z-10">
-        <section className="min-h-screen flex items-center justify-center text-center px-4">
+        <section className="min-h-screen flex items-center justify-center text-center px-4 relative overflow-hidden">
           <div className="max-w-4xl">
             <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-4">
               Kenat: The Ethiopian Calendar Toolkit
@@ -100,7 +99,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20 px-4">
+        {/* --- Section 1: `kenat` Core Logic --- */}
+        <section className="py-20 px-4 relative overflow-hidden">
+          <SectionBackground rotation={15} />
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">Powerful Core Logic</h2>
             <p className="text-zinc-600 dark:text-zinc-400 mb-12 max-w-2xl mx-auto">
@@ -142,7 +143,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20 px-4 bg-white/5 dark:bg-black/20">
+        {/* --- Section 2: `kenat-ui` --- */}
+        <section className="py-20 px-4 relative overflow-hidden bg-white/5 dark:bg-black/20">
+          <SectionBackground rotation={170}/>
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">
               Flexible UI with `kenat-ui`
@@ -172,7 +175,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20 text-center px-4">
+        <section className="py-20 text-center px-4 relative overflow-hidden">
           <h2 className="text-4xl font-bold mb-4">Ready to Build?</h2>
           <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-xl mx-auto">
             Explore the comprehensive documentation for guides and API
