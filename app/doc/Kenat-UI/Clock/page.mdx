@@ -1,0 +1,37 @@
+# Clock UI
+## 🕒 `useEthiopianClock()`
+
+`useEthiopianClock` is a headless hook that provides real-time Ethiopian and Gregorian time, updating every second. It's ideal for creating live digital or analog clocks.
+
+### ✅ Usage
+
+```js
+import { useEthiopianClock } from 'kenat-ui'
+
+const { now, ethiopianTime, gregorianTime } = useEthiopianClock()
+```
+
+### ✅ `state` object
+
+* `now`: The raw JavaScript `Date` object, which updates every second. This is useful for powering analog clock hands.
+* `ethiopianTime`: A `kenat.Time` instance representing the current Ethiopian time, which is derived from the current hour and minute.
+* `gregorianTime`: A plain object `{ hour, minute, second }` for the current Gregorian time.
+
+### ✅ Example
+
+```jsx
+import { useEthiopianClock } from 'kenat-ui';
+import { toGeez } from 'kenat'; // Assuming 'toGeez' is available from the core kenat library
+
+function LiveClock() {
+  const { ethiopianTime, gregorianTime } = useEthiopianClock();
+
+  return (
+    <div className="font-mono text-5xl">
+      <span>{ethiopianTime.hour}</span>:
+      <span>{ethiopianTime.minute}</span>:
+      <span>{gregorianTime.second}</span>
+      <span className="text-lg ml-2">{ethiopianTime.period}</span>
+    </div>
+  );
+}
