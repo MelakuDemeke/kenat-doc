@@ -1,0 +1,60 @@
+# Date Converter UI
+## 🔄 `useDateConverter()`
+
+`useDateConverter` is a headless hook designed for two-way date conversion between the Ethiopian (EC) and Gregorian (GC) calendars. It manages the input states and the conversion results.
+
+### ✅ Usage
+
+Initialize the hook with an optional `initialDate` in either EC or GC format. If no date is provided, it defaults to the current system date.
+
+```js
+import { useDateConverter } from 'kenat-ui'
+
+// Initialize with a Gregorian date
+const { state, actions } = useDateConverter({
+  initialDate: { gc: { year: 2024, month: 6, day: 13 } }
+});
+```
+
+### ✅ `state` object
+
+* `ecDate`: The Ethiopian date object `{ year, month, day }` used as the source for converting to GC.
+* `gcDate`: The Gregorian date object `{ year, month, day }` used as the source for converting to EC.
+* `convertedGc`: The string result (`YYYY/M/D`) of the EC to GC conversion, or an error message if the date is invalid.
+* `convertedEc`: The string result (`YYYY/M/D`) of the GC to EC conversion, or an error message if the date is invalid.
+
+### ✅ `actions` object
+
+* `setEcDate(date)`: Function to update the Ethiopian date object, triggering a new conversion to Gregorian.
+* `setGcDate(date)`: Function to update the Gregorian date object, triggering a new conversion to Ethiopian.
+
+### ✅ Example
+
+```jsx
+function ConverterComponent() {
+  const { state, actions } = useDateConverter();
+
+  const handleGcYearChange = (e) => {
+    actions.setGcDate({ ...state.gcDate, year: parseInt(e.target.value || 0) });
+  };
+
+  const handleEcYearChange = (e) => {
+    actions.setEcDate({ ...state.ecDate, year: parseInt(e.target.value || 0) });
+  };
+
+  return (
+    <div>
+      <div>
+        <label>Gregorian Date</label>
+        <input type="number" value={state.gcDate?.year} onChange={handleGcYearChange} />
+        <p>→ Ethiopian: {state.convertedEc}</p>
+      </div>
+      <div>
+        <label>Ethiopian Date</label>
+        <input type="number" value={state.ecDate?.year} onChange={handleEcYearChange} />
+        <p>→ Gregorian: {state.convertedGc}</p>
+      </div>
+    </div>
+  );
+}
+```
