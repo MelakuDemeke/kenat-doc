@@ -152,7 +152,7 @@ export default function Home() {
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400 mb-12 max-w-2xl mx-auto">
               `kenat-ui` is a headless library that gives you maximum control
-              over your UI's appearance while handling all the complex calendar
+              over your UI&apos;s appearance while handling all the complex calendar
               logic for you.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
