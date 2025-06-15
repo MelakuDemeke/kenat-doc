@@ -1,0 +1,59 @@
+# Time Converter UI
+## ⇆ `useTimeConverter()`
+
+The `useTimeConverter` hook provides the logic for converting between standard 24-hour Gregorian time and the 12-hour Ethiopian time system, which includes "day" and "night" periods.
+
+### ✅ Usage
+
+You can initialize the hook with a specific time in either format. If no initial time is provided, it defaults to the current time.
+
+```js
+import { useTimeConverter } from 'kenat-ui'
+
+const { state, actions } = useTimeConverter({
+  initialTime: { ethiopian: { hour: 8, minute: 30, period: 'day' } }
+});
+```
+
+### ✅ `state` object
+
+* `ethiopian`: A `kenat.Time` instance representing the time in the Ethiopian format.
+* `gregorian`: A plain object `{ hour, minute }` representing the equivalent Gregorian time.
+
+### ✅ `actions` object
+
+* `setGregorianTime(hour, minute)`: Updates the time using a Gregorian source and automatically converts it to Ethiopian time
+* `setEthiopianTime(hour, minute, period)`: Updates the time using an Ethiopian source and automatically converts it to Gregorian time.
+
+### ✅ Example
+
+```jsx
+function TimeConverterComponent() {
+  const { state, actions } = useTimeConverter();
+
+  return (
+    <div>
+      <div>
+        <label>Gregorian Input</label>
+        <input
+          type="number"
+          value={state.gregorian.hour}
+          onChange={(e) => actions.setGregorianTime(parseInt(e.target.value), state.gregorian.minute)}
+        />
+        <p>→ Ethiopian: {state.ethiopian.format()}</p>
+      </div>
+      <div>
+        <label>Ethiopian Input</label>
+         <select
+          value={state.ethiopian.period}
+          onChange={(e) => actions.setEthiopianTime(state.ethiopian.hour, state.ethiopian.minute, e.target.value)}
+        >
+          <option value="day">day</option>
+          <option value="night">night</option>
+        </select>
+        <p>→ Gregorian: {state.gregorian.hour}:{state.gregorian.minute}</p>
+      </div>
+    </div>
+  );
+}
+```
