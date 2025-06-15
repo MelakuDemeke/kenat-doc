@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Kenat from "kenat";
 import { FiCalendar, FiClock } from "react-icons/fi";
-import { useHasMounted } from "@/hooks/useHasMounted"; // Adjust path if needed
+import { useHasMounted } from "@/hooks/useHasMounted";
 
 export function LiveAmharicDateTime() {
   const hasMounted = useHasMounted();

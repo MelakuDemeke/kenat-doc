@@ -13,7 +13,6 @@ import {
 } from "react-icons/fi";
 import { SiNpm } from "react-icons/si";
 
-// Corrected import paths
 import { useHasMounted } from "@/hooks/useHasMounted";
 import { BackgroundEffects } from "@/components/Landing/BackgroundEffects";
 import { GlassCard } from "@/components/Landing/GlassCard";
@@ -25,10 +24,9 @@ export default function Home() {
   const [downloads, setDownloads] = useState(0);
 
   useEffect(() => {
-    // This logic now fetches the combined total downloads
     async function fetchTotalDownloads() {
       try {
-        const startDate = '2015-01-01';
+        const startDate = '2024-01-01';
         const endDate = new Date().toISOString().split('T')[0];
 
         const [kenatRes, kenatUiRes] = await Promise.all([
@@ -102,7 +100,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ... The rest of your feature sections remain the same ... */}
         <section className="py-20 px-4">
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">Powerful Core Logic</h2>
