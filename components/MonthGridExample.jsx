@@ -1,36 +1,39 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { MonthGrid, HolidayTags } from "kenat";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { MonthGrid, HolidayTags, monthNames } from "kenat";
 import { Switch } from "@headlessui/react";
 import { clsx } from "clsx";
 import Confetti from "react-confetti";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-// The existing Modal component remains unchanged.
-function HolidayModal({ holiday, onClose }) {
-  if (!holiday) return null;
-
+function HolidayModal({ holidays, onClose }) {
+  if (!holidays || holidays.length === 0) return null;
   return (
-    // Backdrop
     <div
-      className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+      className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      {/* Modal Content */}
       <div
         className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-8 max-w-md w-full relative"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+        onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-2xl font-bold mb-3 text-zinc-900 dark:text-white">
-          {holiday.name}
-        </h3>
-        <p className="text-zinc-600 dark:text-zinc-300 mb-6">
-          {holiday.description}
-        </p>
+        {holidays.map((holiday, index) => (
+          <div key={index}>
+            <h3 className="text-2xl font-bold mb-3 text-zinc-900 dark:text-white">
+              {holiday.name}
+            </h3>
+            <p className="text-zinc-600 dark:text-zinc-300">
+              {holiday.description}
+            </p>
+            {index < holidays.length - 1 && (
+              <hr className="my-6 border-zinc-200 dark:border-zinc-700" />
+            )}
+          </div>
+        ))}
         <button
           onClick={onClose}
-          className="w-full px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition"
+          className="w-full mt-6 px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition"
         >
           Close
         </button>
@@ -40,116 +43,123 @@ function HolidayModal({ holiday, onClose }) {
 }
 
 export default function MonthGridExample() {
-  const [gridInstance, setGridInstance] = useState(null);
   const [gridData, setGridData] = useState(null);
-  const containerRef = useRef(null);
-  const [holidayFilter, setHolidayFilter] = useState(null);
-  const [selectedHoliday, setSelectedHoliday] = useState(null);
-
-  // +++ START: Add New State for Mode and Saint Toggles +++
+  const [selectedHolidays, setSelectedHolidays] = useState(null);
   const [activeMode, setActiveMode] = useState("public");
+  const [holidayFilter, setHolidayFilter] = useState([HolidayTags.PUBLIC]);
   const [showAllSaints, setShowAllSaints] = useState(false);
-  // +++ END: Add New State +++
 
-  // Initialize the grid on mount
+  const [date, setDate] = useState(() => {
+    const todayInEC = new MonthGrid().generate();
+    return { year: parseInt(todayInEC.year), month: todayInEC.month };
+  });
+
   useEffect(() => {
     const instance = new MonthGrid({
+      year: date.year,
+      month: date.month,
       weekdayLang: "amharic",
       weekStart: 1,
-      mode: "public", // Set initial mode
+      mode: activeMode,
+      showAllSaints,
+      holidayFilter,
     });
-    setGridInstance(instance);
     setGridData(instance.generate());
-  }, []);
+  }, [date, activeMode, showAllSaints, holidayFilter]);
 
-  // Rerender the grid when options change
-  const rerender = (overrides = {}) => {
-    if (!gridInstance) return;
-    const updated = new MonthGrid({
-      year: gridInstance.year,
-      month: gridInstance.month,
-      useGeez: gridInstance.useGeez,
-      weekStart: gridInstance.weekStart,
-      weekdayLang: gridInstance.weekdayLang,
-      // Use the new state variables for filtering
-      holidayFilter:
-        overrides.holidayFilter !== undefined
-          ? overrides.holidayFilter
-          : holidayFilter,
-      mode: overrides.mode !== undefined ? overrides.mode : activeMode,
-      showAllSaints:
-        overrides.showAllSaints !== undefined
-          ? overrides.showAllSaints
-          : showAllSaints,
-    });
-    setGridInstance(updated);
-    setGridData(updated.generate());
-  };
-
-  // +++ START: Update Handlers for New Controls +++
   const handleModeChange = (e) => {
     const newMode = e.target.value;
     setActiveMode(newMode);
-    setShowAllSaints(false); // Reset saint toggle when mode changes
-    rerender({ mode: newMode, showAllSaints: false });
+    setShowAllSaints(false);
+    setHolidayFilter(newMode === "none" ? null : [newMode]);
   };
 
-  const handleSaintToggleChange = (enabled) => {
-    setShowAllSaints(enabled);
-    rerender({ showAllSaints: enabled });
-  };
-  // +++ END: Update Handlers +++
-
-  // Existing holiday filter logic
   const handleFilterChange = (tag) => {
     let newFilter;
     if (tag === "all") {
       newFilter = null;
     } else {
-      const currentFilter = holidayFilter || [];
-      if (currentFilter.includes(tag)) {
-        newFilter = currentFilter.filter((t) => t !== tag);
-      } else {
-        newFilter = [...currentFilter, tag];
-      }
-      if (newFilter.length === 0) {
-        newFilter = null;
-      }
+      const current = holidayFilter || [];
+      newFilter = current.includes(tag)
+        ? current.filter((t) => t !== tag)
+        : [...current, tag];
+      if (newFilter.length === 0) newFilter = null;
     }
+    setActiveMode("none");
     setHolidayFilter(newFilter);
-    rerender({ holidayFilter: newFilter });
   };
 
-  const goNext = () => setGridData(gridInstance.up().generate());
-  const goPrev = () => setGridData(gridInstance.down().generate());
+  const goNextMonth = () => {
+    setDate((d) =>
+      d.month === 13
+        ? { year: d.year + 1, month: 1 }
+        : { ...d, month: d.month + 1 }
+    );
+  };
+  const goPrevMonth = () => {
+    setDate((d) =>
+      d.month === 1
+        ? { year: d.year - 1, month: 13 }
+        : { ...d, month: d.month - 1 }
+    );
+  };
 
-  if (!gridData) return null;
+  const yearOptions = useMemo(
+    () => Array.from({ length: 201 }, (_, i) => 1900 + i),
+    []
+  );
+  const amharicMonths = useMemo(
+    () => monthNames.amharic.map((name, i) => ({ value: i + 1, label: name })),
+    []
+  );
+
+  if (!gridData) return <div className="text-center p-4">Loading...</div>;
 
   return (
-    <div
-      ref={containerRef}
-      className="max-w-4xl mx-auto p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg"
-    >
-      {/* Header (Unchanged) */}
+    <div className="max-w-4xl mx-auto p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg">
       <div className="flex items-center justify-between mb-6 text-zinc-900 dark:text-white">
         <button
-          onClick={goPrev}
-          className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md"
+          onClick={goPrevMonth}
+          className="p-2 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md"
         >
           <FiChevronLeft className="text-2xl" />
         </button>
-        <h2 className="text-2xl font-bold tracking-wide text-center">
-          {gridData.monthName} {gridData.year}
-        </h2>
+        <div className="flex items-center gap-2">
+          <select
+            value={gridData.month}
+            onChange={(e) =>
+              setDate((d) => ({ ...d, month: Number(e.target.value) }))
+            }
+            className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base text-zinc-900 dark:text-white"
+          >
+            {amharicMonths.map((m) => (
+              <option key={m.value} value={m.value}>
+                {m.label}
+              </option>
+            ))}
+          </select>
+          <select
+            value={gridData.year}
+            onChange={(e) =>
+              setDate((d) => ({ ...d, year: Number(e.target.value) }))
+            }
+            className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base text-zinc-900 dark:text-white"
+          >
+            {yearOptions.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+        </div>
         <button
-          onClick={goNext}
-          className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md"
+          onClick={goNextMonth}
+          className="p-2 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md"
         >
           <FiChevronRight className="text-2xl" />
         </button>
       </div>
 
-      {/* +++ START: Updated Controls Section +++ */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
         <div className="flex items-center space-x-3">
           <span className="text-sm text-zinc-900 dark:text-white">Mode:</span>
@@ -158,7 +168,7 @@ export default function MonthGridExample() {
             onChange={handleModeChange}
             className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-sm text-zinc-900 dark:text-white"
           >
-            <option value="none">All</option>
+            <option value="none">Custom Filter</option>
             <option value="christian">Christian</option>
             <option value="muslim">Muslim</option>
             <option value="public">Public</option>
@@ -168,13 +178,11 @@ export default function MonthGridExample() {
           <Toggle
             label="Show All Saints"
             enabled={showAllSaints}
-            onChange={handleSaintToggleChange}
+            onChange={setShowAllSaints}
           />
         )}
       </div>
-      {/* +++ END: Updated Controls Section +++ */}
 
-      {/* Holiday Filter Controls (Unchanged) */}
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mb-8 p-3 rounded-xl bg-white/10 dark:bg-zinc-800/30">
         <span className="text-sm font-medium text-zinc-900 dark:text-white">
           Filter Holidays:
@@ -182,7 +190,7 @@ export default function MonthGridExample() {
         <FilterCheckbox
           label="All"
           value="all"
-          checked={!holidayFilter}
+          checked={!holidayFilter || holidayFilter.length === 0}
           onChange={() => handleFilterChange("all")}
         />
         {Object.values(HolidayTags).map((tag) => (
@@ -196,32 +204,29 @@ export default function MonthGridExample() {
         ))}
       </div>
 
-      {/* Calendar Grid & Headers (Unchanged) */}
+      {/* Calendar Grid & Headers */}
       <div className="grid grid-cols-7 text-center text-sm font-medium text-zinc-700 dark:text-white/80 mb-2">
         {gridData.headers.map((h, i) => (
           <div key={i} className="py-1">
-            {" "}
-            {h}{" "}
+            {h}
           </div>
         ))}
       </div>
       <div className="grid grid-cols-7 gap-1 text-center text-sm relative">
         {gridData.days.map((day, i) => {
           if (!day) return <div key={i} className="p-2" />;
-
           const isToday = day.isToday;
           const isHoliday = day.holidays.length > 0;
-
           return (
             <div
               key={i}
-              onClick={() => isHoliday && setSelectedHoliday(day.holidays[0])}
+              onClick={() => isHoliday && setSelectedHolidays(day.holidays)}
               className={clsx(
                 "relative rounded-xl p-2 border backdrop-blur-md transition shadow-inner overflow-hidden",
                 isToday
-                  ? "!bg-emerald-900 text-white ring-2 ring-emerald-300 dark:ring-emerald-400 shadow-lg z-10"
+                  ? "!bg-emerald-500 text-white ring-2 ring-emerald-300 dark:!bg-emerald-900 dark:ring-emerald-400 shadow-lg z-10"
                   : isHoliday
-                  ? "!bg-indigo-900 text-white border-indigo-500 shadow-md cursor-pointer"
+                  ? "bg-indigo-200 text-indigo-900 border-indigo-300 dark:!bg-indigo-900 dark:text-white dark:border-indigo-500 shadow-md cursor-pointer"
                   : "bg-white/10 dark:bg-zinc-800/30 hover:bg-white/20 dark:hover:bg-zinc-700/50"
               )}
             >
@@ -243,7 +248,14 @@ export default function MonthGridExample() {
                 />
               )}
               <div className="relative z-10">{day.ethiopian.day}</div>
-              <div className="text-xs text-zinc-600 dark:text-white/70 relative z-10">
+              <div
+                className={clsx(
+                  "text-xs relative z-10",
+                  isHoliday
+                    ? "text-indigo-800 dark:text-white/70"
+                    : "text-zinc-600 dark:text-white/70"
+                )}
+              >
                 {day.gregorian.month}/{day.gregorian.day}
               </div>
               {isHoliday && (
@@ -256,18 +268,16 @@ export default function MonthGridExample() {
         })}
       </div>
 
-      {/* Render Modal Conditionally (Unchanged) */}
-      {selectedHoliday && (
+      {selectedHolidays && (
         <HolidayModal
-          holiday={selectedHoliday}
-          onClose={() => setSelectedHoliday(null)}
+          holidays={selectedHolidays}
+          onClose={() => setSelectedHolidays(null)}
         />
       )}
     </div>
   );
 }
 
-// Reusable Toggle component remains unchanged
 function Toggle({ label, enabled, onChange }) {
   return (
     <div className="flex items-center space-x-3">
@@ -291,7 +301,6 @@ function Toggle({ label, enabled, onChange }) {
   );
 }
 
-// Reusable FilterCheckbox component remains unchanged
 function FilterCheckbox({ label, value, checked, onChange }) {
   return (
     <label className="flex items-center space-x-2 cursor-pointer text-sm text-zinc-900 dark:text-white">
