@@ -1,12 +1,13 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
-import { MonthGrid, HolidayTags } from "kenat"; // <-- Import HolidayTags
+import { MonthGrid, HolidayTags } from "kenat";
 import { Switch } from "@headlessui/react";
 import { clsx } from "clsx";
 import Confetti from "react-confetti";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-// +++ START: Add Modal Component +++
+// The existing Modal component remains unchanged.
 function HolidayModal({ holiday, onClose }) {
   if (!holiday) return null;
 
@@ -37,41 +38,69 @@ function HolidayModal({ holiday, onClose }) {
     </div>
   );
 }
-// +++ END: Add Modal Component +++
 
 export default function MonthGridExample() {
   const [gridInstance, setGridInstance] = useState(null);
   const [gridData, setGridData] = useState(null);
   const containerRef = useRef(null);
   const [holidayFilter, setHolidayFilter] = useState(null);
-  // +++ START: Add State for Modal +++
   const [selectedHoliday, setSelectedHoliday] = useState(null);
-  // +++ END: Add State for Modal +++
 
+  // +++ START: Add New State for Mode and Saint Toggles +++
+  const [activeMode, setActiveMode] = useState("public");
+  const [showAllSaints, setShowAllSaints] = useState(false);
+  // +++ END: Add New State +++
+
+  // Initialize the grid on mount
   useEffect(() => {
     const instance = new MonthGrid({
       weekdayLang: "amharic",
+      weekStart: 1,
+      mode: "public", // Set initial mode
     });
     setGridInstance(instance);
     setGridData(instance.generate());
   }, []);
 
+  // Rerender the grid when options change
   const rerender = (overrides = {}) => {
+    if (!gridInstance) return;
     const updated = new MonthGrid({
       year: gridInstance.year,
       month: gridInstance.month,
-      useGeez: overrides.useGeez ?? gridInstance.useGeez,
-      weekStart: overrides.weekStart ?? gridInstance.weekStart,
-      weekdayLang: overrides.weekdayLang ?? gridInstance.weekdayLang,
+      useGeez: gridInstance.useGeez,
+      weekStart: gridInstance.weekStart,
+      weekdayLang: gridInstance.weekdayLang,
+      // Use the new state variables for filtering
       holidayFilter:
         overrides.holidayFilter !== undefined
           ? overrides.holidayFilter
           : holidayFilter,
+      mode: overrides.mode !== undefined ? overrides.mode : activeMode,
+      showAllSaints:
+        overrides.showAllSaints !== undefined
+          ? overrides.showAllSaints
+          : showAllSaints,
     });
     setGridInstance(updated);
     setGridData(updated.generate());
   };
 
+  // +++ START: Update Handlers for New Controls +++
+  const handleModeChange = (e) => {
+    const newMode = e.target.value;
+    setActiveMode(newMode);
+    setShowAllSaints(false); // Reset saint toggle when mode changes
+    rerender({ mode: newMode, showAllSaints: false });
+  };
+
+  const handleSaintToggleChange = (enabled) => {
+    setShowAllSaints(enabled);
+    rerender({ showAllSaints: enabled });
+  };
+  // +++ END: Update Handlers +++
+
+  // Existing holiday filter logic
   const handleFilterChange = (tag) => {
     let newFilter;
     if (tag === "all") {
@@ -90,14 +119,6 @@ export default function MonthGridExample() {
     setHolidayFilter(newFilter);
     rerender({ holidayFilter: newFilter });
   };
-  const toggleGeez = () => rerender({ useGeez: !gridInstance.useGeez });
-  const toggleLang = () =>
-    rerender({
-      weekdayLang:
-        gridInstance.weekdayLang === "amharic" ? "english" : "amharic",
-    });
-  const toggleWeekStart = () =>
-    rerender({ weekStart: gridInstance.weekStart === 1 ? 0 : 1 });
 
   const goNext = () => setGridData(gridInstance.up().generate());
   const goPrev = () => setGridData(gridInstance.down().generate());
@@ -109,7 +130,7 @@ export default function MonthGridExample() {
       ref={containerRef}
       className="max-w-4xl mx-auto p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg"
     >
-      {/* Header */}
+      {/* Header (Unchanged) */}
       <div className="flex items-center justify-between mb-6 text-zinc-900 dark:text-white">
         <button
           onClick={goPrev}
@@ -128,28 +149,32 @@ export default function MonthGridExample() {
         </button>
       </div>
 
-      {/* Toggles */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 mb-4">
-        <Toggle
-          label="Ge'ez Numerals"
-          enabled={gridInstance.useGeez}
-          onChange={toggleGeez}
-        />
-        <Toggle
-          label={`Language (${
-            gridInstance.weekdayLang === "amharic" ? "amharic" : "english"
-          })`}
-          enabled={gridInstance.weekdayLang === "english"}
-          onChange={toggleLang}
-        />
-        <Toggle
-          label={`Week Start (${gridInstance.weekStart === 1 ? "Mon" : "Sun"})`}
-          enabled={gridInstance.weekStart === 0}
-          onChange={toggleWeekStart}
-        />
+      {/* +++ START: Updated Controls Section +++ */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
+        <div className="flex items-center space-x-3">
+          <span className="text-sm text-zinc-900 dark:text-white">Mode:</span>
+          <select
+            value={activeMode}
+            onChange={handleModeChange}
+            className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-sm text-zinc-900 dark:text-white"
+          >
+            <option value="none">All</option>
+            <option value="christian">Christian</option>
+            <option value="muslim">Muslim</option>
+            <option value="public">Public</option>
+          </select>
+        </div>
+        {activeMode === "christian" && (
+          <Toggle
+            label="Show All Saints"
+            enabled={showAllSaints}
+            onChange={handleSaintToggleChange}
+          />
+        )}
       </div>
+      {/* +++ END: Updated Controls Section +++ */}
 
-      {/* Holiday Filter Controls */}
+      {/* Holiday Filter Controls (Unchanged) */}
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mb-8 p-3 rounded-xl bg-white/10 dark:bg-zinc-800/30">
         <span className="text-sm font-medium text-zinc-900 dark:text-white">
           Filter Holidays:
@@ -171,7 +196,7 @@ export default function MonthGridExample() {
         ))}
       </div>
 
-      {/* Headers */}
+      {/* Calendar Grid & Headers (Unchanged) */}
       <div className="grid grid-cols-7 text-center text-sm font-medium text-zinc-700 dark:text-white/80 mb-2">
         {gridData.headers.map((h, i) => (
           <div key={i} className="py-1">
@@ -180,8 +205,6 @@ export default function MonthGridExample() {
           </div>
         ))}
       </div>
-
-      {/* Calendar grid */}
       <div className="grid grid-cols-7 gap-1 text-center text-sm relative">
         {gridData.days.map((day, i) => {
           if (!day) return <div key={i} className="p-2" />;
@@ -192,7 +215,6 @@ export default function MonthGridExample() {
           return (
             <div
               key={i}
-              // +++ START: Add Click Handler and Cursor Style +++
               onClick={() => isHoliday && setSelectedHoliday(day.holidays[0])}
               className={clsx(
                 "relative rounded-xl p-2 border backdrop-blur-md transition shadow-inner overflow-hidden",
@@ -202,7 +224,6 @@ export default function MonthGridExample() {
                   ? "!bg-indigo-900 text-white border-indigo-500 shadow-md cursor-pointer"
                   : "bg-white/10 dark:bg-zinc-800/30 hover:bg-white/20 dark:hover:bg-zinc-700/50"
               )}
-              // +++ END: Add Click Handler and Cursor Style +++
             >
               {isHoliday && (
                 <Confetti
@@ -235,18 +256,18 @@ export default function MonthGridExample() {
         })}
       </div>
 
-      {/* +++ START: Render Modal Conditionally +++ */}
+      {/* Render Modal Conditionally (Unchanged) */}
       {selectedHoliday && (
         <HolidayModal
           holiday={selectedHoliday}
           onClose={() => setSelectedHoliday(null)}
         />
       )}
-      {/* +++ END: Render Modal Conditionally +++ */}
     </div>
   );
 }
 
+// Reusable Toggle component remains unchanged
 function Toggle({ label, enabled, onChange }) {
   return (
     <div className="flex items-center space-x-3">
@@ -270,6 +291,7 @@ function Toggle({ label, enabled, onChange }) {
   );
 }
 
+// Reusable FilterCheckbox component remains unchanged
 function FilterCheckbox({ label, value, checked, onChange }) {
   return (
     <label className="flex items-center space-x-2 cursor-pointer text-sm text-zinc-900 dark:text-white">
