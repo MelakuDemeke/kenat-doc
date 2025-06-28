@@ -55,7 +55,16 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 Python version coming soon...
+    ```python
+    from kenat import Kenat
+
+    date = Kenat()
+    print(date.get_ethiopian())
+    # { 'year': 2017, 'month': 9, 'day': 25 }
+
+    print(date.format_in_geez_amharic())
+    # ግንቦት ፳፭ ፳፻፲፯
+    ```
   </Tabs.Tab>
 
   <Tabs.Tab>
