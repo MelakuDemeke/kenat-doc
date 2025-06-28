@@ -16,12 +16,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
-    ```js
+    ```javascript
     import { toEC, toGC } from 'kenat';
 
     const eth = toEC(2025, 6, 2);
@@ -54,12 +54,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
-    ```js
+    ```javascript
     const k = new Kenat('2016/10/5');
     console.log(k.formatInGeezAmharic());
     // → መስከረም ፭ ፳፻፲፮
@@ -82,12 +82,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
-    ```js
+    ```javascript
     const k = new Kenat('2015/6/10');
 
     k.addDays(5);
@@ -101,12 +101,14 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   <Tabs.Tab>
     ```python
     from kenat import Kenat
+    from kenat.day_arithmetic import add_days, add_months, add_years
 
     k = Kenat('2015/6/10')
 
-    k.add_days(5)
-    k.add_months(-1)
-    k.add_years(2)
+    # The functions return a new Kenat instance
+    k = add_days(k, 5)
+    k = add_months(k, -1)
+    k = add_years(k, 2)
 
     print(k.get_ethiopian())
     # → {'year': 2017, 'month': 5, 'day': 15}
@@ -120,12 +122,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
-    ```js
+    ```javascript
     const a = new Kenat('2015/5/15');
     const b = new Kenat('2012/5/15');
 
@@ -137,13 +139,14 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   <Tabs.Tab>
     ```python
     from kenat import Kenat
+    from kenat.day_arithmetic import diff_in_days, diff_in_months, diff_in_years
 
     a = Kenat('2015/5/15')
     b = Kenat('2012/5/15')
 
-    print(a.diff_in_days(b))    # 1095
-    print(a.diff_in_months(b))  # 39
-    print(a.diff_in_years(b))   # 3
+    print(diff_in_days(a, b))    # 1096
+    print(diff_in_months(a, b))  # 39
+    print(diff_in_years(a, b))   # 3
     ```
   </Tabs.Tab>
 </Tabs>
@@ -154,12 +157,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
-    ```js
+    ```javascript
     const grid = Kenat.getMonthGrid({ year: 2017, month: 9, useGeez: true });
 
     console.log(grid.headers);
@@ -171,15 +174,18 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
-    from kenat import MonthGrid
+    from kenat.month_grid import MonthGrid
 
-    grid = MonthGrid(2017, 9, use_geez=True)
+    # The create method returns the grid directly
+    grid = MonthGrid.create(year=2017, month=9, use_geez=True)
 
-    print(grid.headers)
+    print(grid['headers'])
     # → [ 'እሑድ', 'ሰኞ', 'ማክሰኞ', ... ]
 
-    print(grid.days[0])
-    # → {'ethiopian': {'day': 1}, 'gregorian': {'day': 9}, 'holiday': None}
+    # Accessing a day in the grid
+    # The grid is a list of weeks, and weeks are lists of days
+    first_day_of_first_week = grid['days'][0][0]
+    print(first_day_of_first_week)
     ```
   </Tabs.Tab>
 </Tabs>
@@ -190,12 +196,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
-    ```js
+    ```javascript
     import { getHoliday } from 'kenat';
 
     console.log(getHoliday({ year: 2017, month: 1, day: 1 }));
@@ -204,10 +210,12 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
-    from kenat import get_holiday
+    from kenat.holidays import get_holiday
 
-    print(get_holiday('enkutatash', 2017))
-    # → {'name': 'አዲስ ዓመት', 'type': 'national', 'lang': {'am': 'አዲስ ዓመት', 'en': 'New Year'}}
+    # Get holiday by its key and year
+    enkutatash = get_holiday('enkutatash', 2017)
+    print(enkutatash)
+    # → {'key': 'enkutatash', 'tags': ['national', 'christian'], 'movable': False, 'name': 'አዲስ ዓመት', 'description': 'Ethiopian New Year', 'ethiopian': {'year': 2017, 'month': 1, 'day': 1}}
     ```
   </Tabs.Tab>
 </Tabs>
