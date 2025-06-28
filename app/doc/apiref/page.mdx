@@ -14,12 +14,13 @@ The `Kenat` class provides a high-level API for working with Ethiopian calendar 
 
 ## 🏗 Constructor
 
-`new Kenat(dateString?)`
+`new Kenat(dateStringOrDict?)`
 
 Creates a new instance of an Ethiopian date.
 
 - If no argument is passed, it uses the current Gregorian system date.
 - If a string like `'2015/6/10'` is passed, it's parsed as an Ethiopian date.
+- It can also be initialized with a dictionary: `{'year': 2015, 'month': 6, 'day': 10}`.
 
 <Tabs
   items={[
@@ -40,8 +41,14 @@ Creates a new instance of an Ethiopian date.
     ```python
     from kenat import Kenat
 
+    # Today's date
     k = Kenat()
+    
+    # From a string
     custom = Kenat('2016/6/10')
+
+    # From a dictionary
+    from_dict = Kenat({'year': 2016, 'month': 6, 'day': 10})
     ```
   </Tabs.Tab>
   <Tabs.Tab>🚧 PHP version coming soon...</Tabs.Tab>
@@ -49,15 +56,21 @@ Creates a new instance of an Ethiopian date.
 
 ---
 
-## 📆 Date Access Methods
+## 📆 Date Access & Formatting
 
-| Method            | Returns                          | Description                          |
-|-------------------|-----------------------------------|--------------------------------------|
-| `getEthiopian()` / `get_ethiopian()`  | `{ year, month, day }`            | Current Ethiopian date               |
-| `getGregorian()` / `get_gregorian()`  | `{ year, month, day }`            | Equivalent Gregorian date            |
-| `toString()` / `__str__()`      | `"Ethiopian: yyyy-mm-dd"`         | String format                        |
-| `format(lang?)`   | `"መስከረም 5 2016"` or similar       | Human-readable string                |
-| `formatInGeezAmharic()` / `format_in_geez_amharic()` | `"መስከረም ፭ ፳፻፲፮"`         | Geez-styled output                   |
+Multiple methods are available to get the date in different formats.
+
+| Method                               | Returns                               | Description                                      |
+|--------------------------------------|---------------------------------------|--------------------------------------------------|
+| `get_ethiopian()`                    | `{ 'year', 'month', 'day' }`          | Get the Ethiopian date as a dictionary.          |
+| `get_gregorian()`                    | `{ 'year', 'month', 'day' }`          | Get the equivalent Gregorian date.               |
+| `__str__()`                          | `"YYYY/MM/DD"`                        | A simple string representation.                  |
+| `format_standard(lang='amharic')`    | `"መስከረም 5 2016"` or similar        | Human-readable string with language options.     |
+| `format_in_geez_amharic()`           | `"መስከረም ፭ ፳፻፲፮"`                  | Geez-styled output.                              |
+| `format_with_weekday(lang, use_geez)`| `"ማክሰኞ, መስከረም 1 2016"`            | Includes the day of the week.                    |
+| `format_with_time(time_obj, lang)`   | `"መስከረም 10 2016 08:30 ጠዋት"`        | Combines date and a `Time` object.               |
+| `to_iso_date_string(time_obj)`       | `"YYYY-MM-DDTHH:mm"`                  | ISO 8601-like format.                            |
+
 
 <Tabs
   items={[
@@ -75,12 +88,17 @@ Creates a new instance of an Ethiopian date.
     </Tabs.Tab>
     <Tabs.Tab>
         ```python
-        from kenat import Kenat
+        from kenat import Kenat, Time
 
         k = Kenat('2016/1/5')
         print(k.get_ethiopian()) # {'year': 2016, 'month': 1, 'day': 5}
-        print(str(k)) # Ethiopian: 2016-1-5
+        print(str(k)) # 2016/01/05
+        print(k.format_standard('english')) # September 5 2016
         print(k.format_in_geez_amharic()) # መስከረም ፭ ፳፻፲፮
+        print(k.format_with_weekday()) # ማክሰኞ, መስከረም 5 2016
+        
+        t = Time(8, 30, 'day')
+        print(k.format_with_time(t)) # መስከረም 5 2016 8:30 ቀን
         ```
     </Tabs.Tab>
 </Tabs>
@@ -90,10 +108,17 @@ Creates a new instance of an Ethiopian date.
 
 ## 🕒 Time Handling
 
-| Method               | Description                                        |
-|----------------------|----------------------------------------------------|
-| `getCurrentTime()` / `get_current_time()`   | Gets current time in Ethiopian format              |
-| `setTime(hour, min, period)` / `set_time(hour, min, period)` | Sets Ethiopian time manually (e.g., 3:30 night)  |
+The `Time` class handles time calculations, conversions, and formatting separately from the date.
+
+| Method/Class             | Description                                                |
+|--------------------------|------------------------------------------------------------|
+| `Time(hour, min, period)`| Creates a time object (e.g., 3:30, 'night').               |
+| `Time.from_gregorian(h, m)`| Creates an Ethiopian `Time` object from Gregorian 24h time.|
+| `time.to_gregorian()`    | Converts Ethiopian time back to a 24h dictionary.          |
+| `time.format()`          | Formats the time into a string (e.g., "፫:፴ ሌሊት").         |
+| `time.add(duration)`     | Adds hours/minutes to the time.                            |
+| `time.diff(other_time)`  | Calculates the difference between two `Time` objects.      |
+
 
 <Tabs
   items={[
@@ -109,10 +134,16 @@ Creates a new instance of an Ethiopian date.
     </Tabs.Tab>
     <Tabs.Tab>
         ```python
-        from kenat import Kenat
+        from kenat import Time
 
-        k = Kenat()
-        print(k.get_current_time())
+        # Create time from Ethiopian
+        t1 = Time(3, 30, 'night') 
+        print(t1.to_gregorian()) # {'hour': 21, 'minute': 30}
+        print(t1.format(lang='amharic', use_geez=True)) # ፫:፴ ሌሊት
+
+        # Create time from Gregorian
+        t2 = Time.from_gregorian(22, 0) # 10 PM
+        print(t2) # 4:00 night
         ```
     </Tabs.Tab>
 </Tabs>
@@ -121,11 +152,13 @@ Creates a new instance of an Ethiopian date.
 
 ## ➕ Date Arithmetic
 
-| Method              | Description                              |
+These functions are available in the `kenat.day_arithmetic` module and take a `Kenat` object as the first argument.
+
+| Function            | Description                              |
 |---------------------|------------------------------------------|
-| `addDays(n)` / `add_days(n)`        | Move n days forward/backward             |
-| `addMonths(n)` / `add_months(n)`      | Adjust by n Ethiopian months             |
-| `addYears(n)` / `add_years(n)`       | Move by n Ethiopian years                |
+| `add_days(date, n)`    | Returns a new date n days away.          |
+| `add_months(date, n)`  | Returns a new date n months away.        |
+| `add_years(date, n)`   | Returns a new date n years away.         |
 
 <Tabs
   items={[
@@ -144,11 +177,14 @@ Creates a new instance of an Ethiopian date.
     <Tabs.Tab>
         ```python
         from kenat import Kenat
+        from kenat.day_arithmetic import add_days, add_months
 
         k = Kenat('2014/5/5')
-        k.add_days(10)
-        k.add_months(-1)
-        print(k.get_ethiopian())
+        k_plus_10_days = add_days(k, 10)
+        k_minus_1_month = add_months(k, -1)
+        
+        print(k_plus_10_days.get_ethiopian()) # {'year': 2014, 'month': 5, 'day': 15}
+        print(k_minus_1_month.get_ethiopian()) # {'year': 2014, 'month': 4, 'day': 5}
         ```
     </Tabs.Tab>
 </Tabs>
@@ -157,11 +193,13 @@ Creates a new instance of an Ethiopian date.
 
 ## 📏 Compare Dates
 
-| Method                | Description      |
-| --------------------- | ---------------- |
-| `diffInDays(other)` / `diff_in_days(other)`   | Day difference   |
-| `diffInMonths(other)` / `diff_in_months(other)` | Month difference |
-| `diffInYears(other)` / `diff_in_years(other)`  | Year difference  |
+These functions take two `Kenat` objects and return the difference. They are available in the `kenat.day_arithmetic` module.
+
+| Function                | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `diff_in_days(a, b)`    | Calculates the total day difference.       |
+| `diff_in_months(a, b)`  | Calculates the month difference.           |
+| `diff_in_years(a, b)`   | Calculates the year difference.            |
 
 <Tabs
   items={[
@@ -179,22 +217,28 @@ Creates a new instance of an Ethiopian date.
     <Tabs.Tab>
         ```python
         from kenat import Kenat
+        from kenat.day_arithmetic import diff_in_years
 
         a = Kenat('2015/6/10')
         b = Kenat('2012/6/10')
-        print(a.diff_in_years(b)) # → 3
+        print(diff_in_years(a, b)) # → 3
         ```
     </Tabs.Tab>
 </Tabs>
 
 ---
 
-## 🗓 Calendar Tools
+## 🗓 Calendar & Holiday Tools
 
-| Method                     | Description                                  |
-| -------------------------- | -------------------------------------------- |
-| `getMonthCalendar()` / `get_month_calendar()`       | Full info for every day in the current month |
-| `printThisMonth(useGeez?)` / `print_this_month(use_geez?)` | Console grid printer for current month       |
+The library includes powerful tools for generating monthly calendars and retrieving holiday information.
+
+| Method/Class                     | Description                                      |
+| -------------------------------- | ------------------------------------------------ |
+| `MonthGrid(config)`              | A class to generate a grid for a specific month. |
+| `get_holiday(key, year, lang)`   | Get details for a single holiday.                |
+| `get_holidays_in_month(y, m)`    | Get all holidays in a given month.               |
+| `get_holidays_for_year(year)`    | Get all holidays for a given year.               |
+
 
 <Tabs
   items={[
@@ -210,10 +254,21 @@ Creates a new instance of an Ethiopian date.
     </Tabs.Tab>
     <Tabs.Tab>
         ```python
-        from kenat import Kenat
+        from kenat.month_grid import MonthGrid
+        from kenat.holidays import get_holiday, get_holidays_for_year
 
-        k = Kenat('2016/1/1')
-        k.print_this_month(use_geez=True)
+        # Get a calendar grid for Meskerem 2016
+        grid = MonthGrid.create(2016, 1, use_geez=True)
+        print(grid['headers'])
+        # ['እሑድ', 'ሰኞ', 'ማክሰኞ', 'ረቡዕ', 'ሐሙስ', 'ዓርብ', 'ቅዳሜ']
+        
+        # Get info for a specific holiday
+        christmas = get_holiday('christmas', 2016)
+        print(christmas['name']) # የገና በዓል
+
+        # Get all holidays in a year
+        all_2016_holidays = get_holidays_for_year(2016)
+        print(len(all_2016_holidays))
         ```
     </Tabs.Tab>
 </Tabs>
