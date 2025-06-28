@@ -3,6 +3,9 @@ title: Bahire Hasab (ባሕረ ሐሳብ)
 description: An exploration of the ancient Ethiopian calendar calculation system, Bahire Hasab, and how Kenat automates it.
 ---
 
+import { Tabs } from 'nextra/components'
+import { SiJavascript, SiPython } from 'react-icons/si'
+
 # Bahire Hasab (ባሕረ ሐሳብ)
 
 [examples](/doc/examples/holidayExample)
@@ -78,28 +81,62 @@ Kenat uses this exact logic, adding the `Tewsak` value for each holiday to the c
 
 ## Using `getBahireHasab()` in Kenat
 
-The `Kenat` class provides a `getBahireHasab()` method that performs all these calculations and returns a comprehensive object with all the results.
+The `kenat` library provides a `get_bahire_hasab()` function that performs all these calculations and returns a comprehensive object with all the results.
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+<Tabs.Tab>
 
 ```js
-import Kenat from 'kenat';
-
-// Create a Kenat instance for the year you want to check
-const date = new Kenat('2017/1/1'); // Using any date in 2017 E.C.
+import { getBahireHasab } from 'kenat';
 
 // Get the Bahire Hasab data for that year
-const bahireHasab = date.getBahireHasab();
+const bahireHasab = getBahireHasab(2017);
 
 console.log('--- Bahire Hasab for 2017 E.C. ---');
 console.log(`Amete Alem: ${bahireHasab.ameteAlem}`); // 7517
-console.log(`Evangelist: ${bahireHasab.evangelist.name}`); // Matthew
+console.log(`Evangelist: ${bahireHasab.evangelist}`); // Matthew
 console.log(`Wenber: ${bahireHasab.wenber}`); // 11
 console.log(`Metqi: ${bahireHasab.metqi}`); // 29
 
 // The base date for all movable holidays
-console.log('Fast of Nineveh:', bahireHasab.nineveh);
+console.log('Fast of Nineveh:', bahireHasab.ninevehDate);
 // { year: 2017, month: 5, day: 22 }
 
 // Get the date for Easter (Fasika)
 const fasika = bahireHasab.movableFeasts.fasika;
 console.log(`${fasika.name}:`, fasika.ethiopian);
 // Fasika: { year: 2017, month: 8, day: 1 }
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```python
+from kenat import get_bahire_hasab
+
+# Get the Bahire Hasab data for the year 2017 E.C.
+bahire_hasab = get_bahire_hasab(2017)
+
+print('--- Bahire Hasab for 2017 E.C. ---')
+print(f"Amete Alem: {bahire_hasab['amete_alem']}") # 7517
+print(f"Evangelist: {bahire_hasab['evangelist']}") # Matthew
+print(f"Wenber: {bahire_hasab['wenber']}") # 11
+print(f"Metqi: {bahire_hasab['metqi']}") # 29
+
+# The base date for all movable holidays
+print('Fast of Nineveh:', bahire_hasab['nineveh_date'])
+# {'year': 2017, 'month': 5, 'day': 22}
+
+# Get the date for Easter (Fasika)
+fasika = bahire_hasab['movable_feasts']['fasika']
+print(f"{fasika['name']}:", fasika['ethiopian'])
+# Fasika: {'year': 2017, 'month': 8, 'day': 1}
+```
+
+</Tabs.Tab>
+</Tabs>
