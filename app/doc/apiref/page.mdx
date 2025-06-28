@@ -36,7 +36,14 @@ Creates a new instance of an Ethiopian date.
     ```
   </Tabs.Tab>
   <Tabs.Tab>🚧 Dart version coming soon...</Tabs.Tab>
-  <Tabs.Tab>🚧 Python version coming soon...</Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    from kenat import Kenat
+
+    k = Kenat()
+    custom = Kenat('2016/6/10')
+    ```
+  </Tabs.Tab>
   <Tabs.Tab>🚧 PHP version coming soon...</Tabs.Tab>
 </Tabs>
 
@@ -46,11 +53,38 @@ Creates a new instance of an Ethiopian date.
 
 | Method            | Returns                          | Description                          |
 |-------------------|-----------------------------------|--------------------------------------|
-| `getEthiopian()`  | `{ year, month, day }`            | Current Ethiopian date               |
-| `getGregorian()`  | `{ year, month, day }`            | Equivalent Gregorian date            |
-| `toString()`      | `"Ethiopian: yyyy-mm-dd"`         | String format                        |
+| `getEthiopian()` / `get_ethiopian()`  | `{ year, month, day }`            | Current Ethiopian date               |
+| `getGregorian()` / `get_gregorian()`  | `{ year, month, day }`            | Equivalent Gregorian date            |
+| `toString()` / `__str__()`      | `"Ethiopian: yyyy-mm-dd"`         | String format                        |
 | `format(lang?)`   | `"መስከረም 5 2016"` or similar       | Human-readable string                |
-| `formatInGeezAmharic()` | `"መስከረም ፭ ፳፻፲፮"`         | Geez-styled output                   |
+| `formatInGeezAmharic()` / `format_in_geez_amharic()` | `"መስከረም ፭ ፳፻፲፮"`         | Geez-styled output                   |
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+    <Tabs.Tab>
+        ```js
+        const k = new Kenat('2016/1/5');
+        console.log(k.getEthiopian()); // { year: 2016, month: 1, day: 5 }
+        console.log(k.toString()); // Ethiopian: 2016-1-5
+        console.log(k.formatInGeezAmharic()); // መስከረም ፭ ፳፻፲፮
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```python
+        from kenat import Kenat
+
+        k = Kenat('2016/1/5')
+        print(k.get_ethiopian()) # {'year': 2016, 'month': 1, 'day': 5}
+        print(str(k)) # Ethiopian: 2016-1-5
+        print(k.format_in_geez_amharic()) # መስከረም ፭ ፳፻፲፮
+        ```
+    </Tabs.Tab>
+</Tabs>
+
 
 ---
 
@@ -58,8 +92,30 @@ Creates a new instance of an Ethiopian date.
 
 | Method               | Description                                        |
 |----------------------|----------------------------------------------------|
-| `getCurrentTime()`   | Gets current time in Ethiopian format              |
-| `setTime(hour, min, period)` | Sets Ethiopian time manually (e.g., 3:30 night)  |
+| `getCurrentTime()` / `get_current_time()`   | Gets current time in Ethiopian format              |
+| `setTime(hour, min, period)` / `set_time(hour, min, period)` | Sets Ethiopian time manually (e.g., 3:30 night)  |
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+    <Tabs.Tab>
+        ```js
+        const k = new Kenat();
+        console.log(k.getCurrentTime());
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```python
+        from kenat import Kenat
+
+        k = Kenat()
+        print(k.get_current_time())
+        ```
+    </Tabs.Tab>
+</Tabs>
 
 ---
 
@@ -67,16 +123,35 @@ Creates a new instance of an Ethiopian date.
 
 | Method              | Description                              |
 |---------------------|------------------------------------------|
-| `addDays(n)`        | Move n days forward/backward             |
-| `addMonths(n)`      | Adjust by n Ethiopian months             |
-| `addYears(n)`       | Move by n Ethiopian years                |
+| `addDays(n)` / `add_days(n)`        | Move n days forward/backward             |
+| `addMonths(n)` / `add_months(n)`      | Adjust by n Ethiopian months             |
+| `addYears(n)` / `add_years(n)`       | Move by n Ethiopian years                |
 
-```js
-const k = new Kenat('2014/5/5');
-k.addDays(10);
-k.addMonths(-1);
-console.log(k.getEthiopian());
-````
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+    <Tabs.Tab>
+        ```js
+        const k = new Kenat('2014/5/5');
+        k.addDays(10);
+        k.addMonths(-1);
+        console.log(k.getEthiopian());
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```python
+        from kenat import Kenat
+
+        k = Kenat('2014/5/5')
+        k.add_days(10)
+        k.add_months(-1)
+        print(k.get_ethiopian())
+        ```
+    </Tabs.Tab>
+</Tabs>
 
 ---
 
@@ -84,15 +159,33 @@ console.log(k.getEthiopian());
 
 | Method                | Description      |
 | --------------------- | ---------------- |
-| `diffInDays(other)`   | Day difference   |
-| `diffInMonths(other)` | Month difference |
-| `diffInYears(other)`  | Year difference  |
+| `diffInDays(other)` / `diff_in_days(other)`   | Day difference   |
+| `diffInMonths(other)` / `diff_in_months(other)` | Month difference |
+| `diffInYears(other)` / `diff_in_years(other)`  | Year difference  |
 
-```js
-const a = new Kenat('2015/6/10');
-const b = new Kenat('2012/6/10');
-console.log(a.diffInYears(b)); // → 3
-```
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+    <Tabs.Tab>
+        ```js
+        const a = new Kenat('2015/6/10');
+        const b = new Kenat('2012/6/10');
+        console.log(a.diffInYears(b)); // → 3
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```python
+        from kenat import Kenat
+
+        a = Kenat('2015/6/10')
+        b = Kenat('2012/6/10')
+        print(a.diff_in_years(b)) # → 3
+        ```
+    </Tabs.Tab>
+</Tabs>
 
 ---
 
@@ -100,10 +193,27 @@ console.log(a.diffInYears(b)); // → 3
 
 | Method                     | Description                                  |
 | -------------------------- | -------------------------------------------- |
-| `getMonthCalendar()`       | Full info for every day in the current month |
-| `printThisMonth(useGeez?)` | Console grid printer for current month       |
+| `getMonthCalendar()` / `get_month_calendar()`       | Full info for every day in the current month |
+| `printThisMonth(useGeez?)` / `print_this_month(use_geez?)` | Console grid printer for current month       |
 
-```js
-const k = new Kenat('2016/1/1');
-k.printThisMonth(true);
-```
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+    <Tabs.Tab>
+        ```js
+        const k = new Kenat('2016/1/1');
+        k.printThisMonth(true);
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```python
+        from kenat import Kenat
+
+        k = Kenat('2016/1/1')
+        k.print_this_month(use_geez=True)
+        ```
+    </Tabs.Tab>
+</Tabs>
