@@ -22,7 +22,8 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
@@ -38,6 +39,19 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
     // Example Output GC: { year: 2025, month: 6, 13 }
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    from kenat import Kenat
+
+    today = Kenat()
+
+    print('ET:', today.get_ethiopian())
+    # Example Output ET: { 'year': 2017, 'month': 10, 'day': 5 }
+
+    print('GC:', today.get_gregorian())
+    # Example Output GC: { 'year': 2025, 'month': 6, 'day': 13 }
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ### From a String
@@ -46,7 +60,8 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
@@ -57,6 +72,16 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
     // Output: { year: 2024, month: 6, day: 13 }
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    from kenat import Kenat
+    
+    custom_date = Kenat('2016/10/05')
+
+    print(custom_date.get_gregorian())
+    # Output: { 'year': 2024, 'month': 6, 'day': 13 }
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ### From a JavaScript `Date` Object
@@ -65,7 +90,8 @@ You can pass a native JavaScript `Date` object directly to the constructor.
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
@@ -77,6 +103,18 @@ You can pass a native JavaScript `Date` object directly to the constructor.
     // Output: { year: 2016, month: 12, day: 16 }
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    from kenat import Kenat
+    from datetime import date
+
+    gc_date = date(2024, 8, 22)
+    from_date = Kenat(gc_date)
+
+    print(from_date.get_ethiopian())
+    # Output: { 'year': 2016, 'month': 12, 'day': 16 }
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ### From a Plain Object
@@ -85,7 +123,8 @@ You can also construct an Ethiopian date by passing a plain object with `year`, 
 
 <Tabs
   items={[
-    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
@@ -94,6 +133,16 @@ You can also construct an Ethiopian date by passing a plain object with `year`, 
 
     console.log(fromObject.getGregorian());
     // Output: { year: 2023, month: 9, day: 10 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    from kenat import Kenat
+    
+    from_object = Kenat({ 'year': 2015, 'month': 13, 'day': 5 })
+
+    print(from_object.get_gregorian())
+    # Output: { 'year': 2023, 'month': 9, 'day': 10 }
     ```
   </Tabs.Tab>
 </Tabs>
