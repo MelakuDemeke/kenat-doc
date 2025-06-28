@@ -100,26 +100,26 @@ You can pass a native JavaScript `Date` object directly to the constructor.
     const fromDate = new Kenat(gcDate);
 
     console.log(fromDate.getEthiopian());
-    // Output: { year: 2016, month: 12, day: 16 }
+    // Output: { year: 2016, month: 12, day: 13 }
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
+    from datetime import datetime
     from kenat import Kenat
-    from datetime import date
 
-    gc_date = date(2024, 8, 22)
+    gc_date = datetime(2024, 8, 22)
     from_date = Kenat(gc_date)
 
     print(from_date.get_ethiopian())
-    # Output: { 'year': 2016, 'month': 12, 'day': 16 }
+    # Output: { 'year': 2016, 'month': 12, 'day': 13 }
     ```
   </Tabs.Tab>
 </Tabs>
 
-### From a Plain Object
+### From Individual Components
 
-You can also construct an Ethiopian date by passing a plain object with `year`, `month`, and `day` keys.
+You can create a date by passing the year, month, and day as separate numbers.
 
 <Tabs
   items={[
@@ -129,20 +129,62 @@ You can also construct an Ethiopian date by passing a plain object with `year`, 
 >
   <Tabs.Tab>
     ```js
-    const fromObject = new Kenat({ year: 2015, month: 13, day: 5 });
+    const fromComponents = new Kenat(2016, 1, 1);
 
-    console.log(fromObject.getGregorian());
-    // Output: { year: 2023, month: 9, day: 10 }
+    console.log(fromComponents.getGregorian());
+    // Output: { year: 2023, month: 9, day: 11 }
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
     from kenat import Kenat
-    
-    from_object = Kenat({ 'year': 2015, 'month': 13, 'day': 5 })
 
-    print(from_object.get_gregorian())
-    # Output: { 'year': 2023, 'month': 9, 'day': 10 }
+    from_components = Kenat(2016, 1, 1)
+
+    print(from_components.get_gregorian())
+    # Output: { 'year': 2023, 'month': 9, 'day': 11 }
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+---
+
+## 🎉 Working with Holidays
+
+Kenat also provides functions to get holidays for a given year.
+
+<Tabs
+  items={[
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    import { getHolidaysForYear, HolidayTags } from 'kenat';
+
+    const year = 2017; // E.C.
+
+    // Get only public holidays by passing a single tag.
+    const publicHolidays = getHolidaysForYear(year, {
+        filter: HolidayTags.PUBLIC
+    });
+
+    console.log(`Found ${publicHolidays.length} public holidays in ${year} E.C.`);
+    // Expected: Lists all holidays tagged as 'public'.
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    from kenat import get_holidays_for_year, HolidayTags
+
+    year = 2017 # E.C.
+
+    # Get only public holidays by passing a single tag.
+    public_holidays = get_holidays_for_year(year, filter_by=HolidayTags.PUBLIC)
+
+    print(f"Found {len(public_holidays)} public holidays in {year} E.C.")
+    # Expected: Lists all holidays tagged as 'public'.
     ```
   </Tabs.Tab>
 </Tabs>
