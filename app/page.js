@@ -188,7 +188,7 @@ export default function Home() {
             >
               Read the Docs
             </a>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap justify-center items-center gap-4 w-full">
               <a
                 href="https://github.com/MelakuDemeke/kenat"
                 target="_blank"
