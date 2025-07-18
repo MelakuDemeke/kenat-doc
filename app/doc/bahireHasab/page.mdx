@@ -79,9 +79,47 @@ All other movable Christian holidays are found by adding a specific number of da
 
 Kenat uses this exact logic, adding the `Tewsak` value for each holiday to the calculated date of Nineveh using the `addDays` function.
 
-## Using `getBahireHasab()` in Kenat
 
-The `kenat` library provides a `get_bahire_hasab()` function that performs all these calculations and returns a comprehensive object with all the results.
+## Practical Usage in Kenat
+
+The `kenat` library provides two main functions for Bahire Hasab calculations:
+
+
+### Get All Bahire Hasab Values for a Year
+Use `getBahireHasab(year, options)` to perform all Bahire Hasab calculations and return a comprehensive object with all results. You can pass an optional `{ lang: 'amharic' | 'english' }` for localized output.
+
+### Get a Specific Movable Holiday Date
+Use `getMovableHoliday(holidayKey, year)` to directly return the Ethiopian date for any movable holiday by key. Example:
+
+```js
+import { getMovableHoliday } from 'kenat';
+const easter = getMovableHoliday('TINSAYE', 2017);
+console.log(easter); // { year: 2017, month: 8, day: 1 }
+```
+
+#### Supported Movable Holiday Keys
+
+| Key              | Holiday Name         |
+|------------------|---------------------|
+| NINEVEH          | Fast of Nineveh     |
+| ABIY_TSOME       | Great Lent          |
+| DEBRE_ZEIT       | Mid-Lent            |
+| HOSANNA          | Palm Sunday         |
+| SIKLET           | Good Friday         |
+| TINSAYE          | Easter (Fasika)     |
+| RIKBE_KAHNAT     | Priests' Assembly   |
+| ERGET            | Ascension           |
+| PARACLETE        | Pentecost           |
+| TSOME_HAWARYAT   | Apostles' Fast      |
+| TSOME_DIHENET    | Dihnet Fast         |
+
+See the Kenat source for the full list and spelling.
+
+### Error Handling
+
+If you pass an invalid year or holiday key, Kenat will throw an error (e.g., `UnknownHolidayError`). See the error classes section for details.
+
+---
 
 <Tabs
   items={[
