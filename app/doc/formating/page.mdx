@@ -24,7 +24,7 @@ All formatting functions return strings suitable for display. Invalid date or ti
 
 ## Formatting Functions
 
-Here are the primary functions available for formatting dates in Python.
+Here are the primary functions available for formatting dates in JavaScript. All formatting functions can be used as instance methods on a `Kenat` object or as named functions imported from `kenat`. Invalid date or time objects will throw an error (e.g., `InvalidEthiopianDateError`, `InvalidTimeError`).
 
 
 ### Standard Date Format
@@ -41,7 +41,10 @@ Formats a date into a standard "Month Day Year" string.
 ```javascript
 import { Kenat, formatStandard } from 'kenat';
 
-const today = new Kenat(2016, 1, 10);
+// Kenat constructor supports string/object/Date
+const today = new Kenat('2016/1/10');
+// or: new Kenat({ year: 2016, month: 1, day: 10 })
+// or: new Kenat(new Date(2016, 0, 10))
 
 // Using Kenat instance method (default Amharic)
 console.log(today.format());
@@ -91,7 +94,7 @@ Includes the day of the week in the output.
 ```javascript
 import { Kenat, formatWithWeekday } from 'kenat';
 
-const today = new Kenat(2016, 1, 10);
+const today = new Kenat('2016/1/10');
 
 // Using Kenat instance method
 console.log(today.formatWithWeekday());
@@ -104,6 +107,7 @@ console.log(formatWithWeekday(today));
 // Output: ማክሰኞ, መስከረም 10 2016
 console.log(formatWithWeekday(today, 'english', true));
 // Output: Tuesday, Meskerem ፲ ፳፻፲፮
+// Options: lang ('amharic'|'english'), useGeez (boolean)
 ```
 </Tabs.Tab>
 <Tabs.Tab>
@@ -139,7 +143,7 @@ Combines a date and a Time object into a single string.
 ```javascript
 import { Kenat, Time, formatWithTime } from 'kenat';
 
-const today = new Kenat(2016, 1, 10);
+const today = new Kenat('2016/1/10');
 const time = new Time(8, 30, 'day');
 
 // Using Kenat instance method
@@ -149,6 +153,7 @@ console.log(today.formatWithTime(time));
 // Using named formatting function
 console.log(formatWithTime(today, time));
 // Output: መስከረም 10 2016 8:30 ቀን
+// Options: lang ('amharic'|'english'), useGeez (boolean)
 ```
 </Tabs.Tab>
 <Tabs.Tab>
@@ -180,7 +185,7 @@ Formats the date using Ge'ez numerals for the day and year.
 ```javascript
 import { Kenat, formatInGeezAmharic } from 'kenat';
 
-const today = new Kenat(2016, 1, 10);
+const today = new Kenat('2016/1/10');
 
 // Using Kenat instance method
 console.log(today.formatInGeezAmharic());
@@ -218,7 +223,7 @@ Returns the date in a compact YYYY/MM/DD format.
 ```javascript
 import { Kenat, formatShort } from 'kenat';
 
-const today = new Kenat(2016, 1, 10);
+const today = new Kenat('2016/1/10');
 
 // Using Kenat instance method
 console.log(today.formatShort());
@@ -257,7 +262,7 @@ Returns an ISO-like string, with optional time.
 import { Kenat, Time, toISODateString } from 'kenat';
 
 // Date only
-const today = new Kenat(2016, 1, 10);
+const today = new Kenat('2016/1/10');
 console.log(today.toISOString());
 // Output: 2016-01-10
 console.log(toISODateString(today));
@@ -265,8 +270,9 @@ console.log(toISODateString(today));
 
 // With time
 const time = new Time(8, 30, 'day');
-const withTime = new Kenat(2016, 1, 10, 8, 30);
-console.log(withTime.toISOString());
+// Kenat does not accept time in constructor, set time via setTime
+today.setTime(8, 30, 'day');
+console.log(today.toISOString());
 // Output: 2016-01-10T08:30
 console.log(toISODateString(today, time));
 // Output: 2016-01-10T08:30
