@@ -90,9 +90,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     ```javascript
     const k = new Kenat('2015/6/10');
 
-    k.addDays(5);
-    k.addMonths(-1);
-    k.addYears(2);
+    // These methods mutate the instance and are chainable
+    k.addDays(5).addMonths(-1).addYears(2);
 
     console.log(k.getEthiopian());
     // → { year: 2017, month: 5, day: 15 }
@@ -163,7 +162,9 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 >
   <Tabs.Tab>
     ```javascript
-    const grid = Kenat.getMonthGrid({ year: 2017, month: 9, useGeez: true });
+    import { MonthGrid } from 'kenat';
+
+    const grid = new MonthGrid(2017, 9, { useGeez: true });
 
     console.log(grid.headers);
     // → [ "እሑድ", "ሰኞ", "ማክሰኞ", ... ]
@@ -202,11 +203,28 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 >
   <Tabs.Tab>
     ```javascript
-    import { getHoliday } from 'kenat';
+    import { getHoliday, getHolidaysForYear, getHolidaysInMonth, HolidayTags } from 'kenat';
 
-    console.log(getHoliday({ year: 2017, month: 1, day: 1 }));
-    // → { name: 'አዲስ ዓመት', type: 'national', lang: { am: 'አዲስ ዓመት', en: 'New Year' } }
+    // Get a holiday by key and year
+    const enkutatash = getHoliday('enkutatash', 2017);
+    console.log(enkutatash);
+    // → { key: 'enkutatash', tags: [...], name: 'አዲስ ዓመት', description: 'Ethiopian New Year', ethiopian: { year: 2017, month: 1, day: 1 } }
+
+    // Get all public holidays for a year
+    const publicHolidays = getHolidaysForYear(2017, { filter: HolidayTags.PUBLIC });
+    console.log(publicHolidays);
+
+    // Get holidays for a specific month
+    const monthHolidays = getHolidaysInMonth(2017, 1, { filter: HolidayTags.PUBLIC });
+    console.log(monthHolidays);
+
+    // Use language option
+    const meskelEn = getHoliday('meskel', 2017, { lang: 'english' });
+    console.log(meskelEn.name); // 'Meskel'
     ```
+
+    #⚠️ Error Handling
+    If you provide an invalid key or date, the functions return null or throw an error.
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
@@ -219,3 +237,16 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     ```
   </Tabs.Tab>
 </Tabs>
+
+# 📚 Quick Reference: Named Exports
+
+Kenat exports many useful functions and constants:
+
+- `Kenat` (default)
+- `MonthGrid`
+- `Time`
+- `toEC`, `toGC`, `toGeez`, `toArabic`
+- `getHolidaysForYear`, `getHolidaysInMonth`, `getHoliday`
+- `HolidayTags`, `monthNames`
+- `getBahireHasab`, `getFastingPeriod`
+- Formatting: `formatStandard`, `formatWithWeekday`, `formatWithTime`, `formatInGeezAmharic`, `formatShort`, `toISODateString`
