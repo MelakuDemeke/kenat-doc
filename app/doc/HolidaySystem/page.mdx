@@ -10,11 +10,30 @@ import { SiJavascript, SiPython } from 'react-icons/si'
 
 The `kenat` library has a comprehensive system for calculating and categorizing the many holidays observed in Ethiopia. This system understands the nuances between fixed holidays, movable Christian feasts, and movable Islamic holidays, and provides a powerful tagging system for filtering them.
 
----
+Kenat provides three main functions for working with holidays:
+
+- `getHolidaysForYear(year, options)`: Get all holidays for a given Ethiopian year.
+- `getHolidaysInMonth(year, month, options)`: Get holidays for a specific Ethiopian month.
+- `getHoliday(key, year, options)`: Get details for a single holiday by key and year.
+
+All functions accept an optional `lang` parameter (default: "amharic") to control the language of holiday names and descriptions.
+
+Returned holidays are sorted by day. Islamic holidays may occur twice in one Ethiopian year.
+
+If you provide an invalid key or date, the functions return `null` or throw an error describing the issue.
+
 
 ## Holiday Types
 
 Kenat processes three distinct types of holidays to ensure accurate date reporting.
+
+All holidays are returned as objects with fields like:
+- `key`: The holiday key (e.g., "enkutatash")
+- `ethiopian`: Ethiopian date `{ year, month, day }`
+- `gregorian`: Gregorian date `{ year, month, day }`
+- `name`: Holiday name (localized)
+- `description`: Holiday description (localized)
+- `tags`: Array of tags
 
 ### 1. Fixed Holidays
 
@@ -41,6 +60,8 @@ These are holidays whose dates change each year. Their calculation is based on t
 
 These holidays are based on the Islamic Hijri calendar, which is a lunar calendar. Because the lunar year is shorter than the solar Ethiopian year, the dates of these holidays shift annually and can sometimes occur twice within a single Ethiopian year.
 
+Kenat will return all occurrences of an Islamic holiday in a year, so you may see duplicates in the results.
+
 * **Examples**:
     * *Eid al-Fitr* (End of Ramadan)
     * *Eid al-Adha* (Feast of the Sacrifice)
@@ -52,6 +73,16 @@ These holidays are based on the Islamic Hijri calendar, which is a lunar calenda
 ## Filtering with `HolidayTags`
 
 To make it easy to find specific types of holidays, every holiday in `kenat` is categorized with one or more tags. These are available in the exported `HolidayTags` object.
+
+You can use the following tags for filtering:
+
+- `PUBLIC`: Public national holiday
+- `RELIGIOUS`: Religious significance
+- `CHRISTIAN`: Christian holiday
+- `MUSLIM`: Muslim holiday
+- `STATE`: Civic event
+- `CULTURAL`: Cultural significance
+- `OTHER`: Other observances
 
 The available tags are:
 * `PUBLIC`: A public national holiday. 
@@ -67,6 +98,15 @@ The available tags are:
 You can pass a tag (string) or an array of tags to the `filter` option in functions like `getHolidaysForYear` and `getHolidaysInMonth`. 
 
 When you provide an array of tags, the filter returns holidays that match **at least one** of the tags provided (an "OR" search). 
+
+You can also use the `lang` option to get results in English:
+
+```js
+const publicHolidaysEn = getHolidaysForYear(year, {
+  filter: HolidayTags.PUBLIC,
+  lang: 'english'
+});
+```
 
 <Tabs
   items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>, <div key="py" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>]}
@@ -93,6 +133,16 @@ When you provide an array of tags, the filter returns holidays that match **at l
     });
 
     console.log(`Found ${muslimOrStateHolidays.length} holidays that are either Muslim or State holidays.`);
+
+     // Example 3: Get holidays for a specific month
+    import { getHolidaysInMonth } from 'kenat';
+    const monthHolidays = getHolidaysInMonth(year, 1, { filter: HolidayTags.PUBLIC });
+    console.log(monthHolidays);
+
+     // Example 4: Get a single holiday by key
+    import { getHoliday } from 'kenat';
+    const meskel = getHoliday('meskel', year);
+    console.log(meskel);
     ```
   </Tabs.Tab>
   <Tabs.Tab>
