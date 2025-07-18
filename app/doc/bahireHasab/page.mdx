@@ -86,7 +86,26 @@ The `kenat` library provides two main functions for Bahire Hasab calculations:
 
 
 ### Get All Bahire Hasab Values for a Year
-Use `getBahireHasab(year, options)` to perform all Bahire Hasab calculations and return a comprehensive object with all results. You can pass an optional `{ lang: 'amharic' | 'english' }` for localized output.
+Use `getBahireHasab(year, options)` to perform all Bahire Hasab calculations and return a comprehensive object with all results. You can pass an optional `{ lang: 'amharic' | 'english' }` for localized output. The returned object includes:
+
+- `ameteAlem`: Years since creation (number)
+- `meteneRabiet`: Quotient of ameteAlem / 4 (number)
+- `evangelist`: Name of the year (string)
+- `evangelistRemainder`: Remainder for evangelist cycle (number)
+- `medeb`: Position in 19-year cycle (number)
+- `wenber`: Adjusted medeb (number)
+- `metqi`: Key lunar value (number)
+- `bealeMetqiDate`: Date of proclamation (object)
+- `bealeMetqiWeekday`: Weekday name (string)
+- `mebajaHamer`: Sum for Nineveh calculation (number)
+- `ninevehDate`: Base date for movable holidays (object)
+- `newYearWeekday`: Weekday of Ethiopian New Year (string)
+- `movableFeasts`: Object with all movable holidays and their calculated dates
+
+Example options:
+```js
+const bahireHasab = getBahireHasab(2017, { lang: 'english' });
+```
 
 ### Get a Specific Movable Holiday Date
 Use `getMovableHoliday(holidayKey, year)` to directly return the Ethiopian date for any movable holiday by key. Example:
