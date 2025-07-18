@@ -7,5 +7,6 @@ export default {
     HolidaySystem: "🎉 Holiday System",
     bahireHasab: "🌊 Bahire Hasab",
     "Kenat-UI": "🎨 Kenat UI",
+    "kenat-cli": "💻 Kenat CLI",
     examples: "📚 Examples",
 }
