@@ -145,7 +145,7 @@ export default function Home() {
 
         {/* --- Section 2: `kenat-ui` --- */}
         <section className="py-20 px-4 relative overflow-hidden bg-white/5 dark:bg-black/20">
-          <SectionBackground rotation={170}/>
+          <SectionBackground rotation={170} />
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">
               Flexible UI with `kenat-ui`
@@ -206,6 +206,24 @@ export default function Home() {
               >
                 <FiGithub />
                 <span>kenat-ui</span>
+              </a>
+              <a
+                href="https://github.com/MelakuDemeke/kenat_py"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
+              >
+                <FiGithub />
+                <span>kenat_py</span>
+              </a>
+              <a
+                href="https://github.com/MelakuDemeke/kenat-cli"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
+              >
+                <FiGithub />
+                <span>kenat-cli</span>
               </a>
             </div>
           </div>
