@@ -8,7 +8,17 @@ import { SiJavascript, SiPython } from 'react-icons/si'
 
 # Formatting Ethiopian Dates with Kenat
 
+
 The `kenat.formatting` module provides a collection of functions to format `Kenat` date objects into various string representations. You can combine these with the `Time` class for time-aware formatting.
+
+You can format dates in two ways:
+
+- Using instance methods on a `Kenat` object (e.g., `date.format(...)`, `date.formatInGeezAmharic()`, `date.toISOString()`).
+- Using named formatting functions (e.g., `formatStandard(date)`, `formatWithWeekday(date)`, etc.) imported from `kenat`.
+
+All formatting functions return strings suitable for display. Invalid date or time objects will throw an error (e.g., `InvalidEthiopianDateError`, `InvalidTimeError`).
+
+---
 
 ---
 
@@ -16,9 +26,10 @@ The `kenat.formatting` module provides a collection of functions to format `Kena
 
 Here are the primary functions available for formatting dates in Python.
 
-### `format_standard(et_date, lang='amharic')`
 
-Formats a date into a standard `"Month Day Year"` string.
+### Standard Date Format
+
+Formats a date into a standard "Month Day Year" string.
 
 <Tabs
   items={[
@@ -28,16 +39,22 @@ Formats a date into a standard `"Month Day Year"` string.
 >
 <Tabs.Tab>
 ```javascript
-import { Kenat } from 'kenat';
+import { Kenat, formatStandard } from 'kenat';
 
 const today = new Kenat(2016, 1, 10);
 
-// Default Amharic output
-console.log(today.format('MMMM D YYYY'));
+// Using Kenat instance method (default Amharic)
+console.log(today.format());
 // Output: መስከረም 10 2016
 
-// English output
-console.log(today.format('MMMM D YYYY', { lang: 'en' }));
+// Using Kenat instance method (English)
+console.log(today.format({ lang: 'english' }));
+// Output: Meskerem 10 2016
+
+// Using named formatting function
+console.log(formatStandard(today));
+// Output: መስከረም 10 2016
+console.log(formatStandard(today, 'english'));
 // Output: Meskerem 10 2016
 ```
 </Tabs.Tab>
@@ -59,7 +76,8 @@ print(format_standard(today, lang='english'))
 </Tabs.Tab>
 </Tabs>
 
-### `format_with_weekday(et_date, lang='amharic', use_geez=False)`
+
+### Date Format with Weekday
 
 Includes the day of the week in the output.
 
@@ -71,17 +89,21 @@ Includes the day of the week in the output.
 >
 <Tabs.Tab>
 ```javascript
-import { Kenat } from 'kenat';
+import { Kenat, formatWithWeekday } from 'kenat';
 
 const today = new Kenat(2016, 1, 10);
 
-// Weekday in Amharic
-console.log(today.format('dddd, MMMM D YYYY'));
+// Using Kenat instance method
+console.log(today.formatWithWeekday());
 // Output: ማክሰኞ, መስከረም 10 2016
+console.log(today.formatWithWeekday('english', true));
+// Output: Tuesday, Meskerem ፲ ፳፻፲፮
 
-// Weekday with Geez numerals
-console.log(today.format('dddd, MMMM D YYYY', { useGeez: true }));
-// Output: ማክሰኞ, መስከረም ፲ ፳፻፲፮
+// Using named formatting function
+console.log(formatWithWeekday(today));
+// Output: ማክሰኞ, መስከረም 10 2016
+console.log(formatWithWeekday(today, 'english', true));
+// Output: Tuesday, Meskerem ፲ ፳፻፲፮
 ```
 </Tabs.Tab>
 <Tabs.Tab>
@@ -102,9 +124,10 @@ print(format_with_weekday(today, use_geez=True))
 </Tabs.Tab>
 </Tabs>
 
-### `format_with_time(et_date, time_obj, lang='amharic')`
 
-Combines a date and a `Time` object into a single string.
+### Date Format with Time
+
+Combines a date and a Time object into a single string.
 
 <Tabs
   items={[
@@ -114,11 +137,17 @@ Combines a date and a `Time` object into a single string.
 >
 <Tabs.Tab>
 ```javascript
-import { Kenat } from 'kenat';
+import { Kenat, Time, formatWithTime } from 'kenat';
 
-const today = new Kenat(2016, 1, 10, 8, 30);
+const today = new Kenat(2016, 1, 10);
+const time = new Time(8, 30, 'day');
 
-console.log(today.format('MMMM D YYYY h:mm A'));
+// Using Kenat instance method
+console.log(today.formatWithTime(time));
+// Output: መስከረም 10 2016 8:30 ቀን
+
+// Using named formatting function
+console.log(formatWithTime(today, time));
 // Output: መስከረም 10 2016 8:30 ቀን
 ```
 </Tabs.Tab>
@@ -136,7 +165,8 @@ print(format_with_time(today, time))
 </Tabs.Tab>
 </Tabs>
 
-### `format_in_geez_amharic(et_date)`
+
+### Geez Numeral Date Format
 
 Formats the date using Ge'ez numerals for the day and year.
 
@@ -148,11 +178,16 @@ Formats the date using Ge'ez numerals for the day and year.
 >
 <Tabs.Tab>
 ```javascript
-import { Kenat } from 'kenat';
+import { Kenat, formatInGeezAmharic } from 'kenat';
 
 const today = new Kenat(2016, 1, 10);
 
-console.log(today.format('MMMM D YYYY', { useGeez: true }));
+// Using Kenat instance method
+console.log(today.formatInGeezAmharic());
+// Output: መስከረም ፲ ፳፻፲፮
+
+// Using named formatting function
+console.log(formatInGeezAmharic(today));
 // Output: መስከረም ፲ ፳፻፲፮
 ```
 </Tabs.Tab>
@@ -168,9 +203,10 @@ print(format_in_geez_amharic(today))
 </Tabs.Tab>
 </Tabs>
 
-### `format_short(et_date)`
 
-Returns the date in a compact `YYYY/MM/DD` format.
+### Short Date Format
+
+Returns the date in a compact YYYY/MM/DD format.
 
 <Tabs
   items={[
@@ -180,11 +216,16 @@ Returns the date in a compact `YYYY/MM/DD` format.
 >
 <Tabs.Tab>
 ```javascript
-import { Kenat } from 'kenat';
+import { Kenat, formatShort } from 'kenat';
 
 const today = new Kenat(2016, 1, 10);
 
-console.log(today.format('YYYY/MM/DD'));
+// Using Kenat instance method
+console.log(today.formatShort());
+// Output: 2016/01/10
+
+// Using named formatting function
+console.log(formatShort(today));
 // Output: 2016/01/10
 ```
 </Tabs.Tab>
@@ -200,7 +241,8 @@ print(format_short(today))
 </Tabs.Tab>
 </Tabs>
 
-### `to_iso_date_string(et_date, time_obj=None)`
+
+### ISO Date String Format
 
 Returns an ISO-like string, with optional time.
 
@@ -212,16 +254,21 @@ Returns an ISO-like string, with optional time.
 >
 <Tabs.Tab>
 ```javascript
-import { Kenat } from 'kenat';
+import { Kenat, Time, toISODateString } from 'kenat';
 
 // Date only
 const today = new Kenat(2016, 1, 10);
 console.log(today.toISOString());
 // Output: 2016-01-10
+console.log(toISODateString(today));
+// Output: 2016-01-10
 
 // With time
+const time = new Time(8, 30, 'day');
 const withTime = new Kenat(2016, 1, 10, 8, 30);
 console.log(withTime.toISOString());
+// Output: 2016-01-10T08:30
+console.log(toISODateString(today, time));
 // Output: 2016-01-10T08:30
 ```
 </Tabs.Tab>
