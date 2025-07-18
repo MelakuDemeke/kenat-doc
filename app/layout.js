@@ -21,7 +21,7 @@ const navbar = (
 
     projectLink='https://github.com/MelakuDemeke/kenat'
     chatLink='https://t.me/kenat_tool_kit'
-    chatIcon={<FaTelegram size={24}/>}
+    chatIcon={<FaTelegram size={24} />}
   />
 )
 const footer = <Footer>MIT {new Date().getFullYear()} © Kenat by &nbsp; <a target='_blank' href="https://github.com/MelakuDemeke/"> @MelakuDemeke</a>.</Footer>
@@ -36,10 +36,32 @@ export default async function RootLayout({ children }) {
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
     >
-      <Head
-      // ... Your additional head options
-      >
-        {/* Your additional tags should be passed as `children` of `<Head>` element */}
+      <Head>
+        {/* SEO meta tags */}
+        <title>Kenat Ethiopian Calendar Toolkit</title>
+        <meta name="description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more." />
+        <meta property="og:title" content="Kenat Ethiopian Calendar Toolkit" />
+        <meta property="og:description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more." />
+        <meta property="og:url" content="https://www.kenat.systems" />
+        <meta property="og:image" content="/ogimage.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Kenat Ethiopian Calendar Toolkit" />
+        <meta name="twitter:description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs." />
+        <meta name="twitter:image" content="/ogimage.png" />
+
+        {/* Structured Data for Google Rich Results */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: `{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Kenat Ethiopian Calendar Toolkit",
+          "url": "https://www.kenat.systems",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.kenat.systems/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }`}} />
       </Head>
       <body>
         <Layout
