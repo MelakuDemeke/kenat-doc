@@ -39,12 +39,18 @@ You can optionally pass time information (hour, minute, period) when creating a 
 >
   <Tabs.Tab>
     ```js
-    const withTime = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'pm' });
+    // Use 'day' or 'night' for the period property
+    const withTime = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'day' });
+    // or
+    const withTimeNight = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'night' });
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
-    with_time = Kenat(2017, 10, 5, hour=3, minute=30, period='pm')
+    # Use 'day' or 'night' for the period property
+    with_time = Kenat(2017, 10, 5, hour=3, minute=30, period='day')
+    # or
+    with_time_night = Kenat(2017, 10, 5, hour=3, minute=30, period='night')
     ```
   </Tabs.Tab>
 </Tabs>
