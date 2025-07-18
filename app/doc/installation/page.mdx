@@ -44,26 +44,44 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
     ## ✅ Supported Environments
 
-    - Node.js ≥ 14  
-    - Modern browsers (ES6+)  
-    - Works with React, Vue, Svelte, etc.  
+    - Node.js ≥ 14
+    - Modern browsers (ES6+)
+    - Works with React, Vue, Svelte, etc.
     - Not tested on legacy browsers like IE11
 
-    ## 📥 Basic Import & Usage
+    ## 📥 Import & Usage
+
+    Kenat supports both default and named imports:
 
     ```js
-    import Kenat from 'kenat';
+    import Kenat, { getHolidaysForYear, HolidayTags, toEC, toGC, formatStandard } from 'kenat';
 
+    // Create a date
     const date = new Kenat();
-    console.log(date.getEthiopian()); 
+    console.log(date.getEthiopian());
+
+    // Use named exports
+    const holidays = getHolidaysForYear(2017, { filter: HolidayTags.PUBLIC });
+    console.log(holidays);
+
+    // Convert Gregorian to Ethiopian
+    const etDate = toEC(2025, 7, 18); // { year, month, day }
+    console.log(etDate);
+
+    // Format an Ethiopian date
+    const formatted = formatStandard({ year: 2017, month: 10, day: 5 }, 'english');
+    console.log(formatted);
     ```
 
-    ## 🔄 Dynamic Import (CommonJS)
+    ## 🔄 ES Modules & CommonJS
+
+    Kenat is published as an ES module. For CommonJS, use dynamic import:
 
     ```js
     (async () => {
-      const { default: Kenat } = await import('kenat');
+      const { default: Kenat, getHolidaysForYear } = await import('kenat');
       console.log(new Kenat().toString());
+      console.log(getHolidaysForYear(2017));
     })();
     ```
 
@@ -78,6 +96,21 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     ```bash
     Ethiopian: 2017-9-21
     ```
+
+    ## 🗂 Quick Reference: Named Exports
+
+    - `Kenat` (default)
+    - `MonthGrid`
+    - `Time`
+    - `toEC`, `toGC`, `toGeez`, `toArabic`
+    - `getHolidaysForYear`, `getHolidaysInMonth`, `getHoliday`
+    - `HolidayTags`, `monthNames`
+    - `getBahireHasab`, `getFastingPeriod`
+    - Formatting: `formatStandard`, `formatWithWeekday`, `formatWithTime`, `formatInGeezAmharic`, `formatShort`, `toISODateString`
+
+    ## ⚠️ Error Handling
+
+    If you provide invalid input (e.g., out-of-range date, wrong format), Kenat will throw an error describing the issue.
   </Tabs.Tab>
 
   <Tabs.Tab>
