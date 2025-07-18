@@ -1,0 +1,39 @@
+---
+title: Interactive Mode
+description: How to use Kenat CLI in interactive mode.
+---
+
+# 🧑‍💻 Interactive Mode
+
+Kenat CLI features a guided interactive mode for users who prefer prompts and menus.
+
+## How to Start
+Type `kenat` with no arguments:
+```bash
+kenat
+```
+
+You'll see a welcome banner and be prompted for commands. Available commands include:
+- today
+- convert
+- holiday
+- calendar
+- bahirehasab
+- help
+- exit
+
+## Features
+- Guided prompts for date conversion, holiday filtering, and calendar display
+- Multi-select for holiday tags
+- Error handling and input validation
+- Type `help` at any time for command info
+- Type `exit` to leave interactive mode
+
+## Example Session
+```
+kenat > convert 2016/09/15 --to gregorian
+kenat > holiday --this-month --filter public
+kenat > calendar --year 2017 --month 1
+kenat > bahirehasab 2017
+kenat > exit
+```
