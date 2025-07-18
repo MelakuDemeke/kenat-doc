@@ -1,0 +1,35 @@
+---
+title: Advanced Usage & Tips
+description: Advanced features, troubleshooting, and tips for Kenat CLI.
+---
+
+# 🛠️ Advanced Usage & Tips
+
+## Filtering Holidays
+You can filter holidays by multiple tags using the `--filter` option:
+```bash
+kenat holiday --this-year --filter public christian
+```
+
+## Visual Calendar Output
+The `calendar` command displays color-coded calendars:
+- Today is highlighted
+- Holidays are marked
+- Multiple months can be shown in a grid
+
+## Error Handling
+Kenat CLI provides clear error messages for invalid input, missing arguments, or unknown commands. Use `kenat help` for troubleshooting.
+
+## Environment Requirements
+- Node.js v16 or newer
+- Terminal with color support for best experience
+
+## Extending Kenat CLI
+Kenat CLI is modular. You can add new commands by creating a handler in the `src/commands` directory and registering it in `cli.js`.
+
+## Troubleshooting
+- If a command fails, check your input format and required options
+- For date conversion, use `YYYY/MM/DD` or `YYYY-MM-DD` formats
+- For help, type `kenat help <command>`
+
+For more details, see the source code or open an issue on the project repository.
