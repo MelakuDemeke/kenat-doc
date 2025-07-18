@@ -1,0 +1,65 @@
+---
+title: Command Reference
+description: Full documentation for all Kenat CLI commands.
+---
+
+# 📚 Command Reference
+
+## today
+Display today's date in both Ethiopian and Gregorian calendars.
+```bash
+kenat today
+```
+
+## convert
+Convert a date between Ethiopian and Gregorian calendars.
+```bash
+kenat convert [date] --to <calendar>
+# Example:
+kenat convert 2016/09/15 --to gregorian
+kenat convert 2024-05-23 --to ethiopian
+```
+Options:
+- `[date]` Date string to convert (YYYY/MM/DD or YYYY-MM-DD)
+- `--to, -t` Required. Target calendar: `gregorian` or `ethiopian`
+
+## holiday
+List holidays or get info about a specific holiday.
+```bash
+kenat holiday --this-month
+kenat holiday --this-year
+kenat holiday --info meskel
+kenat holiday --filter public
+```
+Options:
+- `--this-month, -m` List holidays for the current Ethiopian month
+- `--this-year, -y` List holidays for the current Ethiopian year
+- `--info, -i` Get details for a specific holiday key
+- `--filter, -f` Filter holidays by tag (public, religious, christian, muslim, etc.)
+
+## calendar
+Display a visual calendar for a month or year.
+```bash
+kenat calendar --year 2017 --month 1
+kenat calendar --year 2017
+```
+Options:
+- `--year, -y` Ethiopian year
+- `--month, -m` Ethiopian month (1-13)
+
+## bahirehasab
+Calculate and display Bahire Hasab values for a given Ethiopian year.
+```bash
+kenat bahirehasab 2017
+```
+Options:
+- `[year]` Ethiopian year (defaults to current year)
+
+## help
+Display help for a command or general usage.
+```bash
+kenat help
+kenat help convert
+```
+Options:
+- `[command]` Command to get help for
