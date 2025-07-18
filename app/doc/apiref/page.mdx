@@ -32,8 +32,18 @@ Creates a new instance of an Ethiopian date.
 >
   <Tabs.Tab>
     ```js
+    // No argument: current system date
     const k = new Kenat();
+
+    // From a string (YYYY/MM/DD or YYYY-MM-DD)
     const custom = new Kenat('2016/6/10');
+    const custom2 = new Kenat('2016-6-10');
+
+    // From an object
+    const fromObj = new Kenat({ year: 2016, month: 6, day: 10 });
+
+    // From a native JavaScript Date object
+    const fromDate = new Kenat(new Date(2016, 5, 10)); // month is 0-based
     ```
   </Tabs.Tab>
   <Tabs.Tab>🚧 Dart version coming soon...</Tabs.Tab>
@@ -247,10 +257,11 @@ The library includes powerful tools for generating monthly calendars and retriev
   ]}
 >
     <Tabs.Tab>
-        ```js
-        const k = new Kenat('2016/1/1');
-        k.printThisMonth(true);
-        ```
+
+```js
+const k = new Kenat('2016/1/1');
+k.printThisMonth(true);
+```
     </Tabs.Tab>
     <Tabs.Tab>
         ```python
@@ -272,3 +283,56 @@ The library includes powerful tools for generating monthly calendars and retriev
         ```
     </Tabs.Tab>
 </Tabs>
+
+---
+
+# 🧩 Advanced Features & Utilities
+
+## Kenat Static Methods
+
+- `Kenat.now()` — Returns a Kenat instance for the current date/time.
+- `Kenat.getMonthCalendar(year, month, options)` — Returns a calendar grid for a given month.
+- `Kenat.getYearCalendar(year, options)` — Returns a full year calendar.
+- `Kenat.generateDateRange(startDate, endDate)` — Returns an array of Kenat dates for a range.
+
+## MonthGrid Usage
+
+You can generate a month grid with holidays and weekday headers:
+
+```js
+import { MonthGrid } from 'kenat';
+const grid = new MonthGrid({ year: 2016, month: 1 });
+console.log(grid.headers); // ['እሑድ', ...]
+console.log(grid.days); // Array of day objects
+```
+
+## Holiday Filtering
+
+All holiday functions support filtering by tags:
+
+```js
+import { getHolidaysForYear, HolidayTags } from 'kenat';
+const publicHolidays = getHolidaysForYear(2016, { filter: [HolidayTags.PUBLIC] });
+```
+
+## Geez Numeral Conversion
+
+- `toGeez(number)` — Converts numbers to Geez numerals.
+- `toArabic(geezStr)` — Converts Geez numerals to Arabic numbers.
+
+## Date Validation & Utilities
+
+- `isValidEthiopianDate(year, month, day)` — Checks if a date is valid.
+- `isEthiopianLeapYear(year)` — Checks for leap years.
+- `getWeekday({ year, month, day })` — Returns the weekday index.
+
+## Error Classes
+
+Kenat exports error classes for robust error handling:
+
+- `InvalidEthiopianDateError`
+- `InvalidGregorianDateError`
+- `InvalidInputTypeError`
+- `InvalidTimeError`
+- `InvalidGridConfigError`
+- `UnknownHolidayError`
