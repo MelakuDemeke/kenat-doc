@@ -16,6 +16,65 @@ Kenat helps you create and manipulate Ethiopian dates using the intuitive `Kenat
 
 The `Kenat` constructor is flexible. Here are the ways you can create a new date.
 
+### Supported Input Types & Error Handling
+
+Kenat automatically detects the type of input you provide:
+
+- **No arguments**: Uses the current system date.
+- **String**: Accepts `YYYY/MM/DD` or `YYYY-MM-DD` format (Ethiopian or Gregorian).
+- **Date object**: Accepts native JavaScript `Date` or Python `datetime` objects.
+- **Numbers**: Pass year, month, and day as separate numbers.
+
+If you provide an invalid date (e.g., out-of-range month/day, wrong format), Kenat will throw an error describing the issue.
+
+### Time Support
+
+You can optionally pass time information (hour, minute, period) when creating a date:
+
+<Tabs
+  items={[ 
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    const withTime = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'pm' });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    with_time = Kenat(2017, 10, 5, hour=3, minute=30, period='pm')
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### Language Option
+
+Most methods accept a `lang` option to choose between Amharic and English output. Example:
+
+<Tabs
+  items={[ 
+    <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+  ]}
+>
+  <Tabs.Tab>
+    ```js
+    today.getEthiopian({ lang: 'english' })
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```python
+    today.get_ethiopian(lang='english')
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### Output Types
+
+Date methods like `getEthiopian()` and `getGregorian()` return plain objects, not Kenat instances.
+
 ### From the Current Date
 
 If you create a `Kenat` instance with no arguments, it will automatically represent the current system date.
