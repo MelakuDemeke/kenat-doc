@@ -53,12 +53,11 @@ export default function ToolsPage() {
             <main className="relative z-10 container mx-auto px-4 py-16">
                 <section className="text-center mb-16">
                     <h1 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-4">
-                        Kenat Tools Showcase
+                        Kenat Tools
                     </h1>
                     <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 mt-4 max-w-3xl mx-auto">
-                        Discover a collection of powerful, ready-to-use tools and components
-                        built with the Kenat ecosystem. Explore live examples and see what you
-                        can build.
+                        A collection of powerful, ready-to-use tools built with the Kenat
+                        ecosystem. Click on a tool to start using it.
                     </p>
                 </section>
 
