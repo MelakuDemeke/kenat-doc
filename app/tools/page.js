@@ -40,12 +40,6 @@ const tools = [
         link: "/tools/holiday-browser",
         desc: "Browse fixed and movable Ethiopian holidays.",
     },
-    {
-        icon: <FiClock size={32} />,
-        title: "Live Clock",
-        link: "/tools/live-clock",
-        desc: "View the current time in the Ethiopian system.",
-    },
 ];
 
 export default function ToolsPage() {
