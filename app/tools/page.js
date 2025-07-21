@@ -29,12 +29,6 @@ const tools = [
         desc: "Generate a calendar grid for any Ethiopian month.",
     },
     {
-        icon: <FiCalendar size={32} />,
-        title: "Date Picker",
-        link: "/tools/date-picker",
-        desc: "A customizable date picker for React applications.",
-    },
-    {
         icon: <FiMoon size={32} />,
         title: "Bahire Hasab",
         link: "/tools/bahire-hasab",
