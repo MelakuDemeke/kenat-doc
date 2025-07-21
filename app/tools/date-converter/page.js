@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { toGC, toEC } from "kenat";
 
 function EthiopianToGregorian() {
-    const [ecDate, setEcDate] = useState({ year: undefined, month: undefined, day: undefined });
+    const todayGC = new Date();
+    const todayEC = toEC(todayGC.getFullYear(), todayGC.getMonth() + 1, todayGC.getDate());
+    const [ecDate, setEcDate] = useState({ year: todayEC.year, month: todayEC.month, day: todayEC.day });
     const [convertedGc, setConvertedGc] = useState(null);
 
     useEffect(() => {
@@ -71,7 +73,8 @@ function EthiopianToGregorian() {
 }
 
 function GregorianToEthiopian() {
-    const [gcDate, setGcDate] = useState({ year: undefined, month: undefined, day: undefined });
+    const todayGC = new Date();
+    const [gcDate, setGcDate] = useState({ year: todayGC.getFullYear(), month: todayGC.getMonth() + 1, day: todayGC.getDate() });
     const [convertedEc, setConvertedEc] = useState(null);
 
     useEffect(() => {
