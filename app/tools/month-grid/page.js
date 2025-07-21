@@ -6,6 +6,7 @@ import { Switch } from "@headlessui/react";
 import Confetti from "react-confetti";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { clsx } from "clsx";
+import { LiveAmharicDateTime } from "@/components/Landing/LiveAmharicDateTime";
 
 function HolidayModal({ holidays, onClose }) {
     if (!holidays || holidays.length === 0) return null;
@@ -117,6 +118,10 @@ export default function MonthGridPage() {
 
     return (
         <div className="flex flex-col min-h-screen">
+            <div className="mb-12">
+                <LiveAmharicDateTime />
+
+            </div>
             <div className="max-w-3xl mx-auto p-6 rounded-2xl bg-white/20 dark:bg-zinc-800/20 backdrop-blur-md border border-white/10 dark:border-white/5 shadow-lg">
                 <div className="flex items-center justify-between mb-6 text-zinc-900 dark:text-white">
                     <button
