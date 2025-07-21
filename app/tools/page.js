@@ -11,39 +11,46 @@ import { ToolCard } from "@/components/ToolCard";
 
 const tools = [
     {
-        icon: <FiCalendar size={24} />,
+        icon: <FiCalendar size={32} />,
         title: "Date Converter",
         link: "/tools/date-converter",
+        desc: "Convert dates between Ethiopian and Gregorian calendars.",
     },
     {
-        icon: <FiClock size={24} />,
+        icon: <FiClock size={32} />,
         title: "Time Converter",
         link: "/tools/time-converter",
+        desc: "Convert modern 24-hour time to traditional Ethiopian time.",
     },
     {
-        icon: <FiGrid size={24} />,
+        icon: <FiGrid size={32} />,
         title: "Month Grid",
         link: "/tools/month-grid",
+        desc: "Generate a calendar grid for any Ethiopian month.",
     },
     {
-        icon: <FiCalendar size={24} />,
+        icon: <FiCalendar size={32} />,
         title: "Date Picker",
         link: "/tools/date-picker",
+        desc: "A customizable date picker for React applications.",
     },
     {
-        icon: <FiMoon size={24} />,
+        icon: <FiMoon size={32} />,
         title: "Bahire Hasab",
         link: "/tools/bahire-hasab",
+        desc: "Calculate movable feasts and fasts.",
     },
     {
-        icon: <FiGift size={24} />,
+        icon: <FiGift size={32} />,
         title: "Holiday Browser",
         link: "/tools/holiday-browser",
+        desc: "Browse fixed and movable Ethiopian holidays.",
     },
     {
-        icon: <FiClock size={24} />,
+        icon: <FiClock size={32} />,
         title: "Live Clock",
         link: "/tools/live-clock",
+        desc: "View the current time in the Ethiopian system.",
     },
 ];
 
@@ -62,13 +69,14 @@ export default function ToolsPage() {
                 </section>
 
                 <section>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
                         {tools.map((tool) => (
                             <ToolCard
                                 key={tool.title}
                                 icon={tool.icon}
                                 title={tool.title}
                                 link={tool.link}
+                                desc={tool.desc}
                             />
                         ))}
                     </div>
