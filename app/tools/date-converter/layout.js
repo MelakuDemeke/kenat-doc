@@ -1,15 +1,19 @@
 export const metadata = {
-    title: "Ethiopian to Gregorian Date Converter | Kenat Tools",
+    title: "Date Converter - Ethiopian to Gregorian and Vice Versa",
     description:
-        "Easily convert dates between the Ethiopian calendar and the Gregorian calendar. Fast, accurate, and free online tool for all your date conversion needs.",
+        "Convert any date between Ethiopian and Gregorian calendars. Start with today's date or input any date to see the conversion instantly.",
     keywords: [
-        "Ethiopian date converter",
-        "Gregorian to Ethiopian converter",
         "Ethiopian calendar",
-        "toEC",
-        "toGC",
-        "date conversion",
-        "kenat",
+        "Gregorian calendar",
+        "date converter",
+        "today in Ethiopian",
+        "Ethiopian date today",
+        "convert Ethiopian to Gregorian",
+        "convert Gregorian to Ethiopian",
+        "Ethiopian calendar toolkit",
+        "date conversion tool",
+        "Ethiopian date converter",
+        "Gregorian date converter",
     ],
 };
 
