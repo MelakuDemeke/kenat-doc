@@ -33,7 +33,7 @@ function EthiopianToGregorian() {
     };
 
     return (
-        <div className="p-8 rounded-3xl bg-white/10 dark:bg-zinc-900/10 backdrop-blur-2xl border border-white/10 dark:border-white/5 shadow-lg">
+        <div className="p-6 rounded-2xl bg-white/30 dark:bg-zinc-800/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg transition-all transform hover:-translate-y-2 duration-300">
             <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">
                 Ethiopian to Gregorian
             </h2>
@@ -101,7 +101,7 @@ function GregorianToEthiopian() {
     };
 
     return (
-        <div className="p-8 rounded-3xl bg-white/10 dark:bg-zinc-900/10 backdrop-blur-2xl border border-white/10 dark:border-white/5 shadow-lg">
+        <div className="p-6 rounded-2xl bg-white/30 dark:bg-zinc-800/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg transition-all transform hover:-translate-y-2 duration-300">
             <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">
                 Gregorian to Ethiopian
             </h2>
@@ -144,7 +144,7 @@ function GregorianToEthiopian() {
 export default function DateConverterPage() {
     return (
         <div className="relative min-h-screen text-zinc-900 dark:text-white selection:bg-purple-500/50">
-            <SectionBackground rotation={170} />
+            <SectionBackground rotation={10} />
             <main className="container mx-auto px-4 py-16">
                 <section className="text-center mb-12">
                     <h1 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-4">
