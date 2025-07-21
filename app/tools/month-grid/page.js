@@ -2,34 +2,92 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { MonthGrid, HolidayTags, monthNames } from "kenat";
+import { Switch } from "@headlessui/react";
 import Confetti from "react-confetti";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { clsx } from "clsx";
+
+function HolidayModal({ holidays, onClose }) {
+    if (!holidays || holidays.length === 0) return null;
+    return (
+        <div
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+            onClick={onClose}
+        >
+            <div
+                className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-8 max-w-md w-full relative"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {holidays.map((holiday, index) => (
+                    <div key={index}>
+                        <h3 className="text-2xl font-bold mb-3 text-zinc-900 dark:text-white">
+                            {holiday.name}
+                        </h3>
+                        <p className="text-zinc-600 dark:text-zinc-300">
+                            {holiday.description}
+                        </p>
+                        {index < holidays.length - 1 && (
+                            <hr className="my-6 border-zinc-200 dark:border-zinc-700" />
+                        )}
+                    </div>
+                ))}
+                <button
+                    onClick={onClose}
+                    className="w-full mt-6 px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition"
+                >
+                    Close
+                </button>
+            </div>
+        </div>
+    );
+}
 
 export default function MonthGridPage() {
     const [gridData, setGridData] = useState(null);
     const [selectedHolidays, setSelectedHolidays] = useState(null);
-    const [date, setDate] = useState(() => {
-        const todayInEC = new MonthGrid().generate();
-        return { year: parseInt(todayInEC.year), month: todayInEC.month };
-    });
     const [activeMode, setActiveMode] = useState("public");
     const [holidayFilter, setHolidayFilter] = useState([HolidayTags.PUBLIC]);
     const [showAllSaints, setShowAllSaints] = useState(false);
 
+    const [date, setDate] = useState(() => {
+        const todayInEC = new MonthGrid().generate();
+        return { year: parseInt(todayInEC.year), month: todayInEC.month };
+    });
+
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const instance = new MonthGrid({
-                year: date.year,
-                month: date.month,
-                weekdayLang: "amharic",
-                weekStart: 1,
-                mode: activeMode,
-                showAllSaints,
-                holidayFilter,
-            });
-            setGridData(instance.generate());
-        }
+        const instance = new MonthGrid({
+            year: date.year,
+            month: date.month,
+            weekdayLang: "amharic",
+            weekStart: 1,
+            mode: activeMode,
+            showAllSaints,
+            holidayFilter,
+        });
+        setGridData(instance.generate());
     }, [date, activeMode, showAllSaints, holidayFilter]);
+
+    const handleModeChange = (e) => {
+        const newMode = e.target.value;
+        setActiveMode(newMode);
+        setShowAllSaints(false);
+        setHolidayFilter(newMode === "none" ? null : [newMode]);
+    };
+
+    const handleFilterChange = (tag) => {
+        let newFilter;
+        if (tag === "all") {
+            newFilter = null;
+        } else {
+            const current = holidayFilter || [];
+            newFilter = current.includes(tag)
+                ? current.filter((t) => t !== tag)
+                : [...current, tag];
+            if (newFilter.length === 0) newFilter = null;
+        }
+        setActiveMode("none");
+        setHolidayFilter(newFilter);
+    };
 
     const goNextMonth = () => {
         setDate((d) =>
@@ -55,32 +113,10 @@ export default function MonthGridPage() {
         []
     );
 
-    const handleModeChange = (e) => {
-        const newMode = e.target.value;
-        setActiveMode(newMode);
-        setShowAllSaints(false);
-        setHolidayFilter(newMode === "none" ? null : [newMode]);
-    };
-
-    const handleFilterChange = (tag) => {
-        let newFilter;
-        if (tag === "all") {
-            newFilter = null;
-        } else {
-            const current = holidayFilter || [];
-            newFilter = current.includes(tag)
-                ? current.filter((t) => t !== tag)
-                : [...current, tag];
-            if (newFilter.length === 0) newFilter = null;
-        }
-        setActiveMode("none");
-        setHolidayFilter(newFilter);
-    };
-
     if (!gridData) return <div className="text-center p-4">Loading...</div>;
 
     return (
-        <div className="max-w-4xl mx-auto p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg">
+        <div className="max-w-3xl mx-auto p-6 rounded-2xl bg-white/20 dark:bg-zinc-800/20 backdrop-blur-md border border-white/10 dark:border-white/5 shadow-lg">
             <div className="flex items-center justify-between mb-6 text-zinc-900 dark:text-white">
                 <button
                     onClick={goPrevMonth}
@@ -139,15 +175,15 @@ export default function MonthGridPage() {
                     </select>
                 </div>
                 {activeMode === "christian" && (
-                    <div className="flex items-center space-x-3">
-                        <span className="text-sm text-zinc-900 dark:text-white">Show All Saints</span>
+                    <div className="flex items-center space-x-4">
+                        <span className="text-lg text-zinc-900 dark:text-white">Show All Saints</span>
                         <Switch
                             checked={showAllSaints}
                             onChange={setShowAllSaints}
-                            className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 bg-indigo-500"
+                            className="relative inline-flex h-6 w-12 items-center rounded-full transition-colors duration-300 bg-indigo-500 shadow-md"
                         >
                             <span
-                                className="inline-block h-4 w-4 transform rounded-full bg-white shadow transition translate-x-6"
+                                className="inline-block h-4 w-4 transform rounded-full bg-white shadow-md transition translate-x-6"
                             />
                         </Switch>
                     </div>
@@ -199,12 +235,14 @@ export default function MonthGridPage() {
                         <div
                             key={i}
                             onClick={() => isHoliday && setSelectedHolidays(day.holidays)}
-                            className={`relative rounded-xl p-2 border backdrop-blur-md transition shadow-inner overflow-hidden ${isToday
-                                ? "!bg-emerald-500 text-white ring-2 ring-emerald-300 dark:!bg-emerald-900 dark:ring-emerald-400 shadow-lg z-10"
-                                : isHoliday
-                                    ? "bg-indigo-200 text-indigo-900 border-indigo-300 dark:!bg-indigo-900 dark:text-white dark:border-indigo-500 shadow-md cursor-pointer"
-                                    : "bg-white/10 dark:bg-zinc-800/30 hover:bg-white/20 dark:hover:bg-zinc-700/50"
-                                }`}
+                            className={clsx(
+                                "relative rounded-xl p-2 border backdrop-blur-md transition shadow-inner overflow-hidden",
+                                isToday
+                                    ? "!bg-emerald-500 text-white ring-2 ring-emerald-300 dark:!bg-emerald-900 dark:ring-emerald-400 shadow-lg z-10"
+                                    : isHoliday
+                                        ? "bg-indigo-200 text-indigo-900 border-indigo-300 dark:!bg-indigo-900 dark:text-white dark:border-indigo-500 shadow-md cursor-pointer"
+                                        : "bg-white/10 dark:bg-zinc-800/30 hover:bg-white/20 dark:hover:bg-zinc-700/50"
+                            )}
                         >
                             {isHoliday && (
                                 <Confetti
@@ -225,10 +263,12 @@ export default function MonthGridPage() {
                             )}
                             <div className="relative z-10">{day.ethiopian.day}</div>
                             <div
-                                className={`text-xs relative z-10 ${isHoliday
-                                    ? "text-indigo-800 dark:text-white/70"
-                                    : "text-zinc-600 dark:text-white/70"
-                                    }`}
+                                className={clsx(
+                                    "text-xs relative z-10",
+                                    isHoliday
+                                        ? "text-indigo-800 dark:text-white/70"
+                                        : "text-zinc-600 dark:text-white/70"
+                                )}
                             >
                                 {day.gregorian.month}/{day.gregorian.day}
                             </div>
@@ -243,25 +283,13 @@ export default function MonthGridPage() {
             </div>
 
             {selectedHolidays && (
-                <div className="mt-8">
-                    <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-4">
-                        Holidays in this month:
-                    </h2>
-                    <ul className="space-y-2">
-                        {selectedHolidays.map((holiday, index) => (
-                            <li
-                                key={index}
-                                className="p-4 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base text-zinc-900 dark:text-white shadow-md"
-                            >
-                                <h3 className="text-lg font-bold mb-2">{holiday.name}</h3>
-                                <p>{holiday.description}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <HolidayModal
+                    holidays={selectedHolidays}
+                    onClose={() => setSelectedHolidays(null)}
+                />
             )}
 
-            <div className="mt-16 mb-16">{/* Add margin below the calendar grid */}</div>
+            <div className="mt-12 mb-12">{/* Adjust footer spacing */}</div>
         </div>
     );
 }
