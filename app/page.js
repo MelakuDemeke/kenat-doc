@@ -10,6 +10,7 @@ import {
   FiToggleLeft,
   FiLayout,
   FiGithub,
+  FiBookOpen,
 } from "react-icons/fi";
 import { SiNpm } from "react-icons/si";
 
@@ -181,51 +182,52 @@ export default function Home() {
             Explore the comprehensive documentation for guides and API
             references, or dive into the source code on GitHub.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          {/* Prominent Read the Docs button above all others */}
+          <a
+            href="/doc"
+            className="flex items-center justify-center gap-4 px-16 py-6 text-2xl bg-gradient-to-r from-purple-700 to-sky-600 text-white dark:bg-white dark:text-black font-extrabold rounded-2xl shadow-2xl hover:bg-purple-800 dark:hover:bg-zinc-200 transition-transform transform hover:scale-110 border-4 border-white dark:border-zinc-900 mx-auto mb-10 w-fit"
+            style={{ zIndex: 10 }}
+          >
+            <FiBookOpen size={32} />
+            <span>Read the Docs</span>
+          </a>
+          <div className="flex flex-wrap justify-center items-center gap-4">
             <a
-              href="/doc"
-              className="px-8 py-3 bg-zinc-900 text-white dark:bg-white dark:text-black font-semibold rounded-lg shadow-lg hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-transform transform hover:scale-105"
+              href="https://github.com/MelakuDemeke/kenat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
             >
-              Read the Docs
+              <FiGithub />
+              <span>kenat</span>
             </a>
-            <div className="flex flex-wrap justify-center items-center gap-4 w-full">
-              <a
-                href="https://github.com/MelakuDemeke/kenat"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-              >
-                <FiGithub />
-                <span>kenat</span>
-              </a>
-              <a
-                href="https://github.com/MelakuDemeke/kenat-ui"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-              >
-                <FiGithub />
-                <span>kenat-ui</span>
-              </a>
-              <a
-                href="https://github.com/MelakuDemeke/kenat_py"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-              >
-                <FiGithub />
-                <span>kenat_py</span>
-              </a>
-              <a
-                href="https://github.com/MelakuDemeke/kenat-cli"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-              >
-                <FiGithub />
-                <span>kenat-cli</span>
-              </a>
-            </div>
+            <a
+              href="https://github.com/MelakuDemeke/kenat-ui"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
+            >
+              <FiGithub />
+              <span>kenat-ui</span>
+            </a>
+            <a
+              href="https://github.com/MelakuDemeke/kenat_py"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
+            >
+              <FiGithub />
+              <span>kenat_py</span>
+            </a>
+            <a
+              href="https://github.com/MelakuDemeke/kenat-cli"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
+            >
+              <FiGithub />
+              <span>kenat-cli</span>
+            </a>
           </div>
         </section>
       </main>
