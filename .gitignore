@@ -41,6 +41,4 @@ yarn-error.log*
 next-env.d.ts
 _pagefind/
 app.py
-output.txt
-kenat.txt
-cli.txt
+/context
