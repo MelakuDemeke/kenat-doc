@@ -14,6 +14,23 @@ export default function PrivacyPage() {
         <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2">
           <strong>Effective Date: March 26, 2026</strong>
         </p>
+        <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          Official policy URL:{" "}
+          <a
+            className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
+            href="https://www.kenat.systems/privacy"
+          >
+            https://www.kenat.systems/privacy
+          </a>
+          . Account deletion (for app store data safety forms):{" "}
+          <a
+            className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
+            href="https://www.kenat.systems/privacy#account-deletion"
+          >
+            https://www.kenat.systems/privacy#account-deletion
+          </a>
+          .
+        </p>
 
         <p className="mt-8 text-zinc-700 dark:text-zinc-300 leading-relaxed">
           At <strong>Kenat</strong>, we value your privacy. This Privacy Policy
@@ -170,9 +187,35 @@ export default function PrivacyPage() {
 
         <hr className="my-10 border-zinc-300 dark:border-zinc-700" />
 
+        <section id="account-deletion" className="scroll-mt-24 space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">
+            5. Account Deletion
+          </h2>
+          <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">
+            Data deletion request
+          </h3>
+          <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            Users of the Kenat app can request the deletion of their account and
+            all associated data at any time. You can do this directly within
+            the app&apos;s Settings menu by tapping &quot;Delete Account.&quot;
+            If you have uninstalled the app, you may also request deletion by
+            sending an email to{" "}
+            <a
+              className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
+              href="mailto:support@kenat.systems"
+            >
+              support@kenat.systems
+            </a>{" "}
+            with your account details. Upon request, all your synced events and
+            profile information will be permanently removed from our servers.
+          </p>
+        </section>
+
+        <hr className="my-10 border-zinc-300 dark:border-zinc-700" />
+
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">
-            5. Your Choices
+            6. Your Choices
           </h2>
           <ul className="list-disc pl-6 space-y-2 text-zinc-700 dark:text-zinc-300">
             <li>
@@ -181,10 +224,14 @@ export default function PrivacyPage() {
               settings.
             </li>
             <li>
-              <strong>Account Deletion</strong>: You can permanently delete your
-              account and all associated data at any time from the app&apos;s
-              Settings under the &quot;Account&quot; section. This action is
-              immediate and irreversible.
+              <strong>Account deletion</strong>: See{" "}
+              <a
+                className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
+                href="#account-deletion"
+              >
+                Section 5 — Account Deletion
+              </a>{" "}
+              above.
             </li>
             <li>
               <strong>Opt-out</strong>: You can opt-out of personalized ads via
@@ -197,7 +244,7 @@ export default function PrivacyPage() {
 
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">
-            6. Children&apos;s Privacy
+            7. Children&apos;s Privacy
           </h2>
           <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
             Kenat does not knowingly collect personal information from children
@@ -210,7 +257,7 @@ export default function PrivacyPage() {
 
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">
-            7. Changes to This Policy
+            8. Changes to This Policy
           </h2>
           <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
             We may update our Privacy Policy periodically. We will notify you
@@ -223,7 +270,7 @@ export default function PrivacyPage() {
 
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">
-            8. Contact Us
+            9. Contact Us
           </h2>
           <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
             If you have any questions or suggestions about our Privacy Policy,
