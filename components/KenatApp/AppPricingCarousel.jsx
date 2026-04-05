@@ -86,8 +86,12 @@ function PricingPlanCard({
             : "z-0 scale-[0.88] opacity-40",
       ].join(" ")}
     >
-      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${plan.theme}`} />
-      <div className={`pointer-events-none absolute inset-0 ${plan.bgBlur} backdrop-blur-xl`} />
+      <div
+        className={`pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br ${plan.theme}`}
+      />
+      <div
+        className={`pointer-events-none absolute inset-0 rounded-3xl ${plan.bgBlur} backdrop-blur-xl`}
+      />
       <div
         className={`relative z-10 flex min-h-[320px] flex-col ${plan.text} ${isActive ? "animate-float-app" : ""}`}
       >

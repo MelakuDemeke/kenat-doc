@@ -54,15 +54,18 @@
   }
 }
 
+/* Match Tailwind rounded-3xl (1.5rem) so shimmer + layers respect card corners */
 .app-pricing-section .active-card-shimmer-app {
   position: relative;
   overflow: hidden;
+  border-radius: 1.5rem;
 }
 
 .app-pricing-section .active-card-shimmer-app::after {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: linear-gradient(
     to right,
     transparent,
