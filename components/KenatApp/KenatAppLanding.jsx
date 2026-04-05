@@ -14,13 +14,6 @@ import { AppPricingCarousel } from "@/components/KenatApp/AppPricingCarousel";
 
 const APP_ICON_SRC = "/kenat%20icon.png";
 
-const nav = [
-  { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#pro-benefits", label: "Pro Benefits" },
-  { href: "#faq", label: "FAQ" },
-];
-
 const proBenefits = [
   {
     Icon: FiShield,
@@ -72,11 +65,7 @@ const faqItems = [
 const btnPrimary =
   "inline-flex items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200 sm:px-8 sm:py-3.5 sm:text-base";
 
-const btnPrimaryCompact =
-  "inline-flex items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200";
-
 export function KenatAppLanding() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
 
   return (
@@ -87,84 +76,6 @@ export function KenatAppLanding() {
       >
         Skip to content
       </a>
-
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-white/40 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/70">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:py-4">
-          <a href="#top" className="flex shrink-0 items-center gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={APP_ICON_SRC}
-              alt="Kenat Ethiopian calendar app icon"
-              width={44}
-              height={44}
-              className="h-11 w-11 rounded-2xl shadow-lg ring-1 ring-black/10 dark:ring-white/20"
-            />
-            <span className="font-semibold tracking-tight text-zinc-900 dark:text-white">
-              Kenat App
-            </span>
-          </a>
-
-          <nav
-            className="hidden items-center gap-8 text-sm font-medium text-zinc-600 dark:text-zinc-300 md:flex"
-            aria-label="App page"
-          >
-            {nav.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="transition-colors hover:text-purple-600 dark:hover:text-sky-400"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <a href="#download" className={`${btnPrimaryCompact} hidden sm:inline-flex`}>
-              Download Now
-            </a>
-            <button
-              type="button"
-              className="rounded-lg border border-black/10 bg-white/50 p-2 text-zinc-800 dark:border-white/15 dark:bg-zinc-800/50 dark:text-white md:hidden"
-              aria-expanded={menuOpen}
-              aria-label="Toggle menu"
-              onClick={() => setMenuOpen((o) => !o)}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {menuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {menuOpen ? (
-          <div className="border-t border-black/5 bg-white/50 px-4 py-4 dark:border-white/10 dark:bg-zinc-900/80 md:hidden">
-            <nav className="flex flex-col gap-3 text-sm font-medium" aria-label="Mobile app page">
-              {nav.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="py-1 text-zinc-700 dark:text-zinc-200"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href="#download"
-                className={`${btnPrimary} mt-2 w-full`}
-                onClick={() => setMenuOpen(false)}
-              >
-                Download Now
-              </a>
-            </nav>
-          </div>
-        ) : null}
-      </header>
 
       <main id="main" className="relative z-10">
         <section id="top" className="relative overflow-hidden px-4 pb-20 pt-12 md:pb-28 md:pt-16">
@@ -179,17 +90,24 @@ export function KenatAppLanding() {
 
           <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h1 className="kenat-reveal text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-[2.75rem] lg:leading-[1.15]">
+              <p className="kenat-reveal mb-4 text-base font-medium md:text-lg">
+                <span className="text-zinc-700 dark:text-zinc-300">Ethiopian calendar</span>
+                <span className="mx-2 text-purple-600 dark:text-sky-400" aria-hidden>
+                  |
+                </span>
+                <span className="font-semibold tracking-tight text-zinc-900 dark:text-white">Kenat</span>
+              </p>
+              <h1 className="kenat-reveal kenat-reveal-delay-1 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-[2.75rem] lg:leading-[1.15]">
                 <span className="text-zinc-900 dark:text-white">Master Your Time with the </span>
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500">
                   Best Ethiopian Calendar
                 </span>
                 <span className="text-zinc-900 dark:text-white"> App.</span>
               </h1>
-              <p className="kenat-reveal kenat-reveal-delay-1 mt-6 max-w-xl text-lg text-zinc-600 dark:text-zinc-300 md:text-xl">
+              <p className="kenat-reveal kenat-reveal-delay-2 mt-6 max-w-xl text-lg text-zinc-600 dark:text-zinc-300 md:text-xl">
                 Precision date conversion, cultural heritage, and modern synchronization in one beautiful package.
               </p>
-              <div className="kenat-reveal kenat-reveal-delay-2 mt-10 flex flex-wrap gap-4" id="download">
+              <div className="kenat-reveal kenat-reveal-delay-3 mt-10 flex flex-wrap gap-4" id="download">
                 <a href="#download" className={`${btnPrimary} transform hover:scale-105`}>
                   Download Now
                 </a>
@@ -202,7 +120,7 @@ export function KenatAppLanding() {
               </div>
             </div>
 
-            <div className="kenat-reveal kenat-reveal-delay-3 flex justify-center lg:justify-end">
+            <div className="kenat-reveal kenat-reveal-delay-4 flex justify-center lg:justify-end">
               <GlassCard className="relative max-w-md rounded-3xl p-8 shadow-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -334,19 +252,6 @@ export function KenatAppLanding() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-black/5 px-4 py-10 dark:border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-center text-sm text-zinc-600 dark:text-zinc-400 sm:flex-row sm:text-left">
-          <div className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={APP_ICON_SRC} alt="" width={32} height={32} className="h-8 w-8 rounded-lg opacity-90" />
-            <span>Kenat — Ethiopian Calendar Toolkit</span>
-          </div>
-          <a href="/privacy" className="hover:text-purple-600 dark:hover:text-sky-400">
-            Privacy Policy
-          </a>
-        </div>
-      </footer>
     </div>
   );
 }

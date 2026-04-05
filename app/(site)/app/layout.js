@@ -3,7 +3,8 @@ const APP_ICON_PATH = '/kenat%20icon.png';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Kenat',
+  name: 'Ethiopian calendar | Kenat',
+  alternateName: ['Kenat', 'Kenat Ethiopian calendar'],
   applicationCategory: 'LifestyleApplication',
   operatingSystem: 'Android, iOS',
   description:
@@ -23,11 +24,11 @@ const jsonLd = {
 };
 
 export const metadata = {
-  title: 'Kenat App — Best Ethiopian Calendar for Android & iOS',
+  title: 'Ethiopian calendar | Kenat — Android & iOS',
   description:
     'Kenat is the best Ethiopian calendar app for Android and iOS. Featuring accurate date conversion, Bahire Hasab, holiday tracking, and cloud sync. Upgrade to Pro for an ad-free experience, Telegram integration, and cross-device sync. Download the ultimate Ethiopic toolkit today.',
   openGraph: {
-    title: 'Kenat — Best Ethiopian Calendar App',
+    title: 'Ethiopian calendar | Kenat',
     description:
       'Precision date conversion, Bahire Hasab, holidays, and Pro cloud sync. Download Kenat for Android and iOS.',
     url: 'https://www.kenat.systems/app',
@@ -45,7 +46,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kenat — Best Ethiopian Calendar App',
+    title: 'Ethiopian calendar | Kenat',
     description:
       'Ethiopic–Gregorian conversion, Bahire Hasab, holidays, and Pro features. For Android & iOS.',
   },
