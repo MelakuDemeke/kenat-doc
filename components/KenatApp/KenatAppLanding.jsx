@@ -61,7 +61,7 @@ const faqItems = [
   },
   {
     q: "Can I pay with Telegram Stars?",
-    a: "Yes. Pro plans can be purchased in Ethiopian Birr or an equivalent amount in Telegram Stars (around 200 Stars for comparable short-term access—exact bundles are shown in the app).",
+    a: "Yes. Kenat Pro is 80 Stars (3 months), 160 Stars (6 months), or 200 Stars (1 year), or you can pay the listed ETB amounts. Checkout happens in Telegram; Star pricing in your currency follows Telegram’s rates.",
   },
   {
     q: "Does Kenat work offline?",
@@ -293,7 +293,8 @@ export function KenatAppLanding() {
               Pricing
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-600 dark:text-zinc-400">
-              Pay in Ethiopian Birr or equivalent Telegram Stars (~200 Stars for comparable short-term access).
+              Pay in Ethiopian Birr or Telegram Stars: <strong>80</strong>, <strong>160</strong>, or{" "}
+              <strong>200</strong> Stars for the three Pro tiers (see carousel).
             </p>
             <AppPricingCarousel />
           </div>

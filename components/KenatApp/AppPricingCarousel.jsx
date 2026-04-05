@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FiChevronLeft, FiChevronRight, FiStar } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 /** Themes aligned with Kenat mini-app pricing (semi-transparent glass). */
 export const APP_PRICING_PLANS = [
@@ -11,7 +11,8 @@ export const APP_PRICING_PLANS = [
     tag: "Free",
     price: "0",
     period: "Forever",
-    stars: 0,
+    priceEtb: 0,
+    starsPrice: null,
     recommended: false,
     note: "Ad-supported, standard conversion, local reminders.",
     theme: "from-zinc-200/80 via-zinc-400/70 to-zinc-500/80",
@@ -25,7 +26,8 @@ export const APP_PRICING_PLANS = [
     tag: "3 months",
     price: "199",
     period: "ETB",
-    stars: 1,
+    priceEtb: 199,
+    starsPrice: 80,
     recommended: false,
     note: "All Pro features.",
     theme: "from-slate-200/80 via-slate-400/70 to-slate-500/80",
@@ -39,7 +41,8 @@ export const APP_PRICING_PLANS = [
     tag: "6 months",
     price: "399",
     period: "ETB",
-    stars: 2,
+    priceEtb: 399,
+    starsPrice: 160,
     recommended: false,
     note: "Best for season planning.",
     theme: "from-orange-200/80 via-orange-400/70 to-orange-500/80",
@@ -53,7 +56,8 @@ export const APP_PRICING_PLANS = [
     tag: "1 year · Best value",
     price: "499",
     period: "ETB",
-    stars: 3,
+    priceEtb: 499,
+    starsPrice: 200,
     recommended: true,
     note: "The complete experience.",
     theme: "from-amber-200/80 via-yellow-400/70 to-amber-500/80",
@@ -74,6 +78,7 @@ function PricingPlanCard({
   isRight,
 }) {
   const neighbor = isLeft || isRight;
+  const stars = plan.starsPrice;
   return (
     <div
       className={[
@@ -108,15 +113,20 @@ function PricingPlanCard({
           <span className="text-4xl font-black tabular-nums">{plan.price}</span>
           <span className="text-sm font-semibold opacity-70">{plan.period}</span>
         </div>
-        {plan.stars > 0 ? (
-          <div className="mt-2 flex items-center gap-0.5 text-amber-800/80" aria-label={`${plan.stars} Telegram Stars tier`}>
-            {Array.from({ length: plan.stars }).map((_, i) => (
-              <FiStar key={i} className="fill-current" size={14} strokeWidth={1.5} />
-            ))}
-            <span className="ml-1 text-[11px] font-bold opacity-70">Stars</span>
+        {stars != null ? (
+          <div className="mt-3 space-y-1 rounded-xl bg-black/10 px-3 py-2.5">
+            <p className="text-[11px] font-bold uppercase tracking-wide opacity-60">
+              Telegram Stars
+            </p>
+            <p className="text-lg font-black tabular-nums leading-tight">
+              {stars.toLocaleString()} Stars
+            </p>
+            <p className="text-[10px] font-medium leading-snug opacity-65">
+              Charged in-app via Telegram at checkout, or pay the ETB amount shown above.
+            </p>
           </div>
         ) : (
-          <p className="mt-2 text-[11px] font-semibold opacity-60">Free tier</p>
+          <p className="mt-2 text-[11px] font-semibold opacity-60">Free tier — no Stars</p>
         )}
         <p className="mt-4 flex-1 text-sm font-medium leading-relaxed opacity-80">
           {plan.note}
@@ -213,6 +223,22 @@ export function AppPricingCarousel() {
         </h3>
         <p className="mx-auto mt-2 max-w-xs text-[10px] font-bold uppercase leading-relaxed tracking-widest text-white/35">
           Pay in ETB or Telegram Stars in the app
+        </p>
+        <p className="mx-auto mt-3 max-w-md px-2 text-left text-[10px] font-medium leading-relaxed text-white/45">
+          <span className="font-bold text-white/55">Telegram Stars pricing:</span>{" "}
+          <span className="text-white/70">80 Stars</span> (3 months),{" "}
+          <span className="text-white/70">160 Stars</span> (6 months),{" "}
+          <span className="text-white/70">200 Stars</span> (1 year)—or the ETB price on each card. How Stars
+          convert to your local currency depends on Telegram; see the{" "}
+          <a
+            className="text-sky-400/90 underline decoration-white/20 underline-offset-2 hover:text-sky-300"
+            href="https://core.telegram.org/api/stars"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Stars API
+          </a>{" "}
+          (<code className="rounded bg-white/10 px-1 py-0.5 text-[9px]">stars_usd_sell_rate_x1000</code>).
         </p>
       </div>
 
