@@ -21,7 +21,7 @@ const navbar = (
     </div>}
 
     projectLink='https://github.com/MelakuDemeke/kenat'
-    chatLink='https://t.me/kenat_tool_kit'
+    chatLink='https://t.me/kenat_bot'
     chatIcon={<FaTelegram size={24} />}
   />
 )

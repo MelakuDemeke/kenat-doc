@@ -1,6 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import {
+  FiCalendar,
+  FiCloud,
+  FiHeadphones,
+  FiLayers,
+  FiShield,
+} from "react-icons/fi";
+import { FaTelegram } from "react-icons/fa";
 import { GlassCard } from "@/components/Landing/GlassCard";
 
 const APP_ICON_SRC = "/kenat%20icon.png";
@@ -14,32 +22,32 @@ const nav = [
 
 const proBenefits = [
   {
-    icon: "✨",
+    Icon: FiShield,
     title: "Ad-Free Experience",
     body: "Focus on what matters without distractions or banner ads.",
   },
   {
-    icon: "☁️",
+    Icon: FiCloud,
     title: "Cross-Device Cloud Sync",
     body: "Automatically synchronize your personal events and preferences across all your mobile devices.",
   },
   {
-    icon: "🤖",
+    Icon: FaTelegram,
     title: "Telegram Integration",
-    body: "Link your account to the Kenat Telegram Bot (@kenat_tool_kit) to manage your schedule and receive reminders via Telegram.",
+    body: "Link your account to the Kenat Telegram Bot (@kenat_bot) to manage your schedule and receive reminders via Telegram.",
   },
   {
-    icon: "🎨",
+    Icon: FiLayers,
     title: "Premium Customization",
     body: "Unlock exclusive accent colors and UI themes (Amethyst, Gold, Deep Sea) to match your personality.",
   },
   {
-    icon: "📅",
+    Icon: FiCalendar,
     title: "Full Bahire Hasab Access",
     body: "Access the deepest layers of traditional calculations for any year in the past or future.",
   },
   {
-    icon: "🚀",
+    Icon: FiHeadphones,
     title: "Priority Support",
     body: "Get at the front of the line for any technical help or feature requests.",
   },
@@ -297,15 +305,17 @@ export function KenatAppLanding() {
               Pro removes limits and connects your calendar everywhere you work.
             </p>
             <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {proBenefits.map((b) => (
-                <li key={b.title}>
+              {proBenefits.map(({ Icon, title, body }) => (
+                <li key={title}>
                   <GlassCard className="kenat-reveal flex gap-4 rounded-2xl p-6">
-                    <span className="text-2xl" aria-hidden>
-                      {b.icon}
-                    </span>
+                    <Icon
+                      size={26}
+                      className="mt-0.5 shrink-0 text-purple-600 dark:text-sky-400"
+                      aria-hidden
+                    />
                     <div>
-                      <h3 className="font-semibold text-zinc-900 dark:text-white">{b.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{b.body}</p>
+                      <h3 className="font-semibold text-zinc-900 dark:text-white">{title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{body}</p>
                     </div>
                   </GlassCard>
                 </li>
