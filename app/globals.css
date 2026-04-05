@@ -5,3 +5,49 @@
 /* or nextra-theme-blog/style.css */
 
 @variant dark (&:where(.dark *));
+
+/* App landing — subtle entry motion */
+@keyframes kenat-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kenat-reveal {
+  opacity: 0;
+  animation: kenat-fade-up 0.75s ease-out forwards;
+}
+
+.kenat-reveal-delay-1 {
+  animation-delay: 0.1s;
+}
+.kenat-reveal-delay-2 {
+  animation-delay: 0.2s;
+}
+.kenat-reveal-delay-3 {
+  animation-delay: 0.3s;
+}
+.kenat-reveal-delay-4 {
+  animation-delay: 0.4s;
+}
+
+.kenat-pricing-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.kenat-pricing-card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 20px 40px rgb(0 0 0 / 0.08);
+}
+
+.dark .kenat-pricing-card:hover {
+  box-shadow: 0 20px 40px rgb(0 0 0 / 0.35);
+}

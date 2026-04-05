@@ -10,5 +10,9 @@ export default {
     tools: {
         title: 'Tools',
         type: 'page'
+    },
+    app: {
+        title: 'App',
+        type: 'page'
     }
 }
