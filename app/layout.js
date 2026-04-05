@@ -24,7 +24,32 @@ const navbar = (
     chatIcon={<FaTelegram size={24} />}
   />
 )
-const footer = <Footer>MIT {new Date().getFullYear()} © Kenat by &nbsp; <a target='_blank' href="https://github.com/MelakuDemeke/"> @MelakuDemeke</a>.</Footer>
+const footer = (
+  <Footer>
+    <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center">
+      <a
+        href="/privacy"
+        className="text-primary-600 hover:underline dark:text-primary-400"
+      >
+        Privacy Policy
+      </a>
+      <span className="text-zinc-400 dark:text-zinc-500" aria-hidden>
+        ·
+      </span>
+      <span>
+        MIT {new Date().getFullYear()} © Kenat by{' '}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/MelakuDemeke/"
+        >
+          @MelakuDemeke
+        </a>
+        .
+      </span>
+    </span>
+  </Footer>
+)
 
 export default async function RootLayout({ children }) {
   return (
