@@ -10,6 +10,7 @@ import {
 } from "react-icons/fi";
 import { FaTelegram } from "react-icons/fa";
 import { GlassCard } from "@/components/Landing/GlassCard";
+import { AppPricingCarousel } from "@/components/KenatApp/AppPricingCarousel";
 
 const APP_ICON_SRC = "/kenat%20icon.png";
 
@@ -53,41 +54,6 @@ const proBenefits = [
   },
 ];
 
-const pricingPlans = [
-  {
-    name: "Basic",
-    tag: "Free",
-    price: "0 ETB",
-    period: "Forever",
-    note: "Ad-supported, standard conversion, local reminders.",
-    highlight: false,
-  },
-  {
-    name: "Standard",
-    tag: "Short-term",
-    price: "199 ETB",
-    period: "3 Months",
-    note: "All Pro features.",
-    highlight: false,
-  },
-  {
-    name: "Balanced",
-    tag: "Medium-term",
-    price: "399 ETB",
-    period: "6 Months",
-    note: "Best for season planning.",
-    highlight: false,
-  },
-  {
-    name: "Ultimate",
-    tag: "Best value",
-    price: "499 ETB",
-    period: "1 Year",
-    note: "The complete experience.",
-    highlight: true,
-  },
-];
-
 const faqItems = [
   {
     q: "What makes Kenat the best Ethiopian calendar app?",
@@ -108,9 +74,6 @@ const btnPrimary =
 
 const btnPrimaryCompact =
   "inline-flex items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200";
-
-const btnPrimaryBlock =
-  "flex w-full items-center justify-center rounded-lg bg-zinc-900 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200";
 
 export function KenatAppLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -332,40 +295,7 @@ export function KenatAppLanding() {
             <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-600 dark:text-zinc-400">
               Pay in Ethiopian Birr or equivalent Telegram Stars (~200 Stars for comparable short-term access).
             </p>
-            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
-              {pricingPlans.map((plan) => (
-                <GlassCard
-                  key={plan.name}
-                  className={`kenat-pricing-card kenat-reveal flex flex-col rounded-2xl p-6 ${
-                    plan.highlight
-                      ? "ring-2 ring-purple-500/50 shadow-lg dark:ring-sky-500/50"
-                      : ""
-                  }`}
-                >
-                  <span className="text-xs font-semibold uppercase tracking-wider text-purple-600 dark:text-sky-400">
-                    {plan.tag}
-                  </span>
-                  <h3 className="mt-2 text-xl font-bold text-zinc-900 dark:text-white">{plan.name}</h3>
-                  <p className="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">
-                    {plan.price}
-                    <span className="block text-sm font-normal text-zinc-500 dark:text-zinc-400">
-                      {plan.period}
-                    </span>
-                  </p>
-                  <p className="mt-4 flex-1 text-sm text-zinc-600 dark:text-zinc-400">{plan.note}</p>
-                  <a
-                    href="#download"
-                    className={`mt-6 text-center text-sm font-semibold transition ${
-                      plan.highlight
-                        ? btnPrimaryBlock
-                        : "flex w-full items-center justify-center rounded-lg border border-black/10 bg-white/30 py-3 text-zinc-900 hover:bg-white/50 dark:border-white/15 dark:bg-zinc-800/30 dark:text-white dark:hover:bg-zinc-800/50"
-                    }`}
-                  >
-                    {plan.name === "Basic" ? "Get started" : "Go Pro"}
-                  </a>
-                </GlassCard>
-              ))}
-            </div>
+            <AppPricingCarousel />
           </div>
         </section>
 

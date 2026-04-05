@@ -36,18 +36,55 @@
   animation-delay: 0.4s;
 }
 
-.kenat-pricing-card {
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+/* /app pricing carousel (mini-app style) */
+.app-pricing-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.app-pricing-no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.kenat-pricing-card:hover {
-  transform: translateY(-0.5rem);
-  box-shadow: 0 20px 40px rgb(0 0 0 / 0.08);
+@keyframes app-pricing-shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(150%) skewX(-20deg);
+  }
 }
 
-.dark .kenat-pricing-card:hover {
-  box-shadow: 0 20px 40px rgb(0 0 0 / 0.35);
+.app-pricing-section .active-card-shimmer-app {
+  position: relative;
+  overflow: hidden;
+}
+
+.app-pricing-section .active-card-shimmer-app::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: app-pricing-shimmer 4s infinite linear;
+  pointer-events: none;
+  z-index: 30;
+}
+
+@keyframes app-pricing-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.app-pricing-section .animate-float-app {
+  animation: app-pricing-float 4s ease-in-out infinite;
 }
