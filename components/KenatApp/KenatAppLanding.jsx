@@ -203,10 +203,6 @@ export function KenatAppLanding() {
             <h2 className="text-center text-2xl font-bold text-zinc-900 dark:text-white md:text-3xl">
               Pricing
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-600 dark:text-zinc-400">
-              Pay in Ethiopian Birr or Telegram Stars: <strong>80</strong>, <strong>160</strong>, or{" "}
-              <strong>200</strong> Stars for the three Pro tiers (see carousel).
-            </p>
             <AppPricingCarousel />
           </div>
         </section>
