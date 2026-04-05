@@ -14,7 +14,7 @@ export const APP_PRICING_PLANS = [
     priceEtb: 0,
     starsPrice: null,
     recommended: false,
-    note: "Ad-supported, standard conversion, local reminders.",
+    note: "Ad-supported; conversion, Bahire Hasab, local calendar sync & reminders.",
     theme: "from-zinc-200/80 via-zinc-400/70 to-zinc-500/80",
     text: "text-zinc-950",
     bgBlur: "bg-zinc-400/10",
@@ -224,22 +224,7 @@ export function AppPricingCarousel() {
         <p className="mx-auto mt-2 max-w-xs text-[10px] font-bold uppercase leading-relaxed tracking-widest text-white/35">
           Pay in ETB or Telegram Stars in the app
         </p>
-        <p className="mx-auto mt-3 max-w-md px-2 text-left text-[10px] font-medium leading-relaxed text-white/45">
-          <span className="font-bold text-white/55">Telegram Stars pricing:</span>{" "}
-          <span className="text-white/70">80 Stars</span> (3 months),{" "}
-          <span className="text-white/70">160 Stars</span> (6 months),{" "}
-          <span className="text-white/70">200 Stars</span> (1 year)—or the ETB price on each card. How Stars
-          convert to your local currency depends on Telegram; see the{" "}
-          <a
-            className="text-sky-400/90 underline decoration-white/20 underline-offset-2 hover:text-sky-300"
-            href="https://core.telegram.org/api/stars"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Stars API
-          </a>{" "}
-          (<code className="rounded bg-white/10 px-1 py-0.5 text-[9px]">stars_usd_sell_rate_x1000</code>).
-        </p>
+
       </div>
 
       <div className="relative z-10 w-full">

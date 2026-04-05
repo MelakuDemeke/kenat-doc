@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  FiCalendar,
-  FiCloud,
-  FiHeadphones,
-  FiLayers,
-  FiShield,
-} from "react-icons/fi";
+import { FiCloud, FiHeadphones, FiLayers, FiShield } from "react-icons/fi";
 import { FaTelegram } from "react-icons/fa";
 import { GlassCard } from "@/components/Landing/GlassCard";
 import { AppPricingCarousel } from "@/components/KenatApp/AppPricingCarousel";
@@ -34,11 +28,6 @@ const proBenefits = [
     Icon: FiLayers,
     title: "Premium Customization",
     body: "Unlock exclusive accent colors and UI themes (Amethyst, Gold, Deep Sea) to match your personality.",
-  },
-  {
-    Icon: FiCalendar,
-    title: "Full Bahire Hasab Access",
-    body: "Access the deepest layers of traditional calculations for any year in the past or future.",
   },
   {
     Icon: FiHeadphones,
@@ -144,9 +133,9 @@ export function KenatAppLanding() {
               Built for accuracy &amp; heritage
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-600 dark:text-zinc-400">
-              Four pillars that make Kenat the Ethiopian calendar toolkit you can trust.
+              Core tools for everyone—plus Pro for sync, Telegram, themes, and an ad-free experience.
             </p>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 {
                   title: "Date Conversion",
@@ -158,11 +147,15 @@ export function KenatAppLanding() {
                 },
                 {
                   title: "Traditional Logic (Bahire Hasab)",
-                  body: "The definitive tool for calculating movable dates without needing a physical book.",
+                  body: "Full Bahire Hasab and movable feasts for any Ethiopian year—free in the app, no Pro required.",
                 },
                 {
-                  title: "Modern Workflow",
-                  body: "Native integration with system calendars for notifications and reminders.",
+                  title: "Local calendar sync",
+                  body: "Sync Ethiopian dates, holidays, and your personal events with your phone’s calendar (Google Calendar, Apple Calendar, and system providers).",
+                },
+                {
+                  title: "Reminders & daily rhythm",
+                  body: "Local notifications and reminders so fasts, feasts, and your own plans stay on your radar.",
                 },
               ].map((f) => (
                 <GlassCard key={f.title} className="kenat-reveal rounded-2xl p-6 transition hover:ring-1 hover:ring-purple-500/30 dark:hover:ring-sky-500/30">
@@ -183,7 +176,7 @@ export function KenatAppLanding() {
               Unlock the Full Kenat Experience
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-600 dark:text-zinc-400">
-              Pro removes limits and connects your calendar everywhere you work.
+              Pro adds cross-device cloud sync, Telegram, premium themes, and an ad-free experience—Bahire Hasab stays free for everyone.
             </p>
             <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {proBenefits.map(({ Icon, title, body }) => (
