@@ -20,6 +20,9 @@ import { LiveAmharicDateTime } from "@/components/Landing/LiveAmharicDateTime";
 import { FeatureCard } from "@/components/Landing/FeatureCard";
 import { SectionBackground } from "@/components/Landing/SectionBackground";
 
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
+const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
+
 export default function Home() {
   const hasMounted = useHasMounted();
   const [downloads, setDownloads] = useState(0);
@@ -96,6 +99,20 @@ export default function Home() {
                   </span>
                 </div>
               </GlassCard>
+              <a
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Download Kenat on Google Play"
+                className="inline-flex transition-transform transform hover:scale-105"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={PLAY_STORE_BADGE_SRC}
+                  alt="Get it on Google Play"
+                  className="h-14 w-auto"
+                />
+              </a>
             </div>
           </div>
         </section>
