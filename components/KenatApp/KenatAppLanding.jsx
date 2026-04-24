@@ -7,6 +7,8 @@ import { GlassCard } from "@/components/Landing/GlassCard";
 import { AppPricingCarousel } from "@/components/KenatApp/AppPricingCarousel";
 
 const APP_ICON_SRC = "/kenat%20icon.png";
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
+const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
 
 const proBenefits = [
   {
@@ -51,9 +53,6 @@ const faqItems = [
   },
 ];
 
-const btnPrimary =
-  "inline-flex items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200 sm:px-8 sm:py-3.5 sm:text-base";
-
 export function KenatAppLanding() {
   const [openFaq, setOpenFaq] = useState(0);
 
@@ -97,8 +96,19 @@ export function KenatAppLanding() {
                 Precision date conversion, cultural heritage, and modern synchronization in one beautiful package.
               </p>
               <div className="kenat-reveal kenat-reveal-delay-3 mt-10 flex flex-wrap gap-4" id="download">
-                <a href="#download" className={`${btnPrimary} transform hover:scale-105`}>
-                  Download Now
+                <a
+                  href={PLAY_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Download Kenat on Google Play"
+                  className="inline-flex transition-transform hover:scale-105"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={PLAY_STORE_BADGE_SRC}
+                    alt="Get it on Google Play"
+                    className="h-14 w-auto"
+                  />
                 </a>
                 <a
                   href="#features"
