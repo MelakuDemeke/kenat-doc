@@ -13,7 +13,7 @@ import {
   FiGithub,
   FiBookOpen,
 } from "react-icons/fi";
-import { SiNpm, SiPnpm, SiYarn, SiBun } from "react-icons/si";
+import { SiNpm, SiPypi, SiDart } from "react-icons/si";
 import { clsx } from "clsx";
 
 import { useHasMounted } from "@/hooks/useHasMounted";
@@ -28,10 +28,15 @@ const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
 
 const INSTALL_COMMANDS = {
   npm: "npm install kenat kenat-ui",
-  pnpm: "pnpm add kenat kenat-ui",
-  yarn: "yarn add kenat kenat-ui",
-  bun: "bun add kenat kenat-ui",
+  pip: "pip install kenat",
+  pub: "dart pub add kenat",
 };
+
+const INSTALLER_TABS = [
+  { key: "npm", Icon: SiNpm, label: "npm" },
+  { key: "pip", Icon: SiPypi, label: "pip" },
+  { key: "pub", Icon: SiDart, label: "pub" },
+];
 
 export default function Home() {
   const hasMounted = useHasMounted();
@@ -40,33 +45,10 @@ export default function Home() {
   const [copiedInstaller, setCopiedInstaller] = useState(false);
 
   useEffect(() => {
-    async function fetchTotalDownloads() {
-      try {
-        const startDate = "2024-01-01";
-        const endDate = new Date().toISOString().split("T")[0];
-
-        const [kenatRes, kenatUiRes] = await Promise.all([
-          fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat`),
-          fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat-ui`),
-        ]);
-
-        const kenatData = await kenatRes.json();
-        const kenatUiData = await kenatUiRes.json();
-
-        const totalKenatDownloads = kenatData.downloads
-          ? kenatData.downloads.reduce((sum, day) => sum + day.downloads, 0)
-          : 0;
-        const totalKenatUiDownloads = kenatUiData.downloads
-          ? kenatUiData.downloads.reduce((sum, day) => sum + day.downloads, 0)
-          : 0;
-
-        setDownloads(totalKenatDownloads + totalKenatUiDownloads);
-      } catch (error) {
-        console.error("Failed to fetch total downloads:", error);
-        setDownloads(0);
-      }
-    }
-    fetchTotalDownloads();
+    fetch("/api/downloads")
+      .then((r) => r.json())
+      .then((data) => setDownloads(data.total ?? 0))
+      .catch(() => setDownloads(0));
   }, []);
 
   const handleCopyInstaller = () => {
@@ -116,13 +98,8 @@ export default function Home() {
           {/* Installer Bar Component */}
           <div className="w-full max-w-lg mx-auto border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md shadow-lg p-2.5 space-y-2.5">
             <div className="flex justify-between items-center px-1">
-              <div className="flex gap-1.5">
-                {[
-                  { key: "npm", Icon: SiNpm, label: "npm" },
-                  { key: "pnpm", Icon: SiPnpm, label: "pnpm" },
-                  { key: "yarn", Icon: SiYarn, label: "yarn" },
-                  { key: "bun", Icon: SiBun, label: "bun" },
-                ].map((item) => (
+              <div className="flex items-center gap-1">
+                {INSTALLER_TABS.map((item) => (
                   <button
                     key={item.key}
                     onClick={() => setActiveInstaller(item.key)}
@@ -140,7 +117,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-1.5 font-mono text-[10px] text-zinc-500">
                 <FiDownload />
-                <span>{hasMounted ? downloads.toLocaleString() : "..."} downloads</span>
+                <span>{hasMounted ? downloads.toLocaleString() : "..."} total downloads</span>
               </div>
             </div>
 
