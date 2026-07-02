@@ -16,6 +16,7 @@ import {
 import { FaTelegram } from "react-icons/fa";
 import { FeatureCard } from "@/components/Landing/FeatureCard";
 import { AppPricingCarousel } from "@/components/KenatApp/AppPricingCarousel";
+import { SiteFooter } from "@/components/SiteFooter";
 
 const APP_ICON_SRC = "/kenat%20icon.png";
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
@@ -297,6 +298,7 @@ export function KenatAppLanding() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

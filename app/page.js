@@ -21,6 +21,7 @@ import { LiveAmharicDateTime } from "@/components/Landing/LiveAmharicDateTime";
 import { FeatureCard } from "@/components/Landing/FeatureCard";
 import { OrbitingLanguageIcons } from "@/components/Landing/OrbitingLanguageIcons";
 import InteractivePlayground from "@/components/Landing/InteractivePlayground";
+import { SiteFooter } from "@/components/SiteFooter";
 
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
 const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
@@ -306,6 +307,7 @@ export default function Home() {
                 { name: "kenat-ui", url: "https://github.com/MelakuDemeke/kenat-ui" },
                 { name: "kenat_py", url: "https://github.com/MelakuDemeke/kenat_py" },
                 { name: "kenat-cli", url: "https://github.com/MelakuDemeke/kenat-cli" },
+                { name: "kenat-dart", url: "https://github.com/MelakuDemeke/kenat-dart" },
               ].map((repo) => (
                 <a
                   key={repo.name}
@@ -322,6 +324,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

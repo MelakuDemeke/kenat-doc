@@ -1,4 +1,4 @@
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
+import { Layout, Navbar, ThemeSwitch } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
@@ -23,35 +23,10 @@ const navbar = (
     projectLink='https://github.com/MelakuDemeke/kenat'
     chatLink='https://t.me/kenat_bot'
     chatIcon={<FaTelegram size={24} />}
-  />
+  >
+    <ThemeSwitch />
+  </Navbar>
 )
-const footer = (
-  <Footer>
-    <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center">
-      <a
-        href="/privacy"
-        className="text-primary-600 hover:underline dark:text-primary-400"
-      >
-        Privacy Policy
-      </a>
-      <span className="text-zinc-400 dark:text-zinc-500" aria-hidden>
-        ·
-      </span>
-      <span>
-        MIT {new Date().getFullYear()} © Kenat by{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/MelakuDemeke/"
-        >
-          @MelakuDemeke
-        </a>
-        .
-      </span>
-    </span>
-  </Footer>
-)
-
 export default async function RootLayout({ children }) {
   return (
     <html
@@ -95,7 +70,6 @@ export default async function RootLayout({ children }) {
           navbar={navbar}
           pageMap={await getPageMap()}
           docsRepositoryBase="https://github.com/MelakuDemeke/kenat-doc"
-          footer={footer}
         // ... Your additional layout options
         >
           {children}

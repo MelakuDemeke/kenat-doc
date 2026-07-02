@@ -8,6 +8,7 @@ import {
     FiGift,
 } from "react-icons/fi";
 import { ToolCard } from "@/components/ToolCard";
+import { SiteFooter } from "@/components/SiteFooter";
 
 const tools = [
     {
@@ -83,6 +84,7 @@ export default function ToolsPage() {
                     </div>
                 </section>
             </main>
+            <SiteFooter />
         </div>
     );
 }
