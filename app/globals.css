@@ -92,6 +92,21 @@
   animation: app-pricing-float 4s ease-in-out infinite;
 }
 
+/* Language chip floating animation */
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.lang-float {
+  animation: icon-float var(--float-dur, 4.5s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-float { animation: none; }
+}
+
 /* Design Engineering UI Utilities */
 .bg-grid-dots {
   background-image: radial-gradient(circle, rgba(9, 9, 11, 0.07) 1px, transparent 1px);

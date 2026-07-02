@@ -1,14 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import * as THREE from "three";
-import {
-  SiJavascript,
-  SiNodedotjs,
-  SiPython,
-  SiReact,
-  SiTypescript,
-} from "react-icons/si";
+import { SiJavascript, SiNodedotjs, SiPython, SiReact, SiTypescript } from "react-icons/si";
 
 const ICONS = [
   {
@@ -16,90 +8,74 @@ const ICONS = [
     label: "JavaScript",
     Icon: SiJavascript,
     iconClass: "text-amber-500",
-    chipClass: "bg-amber-100/95 dark:bg-amber-500/20",
+    chipClass: "bg-amber-50/90 dark:bg-amber-500/10 border-amber-200/70 dark:border-amber-500/20 text-zinc-700 dark:text-zinc-300",
   },
   {
     key: "typescript",
     label: "TypeScript",
     Icon: SiTypescript,
     iconClass: "text-blue-600",
-    chipClass: "bg-blue-100/95 dark:bg-blue-500/20",
+    chipClass: "bg-blue-50/90 dark:bg-blue-500/10 border-blue-200/70 dark:border-blue-500/20 text-zinc-700 dark:text-zinc-300",
   },
   {
     key: "python",
     label: "Python",
     Icon: SiPython,
     iconClass: "text-emerald-600",
-    chipClass: "bg-emerald-100/95 dark:bg-emerald-500/20",
+    chipClass: "bg-emerald-50/90 dark:bg-emerald-500/10 border-emerald-200/70 dark:border-emerald-500/20 text-zinc-700 dark:text-zinc-300",
   },
   {
     key: "react",
     label: "React",
     Icon: SiReact,
     iconClass: "text-cyan-500",
-    chipClass: "bg-cyan-100/95 dark:bg-cyan-500/20",
+    chipClass: "bg-cyan-50/90 dark:bg-cyan-500/10 border-cyan-200/70 dark:border-cyan-500/20 text-zinc-700 dark:text-zinc-300",
   },
   {
     key: "node",
     label: "Node.js",
     Icon: SiNodedotjs,
     iconClass: "text-lime-600",
-    chipClass: "bg-lime-100/95 dark:bg-lime-500/20",
+    chipClass: "bg-lime-50/90 dark:bg-lime-500/10 border-lime-200/70 dark:border-lime-500/20 text-zinc-700 dark:text-zinc-300",
   },
 ];
 
+const PLACEMENTS = [
+  { top: "10%", left: "1.5%" },
+  { top: "32%", right: "1.5%" },
+  { top: "56%", left: "0.8%" },
+  { bottom: "24%", right: "1%" },
+  { bottom: "10%", left: "2%" },
+];
+
+const FLOAT_PARAMS = [
+  { dur: "4.2s", delay: "0s" },
+  { dur: "5.1s", delay: "-1.3s" },
+  { dur: "3.9s", delay: "-2.5s" },
+  { dur: "4.8s", delay: "-0.7s" },
+  { dur: "5.5s", delay: "-3.1s" },
+];
+
 export function OrbitingLanguageIcons() {
-  const [positions, setPositions] = useState(() =>
-    ICONS.map(() => ({ x: 0, y: 0, scale: 1 }))
-  );
-
-  const clock = useMemo(() => new THREE.Clock(), []);
-
-  useEffect(() => {
-    let frameId = 0;
-    const orbitRadiusX = 290;
-    const orbitRadiusY = 170;
-    const orbitSpeed = 0.16;
-    const noFlyZoneY = 115;
-
-    const update = () => {
-      const time = clock.getElapsedTime();
-      const projected = ICONS.map((_, index) => {
-        const angle = time * orbitSpeed + (index / ICONS.length) * Math.PI * 2;
-        const x = Math.cos(angle) * orbitRadiusX;
-        let y = Math.sin(angle) * orbitRadiusY;
-        if (Math.abs(y) < noFlyZoneY) {
-          y = y < 0 ? -noFlyZoneY : noFlyZoneY;
-        }
-        const depth = Math.sin(angle * 1.2);
-        const scale = THREE.MathUtils.clamp(0.9 + depth * 0.08, 0.82, 1);
-        return { x, y, scale };
-      });
-
-      setPositions(projected);
-      frameId = window.requestAnimationFrame(update);
-    };
-
-    frameId = window.requestAnimationFrame(update);
-    return () => window.cancelAnimationFrame(frameId);
-  }, [clock]);
-
   return (
-    <div className="pointer-events-none absolute inset-0 hidden md:block" aria-hidden="true">
-      {ICONS.map(({ key, Icon, iconClass, chipClass }, index) => {
-        const pos = positions[index] || { x: 0, y: 0, scale: 1 };
-        return (
-          <div
-            key={key}
-            className={`absolute left-1/2 top-1/2 flex h-11 w-11 items-center justify-center rounded-xl shadow-md ring-1 ring-black/5 dark:ring-white/10 opacity-85 ${chipClass}`}
-            style={{
-              transform: `translate(-50%, -50%) translate(${pos.x}px, ${pos.y}px) scale(${pos.scale})`,
-            }}
-          >
-            <Icon className={`text-xl ${iconClass}`} />
-          </div>
-        );
-      })}
+    <div
+      className="pointer-events-none absolute inset-0 hidden md:block overflow-hidden"
+      aria-hidden="true"
+    >
+      {ICONS.map(({ key, Icon, iconClass, chipClass, label }, i) => (
+        <div
+          key={key}
+          className={`absolute flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border backdrop-blur-sm lang-float ${chipClass}`}
+          style={{
+            ...PLACEMENTS[i],
+            "--float-dur": FLOAT_PARAMS[i].dur,
+            "--float-delay": FLOAT_PARAMS[i].delay,
+          }}
+        >
+          <Icon className={`text-base shrink-0 ${iconClass}`} />
+          <span className="font-mono text-[11px] font-medium opacity-75">{label}</span>
+        </div>
+      ))}
     </div>
   );
 }

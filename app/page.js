@@ -96,7 +96,10 @@ export default function Home() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
-              Ethiopian Calendar <span className="text-gradient-sky-purple">Toolkit</span>
+              Ethiopian Calendar{" "}
+              <span className="font-mono bg-zinc-900 dark:bg-zinc-100 text-sky-400 dark:text-sky-600 px-3 rounded-lg">
+                Toolkit
+              </span>
             </h1>
 
             <p className="text-lg md:text-xl text-zinc-650 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed">
