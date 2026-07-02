@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   FiCode,
   FiCopy,
+  FiCheck,
   FiDownload,
   FiBox,
   FiLayers,
@@ -12,40 +13,53 @@ import {
   FiGithub,
   FiBookOpen,
 } from "react-icons/fi";
-import { SiNpm } from "react-icons/si";
+import { SiNpm, SiPnpm, SiYarn, SiBun } from "react-icons/si";
+import { clsx } from "clsx";
 
 import { useHasMounted } from "@/hooks/useHasMounted";
-import { GlassCard } from "@/components/Landing/GlassCard";
 import { LiveAmharicDateTime } from "@/components/Landing/LiveAmharicDateTime";
 import { FeatureCard } from "@/components/Landing/FeatureCard";
-import { SectionBackground } from "@/components/Landing/SectionBackground";
+import { OrbitingLanguageIcons } from "@/components/Landing/OrbitingLanguageIcons";
+import InteractivePlayground from "@/components/Landing/InteractivePlayground";
 
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
 const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
 
+const INSTALL_COMMANDS = {
+  npm: "npm install kenat kenat-ui",
+  pnpm: "pnpm add kenat kenat-ui",
+  yarn: "yarn add kenat kenat-ui",
+  bun: "bun add kenat kenat-ui",
+};
+
 export default function Home() {
   const hasMounted = useHasMounted();
   const [downloads, setDownloads] = useState(0);
+  const [activeInstaller, setActiveInstaller] = useState("npm");
+  const [copiedInstaller, setCopiedInstaller] = useState(false);
 
   useEffect(() => {
     async function fetchTotalDownloads() {
       try {
-        const startDate = '2024-01-01';
-        const endDate = new Date().toISOString().split('T')[0];
+        const startDate = "2024-01-01";
+        const endDate = new Date().toISOString().split("T")[0];
 
         const [kenatRes, kenatUiRes] = await Promise.all([
           fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat`),
-          fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat-ui`)
+          fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat-ui`),
         ]);
 
         const kenatData = await kenatRes.json();
         const kenatUiData = await kenatUiRes.json();
 
-        const totalKenatDownloads = kenatData.downloads ? kenatData.downloads.reduce((sum, day) => sum + day.downloads, 0) : 0;
-        const totalKenatUiDownloads = kenatUiData.downloads ? kenatUiData.downloads.reduce((sum, day) => sum + day.downloads, 0) : 0;
+        const totalKenatDownloads = kenatData.downloads
+          ? kenatData.downloads.reduce((sum, day) => sum + day.downloads, 0)
+          : 0;
+        const totalKenatUiDownloads = kenatUiData.downloads
+          ? kenatUiData.downloads.reduce((sum, day) => sum + day.downloads, 0)
+          : 0;
 
         setDownloads(totalKenatDownloads + totalKenatUiDownloads);
-
       } catch (error) {
         console.error("Failed to fetch total downloads:", error);
         setDownloads(0);
@@ -54,197 +68,254 @@ export default function Home() {
     fetchTotalDownloads();
   }, []);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText("npm install kenat kenat-ui");
-    alert("Copied to clipboard!");
+  const handleCopyInstaller = () => {
+    navigator.clipboard.writeText(INSTALL_COMMANDS[activeInstaller]);
+    setCopiedInstaller(true);
+    setTimeout(() => setCopiedInstaller(false), 2000);
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-zinc-900 text-zinc-900 dark:text-white selection:bg-purple-500/50 relative overflow-x-hidden">
-      <main className="relative z-10">
-        <section className="min-h-screen flex items-center justify-center text-center px-4 relative overflow-hidden">
-          <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-4">
-              Kenat: The Ethiopian Calendar Toolkit
-            </h1>
-            <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 mt-4 max-w-2xl mx-auto">
-              A multi-language toolkit for the Ethiopian calendar, offering date
-              conversion, calendar grids, holiday detection, and a headless UI
-              library for React.
-            </p>
-            <LiveAmharicDateTime />
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
-              <a
-                href="/doc"
-                className="w-full sm:w-auto px-6 py-3 bg-zinc-900 text-white dark:bg-white dark:text-black font-semibold rounded-lg shadow-lg hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-transform transform hover:scale-105"
-              >
-                Get Started
-              </a>
-              <GlassCard className="w-full sm:w-auto p-4 flex items-center gap-4">
-                <SiNpm size={30} className="text-red-500 flex-shrink-0" />
-                <code className="text-sky-600 dark:text-sky-300 text-sm sm:text-base whitespace-nowrap">
-                  npm i kenat kenat-ui
-                </code>
-                <button
-                  onClick={copyToClipboard}
-                  className="p-2 text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white"
-                >
-                  <FiCopy />
-                </button>
-                <div className="h-8 border-l border-black/10 dark:border-white/20"></div>
-                <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
-                  <FiDownload />
-                  <span className="font-bold text-zinc-800 dark:text-white">
-                    {hasMounted ? downloads.toLocaleString() : "..."}
-                  </span>
-                </div>
-              </GlassCard>
-              <a
-                href={PLAY_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Download Kenat on Google Play"
-                className="inline-flex transition-transform transform hover:scale-105"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={PLAY_STORE_BADGE_SRC}
-                  alt="Get it on Google Play"
-                  className="h-14 w-auto"
-                />
-              </a>
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 selection:bg-sky-500/30 relative overflow-x-hidden bg-grid-dots">
+      {/* Visual top/bottom accent gradients */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-sky-500/10 dark:bg-sky-500/5 rounded-full filter blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute top-[40%] right-1/4 w-[600px] h-[600px] bg-purple-500/10 dark:bg-purple-500/5 rounded-full filter blur-[120px] pointer-events-none -z-10" />
+
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+        {/* --- Hero Section --- */}
+        <section className="relative pt-12 pb-8 text-center space-y-8">
+          <div className="absolute inset-0 -z-10 pointer-events-none flex items-center justify-center">
+            <OrbitingLanguageIcons />
+          </div>
+
+          <div className="space-y-4 max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 shadow-sm backdrop-blur">
+              <span className="w-2 h-2 rounded-full bg-sky-500"></span>
+              <span className="font-mono text-xs font-semibold text-zinc-600 dark:text-zinc-350">
+                v2.0.0 Release
+              </span>
             </div>
+
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+              Ethiopian Calendar <span className="text-gradient-sky-purple">Toolkit</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-zinc-650 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed">
+              Complete date conversion, holiday detection, and custom calendar UI logic.
+              A robust, lightweight, multi-language library built for developers.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center justify-center gap-4">
+            <LiveAmharicDateTime />
+          </div>
+
+          {/* Installer Bar Component */}
+          <div className="w-full max-w-lg mx-auto border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md shadow-lg p-2.5 space-y-2.5">
+            <div className="flex justify-between items-center px-1">
+              <div className="flex gap-1.5">
+                {[
+                  { key: "npm", Icon: SiNpm, label: "npm" },
+                  { key: "pnpm", Icon: SiPnpm, label: "pnpm" },
+                  { key: "yarn", Icon: SiYarn, label: "yarn" },
+                  { key: "bun", Icon: SiBun, label: "bun" },
+                ].map((item) => (
+                  <button
+                    key={item.key}
+                    onClick={() => setActiveInstaller(item.key)}
+                    className={clsx(
+                      "flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono transition-colors",
+                      activeInstaller === item.key
+                        ? "bg-zinc-100 dark:bg-zinc-850 text-zinc-900 dark:text-white font-bold"
+                        : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+                    )}
+                  >
+                    <item.Icon size={12} className={activeInstaller === item.key ? "text-sky-500" : ""} />
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5 font-mono text-[10px] text-zinc-500">
+                <FiDownload />
+                <span>{hasMounted ? downloads.toLocaleString() : "..."} downloads</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-900 rounded-lg p-3 font-mono text-sm overflow-hidden">
+              <span className="text-sky-600 dark:text-sky-400 select-all truncate mr-2">
+                {INSTALL_COMMANDS[activeInstaller]}
+              </span>
+              <button
+                onClick={handleCopyInstaller}
+                className="flex-shrink-0 p-1.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-850 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                title="Copy install command"
+              >
+                {copiedInstaller ? <FiCheck className="text-emerald-500" /> : <FiCopy />}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <a
+              href="/doc"
+              className="px-6 py-2.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
+            >
+              Get Started
+            </a>
+            <a
+              href={PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex transition-transform hover:scale-[1.02] active:scale-95"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={PLAY_STORE_BADGE_SRC}
+                alt="Get it on Google Play"
+                className="h-10 w-auto"
+              />
+            </a>
           </div>
         </section>
 
-        {/* --- Section 1: `kenat` Core Logic --- */}
-        <section className="py-20 px-4 relative overflow-hidden">
-          <SectionBackground rotation={15} />
-          <div className="container mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">Powerful Core Logic</h2>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-12 max-w-2xl mx-auto">
-              `kenat` provides a robust, standalone library for all your
-              Ethiopian calendar needs.
+        {/* --- Dotted Separator Layout Rail --- */}
+        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800 my-12" />
+
+        {/* --- Proof-over-Decoration playground --- */}
+        <section className="space-y-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-extrabold tracking-tight">Interactive Playground</h2>
+            <p className="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto text-sm">
+              See the Ethiopian Calendar Toolkit in action. Toggle between interactive demos and review clean implementation codes.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <FeatureCard
-                icon={<FiCode size={24} />}
-                title="Date Conversion"
-                desc="Effortlessly convert dates between Ethiopian and Gregorian calendars with simple functions like toEC and toGC."
-              />
-              <FeatureCard
-                icon={<FiLayout size={24} />}
-                title="Calendar Grids"
-                desc="Generate complete month data, including headers, days, and holiday information, perfect for building custom calendar UIs."
-              />
-              <FeatureCard
-                icon={<FiToggleLeft size={24} />}
-                title="Date Arithmetic"
-                desc="Reliably add or subtract days, months, and years from any Ethiopian date."
-              />
-              <FeatureCard
-                icon={<FiCode size={24} />}
-                title="Geez Numerals"
-                desc="Format dates and numbers using traditional Ge'ez script for an authentic cultural representation."
-              />
-              <FeatureCard
-                icon={<FiCode size={24} />}
-                title="Bahire Hasab"
-                desc="Calculate movable feasts and fasts like Easter and Lent using the ancient Bahire Hasab computational system."
-              />
-              <FeatureCard
-                icon={<FiCode size={24} />}
-                title="Holiday System"
-                desc="Detect fixed, movable, and tagged holidays with a flexible system that supports filtering by type (e.g., PUBLIC, RELIGIOUS)."
-              />
-            </div>
+          </div>
+          <InteractivePlayground />
+        </section>
+
+        {/* --- Dotted Separator Layout Rail --- */}
+        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800 my-12" />
+
+        {/* --- Section 1: `kenat` Core Logic --- */}
+        <section className="space-y-12">
+          <div className="text-center space-y-2">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-sky-500 font-semibold">Core Library Features</span>
+            <h2 className="text-3xl font-extrabold tracking-tight">Powerful Core Logic</h2>
+            <p className="text-zinc-550 dark:text-zinc-400 max-w-2xl mx-auto text-sm">
+              `kenat` provides a robust, zero-dependency engine for parsing, converting, and formatting Ethiopian dates.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <FeatureCard
+              icon={<FiCode size={20} />}
+              title="Date Conversion"
+              desc="Effortlessly convert dates between Ethiopian and Gregorian calendars using highly-optimized conversion formulas."
+              tag="core"
+            />
+            <FeatureCard
+              icon={<FiLayout size={20} />}
+              title="Calendar Grids"
+              desc="Generate month structures, including weekday headers, Ge'ez days, and matching Gregorian values, ready for frontend UI tables."
+              tag="core"
+            />
+            <FeatureCard
+              icon={<FiToggleLeft size={20} />}
+              title="Date Arithmetic"
+              desc="Perform reliable mathematical calculations, adding or subtracting days, months, and years relative to any Ethiopian epoch."
+              tag="core"
+            />
+            <FeatureCard
+              icon={<FiCode size={20} />}
+              title="Geez Numerals"
+              desc="Support traditional Ge'ez scripts with native number-to-Geez formatting utilities for culturally accurate UIs."
+              tag="core"
+            />
+            <FeatureCard
+              icon={<FiCode size={20} />}
+              title="Bahire Hasab"
+              desc="Calculate movable Christian feasts and fasts (Easter, Nineveh, Lent) for any given year based on ancient calendar calculations."
+              tag="core"
+            />
+            <FeatureCard
+              icon={<FiCode size={20} />}
+              title="Holiday System"
+              desc="Identify fixed and dynamic holidays with custom filtering (PUBLIC, RELIGIOUS) tailored for Ethiopia."
+              tag="core"
+            />
           </div>
         </section>
 
         {/* --- Section 2: `kenat-ui` --- */}
-        <section className="py-20 px-4 relative overflow-hidden bg-white/5 dark:bg-black/20">
-          <SectionBackground rotation={170} />
-          <div className="container mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">
-              Flexible UI with `kenat-ui`
-            </h2>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-12 max-w-2xl mx-auto">
-              `kenat-ui` is a headless library that gives you maximum control
-              over your UI&apos;s appearance while handling all the complex calendar
-              logic for you.
+        <section className="space-y-12 py-4">
+          <div className="text-center space-y-2">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-purple-500 font-semibold">Headless Primitive Hooks</span>
+            <h2 className="text-3xl font-extrabold tracking-tight">Flexible UI with `kenat-ui`</h2>
+            <p className="text-zinc-550 dark:text-zinc-400 max-w-2xl mx-auto text-sm">
+              `kenat-ui` is a headless UI logic library that gives you full aesthetic freedom while managing the state behind date pickers and calendars.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <FeatureCard
-                icon={<FiLayers size={24} />}
-                title="Headless by Design"
-                desc="Get powerful hooks and functions for state management and business logic, without any pre-styled components."
-              />
-              <FeatureCard
-                icon={<FiBox size={24} />}
-                title="Bring Your Own Styles"
-                desc="You control the markup and styling. Perfect for Tailwind CSS, Chakra UI, or your own design system."
-              />
-              <FeatureCard
-                icon={<FiBox size={24} />}
-                title="Reusable Components"
-                desc="Build custom date pickers, clocks, and calendars that are fully reusable across different themes and applications."
-              />
-            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FeatureCard
+              icon={<FiLayers size={20} />}
+              title="Headless by Design"
+              desc="Access React hooks and layout generators without forced styling, allowing full integration with your local CSS framework."
+              tag="ui"
+            />
+            <FeatureCard
+              icon={<FiBox size={20} />}
+              title="Style-Agnostic"
+              desc="Ready to use with Tailwind CSS, Radix UI, Framer Motion, CSS modules, or custom visual tokens."
+              tag="ui"
+            />
+            <FeatureCard
+              icon={<FiBox size={20} />}
+              title="Highly Reusable"
+              desc="Structure custom input date-pickers, digital clocks, month ranges, and multi-select calendars with ease."
+              tag="ui"
+            />
           </div>
         </section>
 
-        <section className="py-20 text-center px-4 relative overflow-hidden">
-          <h2 className="text-4xl font-bold mb-4">Ready to Build?</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-xl mx-auto">
-            Explore the comprehensive documentation for guides and API
-            references, or dive into the source code on GitHub.
-          </p>
-          {/* Prominent Read the Docs button above all others */}
-          <a
-            href="/doc"
-            className="flex items-center justify-center gap-4 px-16 py-6 text-2xl bg-gradient-to-r from-purple-700 to-sky-600 text-white dark:bg-white dark:text-black font-extrabold rounded-2xl shadow-2xl hover:bg-purple-800 dark:hover:bg-zinc-200 transition-transform transform hover:scale-110 border-4 border-white dark:border-zinc-900 mx-auto mb-10 w-fit"
-            style={{ zIndex: 10 }}
-          >
-            <FiBookOpen size={32} />
-            <span>Read the Docs</span>
-          </a>
-          <div className="flex flex-wrap justify-center items-center gap-4">
+        {/* --- Dotted Separator Layout Rail --- */}
+        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800 my-12" />
+
+        {/* --- CTA Section --- */}
+        <section className="text-center py-12 max-w-4xl mx-auto space-y-8">
+          <div className="space-y-3">
+            <h2 className="text-3xl font-extrabold tracking-tight">Ready to Build?</h2>
+            <p className="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
+              Explore the detailed guide and API reference to integrate Ethiopian calendar features, or inspect the open-source codebases.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-8">
             <a
-              href="https://github.com/MelakuDemeke/kenat"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
+              href="/doc"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-bold rounded-xl shadow-lg hover:shadow-zinc-500/10 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all hover:-translate-y-0.5"
             >
-              <FiGithub />
-              <span>kenat</span>
+              <FiBookOpen size={16} />
+              <span>Read the Documentation</span>
             </a>
-            <a
-              href="https://github.com/MelakuDemeke/kenat-ui"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-            >
-              <FiGithub />
-              <span>kenat-ui</span>
-            </a>
-            <a
-              href="https://github.com/MelakuDemeke/kenat_py"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-            >
-              <FiGithub />
-              <span>kenat_py</span>
-            </a>
-            <a
-              href="https://github.com/MelakuDemeke/kenat-cli"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg hover:bg-zinc-600 transition-transform transform hover:scale-105"
-            >
-              <FiGithub />
-              <span>kenat-cli</span>
-            </a>
+
+            <div className="flex flex-wrap justify-center items-center gap-3">
+              {[
+                { name: "kenat", url: "https://github.com/MelakuDemeke/kenat" },
+                { name: "kenat-ui", url: "https://github.com/MelakuDemeke/kenat-ui" },
+                { name: "kenat_py", url: "https://github.com/MelakuDemeke/kenat_py" },
+                { name: "kenat-cli", url: "https://github.com/MelakuDemeke/kenat-cli" },
+              ].map((repo) => (
+                <a
+                  key={repo.name}
+                  href={repo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900 text-xs font-mono text-zinc-600 dark:text-zinc-350 shadow-sm hover:shadow transition-all"
+                >
+                  <FiGithub size={12} />
+                  <span>{repo.name}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
       </main>

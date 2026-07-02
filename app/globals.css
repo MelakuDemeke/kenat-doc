@@ -91,3 +91,54 @@
 .app-pricing-section .animate-float-app {
   animation: app-pricing-float 4s ease-in-out infinite;
 }
+
+/* Design Engineering UI Utilities */
+.bg-grid-dots {
+  background-image: radial-gradient(circle, rgba(9, 9, 11, 0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.dark .bg-grid-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+.glow-hover {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-hover::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(168, 85, 247, 0.15));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease-out;
+}
+.glow-hover:hover::after {
+  opacity: 1;
+}
+
+/* Visual rails and layout separators */
+.layout-rail-v {
+  position: relative;
+}
+.layout-rail-v::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--color-zinc-200), transparent);
+}
+.dark .layout-rail-v::before {
+  background: linear-gradient(to bottom, transparent, var(--color-zinc-800), transparent);
+}
+
+.text-gradient-sky-purple {
+  background: linear-gradient(135deg, #0ea5e9, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
