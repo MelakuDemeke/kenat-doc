@@ -34,6 +34,7 @@ You can optionally pass time information (hour, minute, period) when creating a 
 <Tabs
   items={[ 
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -43,6 +44,19 @@ You can optionally pass time information (hour, minute, period) when creating a 
     const withTime = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'day' });
     // or
     const withTimeNight = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'night' });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    // Dart doesn't take year/month/day as separate constructor args — pass a
+    // Time object as the second argument to fromEthiopian() instead.
+    // Use 'day' or 'night' for the period property.
+    final withTime = Kenat.fromEthiopian(2017, 10, 5, Time(3, 30, 'day'));
+    // or
+    final withTimeNight = Kenat.fromEthiopian(2017, 10, 5, Time(3, 30, 'night'));
+
+    print(withTime.formatWithTime());      // ሰኔ 5 2017 03:30 ጠዋት
+    print(withTimeNight.formatWithTime()); // ሰኔ 5 2017 03:30 ማታ
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -62,12 +76,20 @@ Most methods accept a `lang` option to choose between Amharic and English output
 <Tabs
   items={[ 
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
   <Tabs.Tab>
     ```js
     today.getEthiopian({ lang: 'english' })
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    // getEthiopian() itself has no lang option in Dart — the language
+    // choice lives on the formatting methods instead.
+    today.formatStandard('english'); // e.g. "Hamle 4 2018"
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -88,6 +110,7 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
 <Tabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -102,6 +125,21 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
 
     console.log('GC:', today.getGregorian());
     // Example Output GC: { year: 2025, month: 6, 13 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      final today = Kenat.now();
+
+      print('ET: ${today.getEthiopian()}');
+      // Example Output ET: {year: 2018, month: 11, day: 4}
+
+      print('GC: ${today.getGregorian()}');
+      // Example Output GC: {year: 2026, month: 7, day: 11}
+    }
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -126,6 +164,7 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
 <Tabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -135,6 +174,14 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
 
     console.log(customDate.getGregorian());
     // Output: { year: 2024, month: 6, day: 13 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    final customDate = Kenat('2016/10/05');
+
+    print(customDate.getGregorian());
+    // Output: {year: 2024, month: 6, day: 12}
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -149,13 +196,15 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
   </Tabs.Tab>
 </Tabs>
 
-### From a JavaScript `Date` Object
+### From a Native Date Object
 
-You can pass a native JavaScript `Date` object directly to the constructor.
+You can pass a native date object directly to the constructor: a JavaScript
+`Date`, a Python `datetime`, or a Dart `DateTime`.
 
 <Tabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -166,6 +215,17 @@ You can pass a native JavaScript `Date` object directly to the constructor.
 
     console.log(fromDate.getEthiopian());
     // Output: { year: 2016, month: 12, day: 13 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    // Unlike JS's Date, Dart's DateTime months are already 1-based
+    // (August = 8), so there's no off-by-one to worry about.
+    final gcDate = DateTime(2024, 8, 22);
+    final fromDate = Kenat(gcDate);
+
+    print(fromDate.getEthiopian());
+    // Output: {year: 2016, month: 12, day: 16}
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -189,6 +249,7 @@ You can create a date by passing the year, month, and day as separate numbers.
 <Tabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -198,6 +259,16 @@ You can create a date by passing the year, month, and day as separate numbers.
 
     console.log(fromComponents.getGregorian());
     // Output: { year: 2023, month: 9, day: 11 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    // Dart's plain constructor takes a single Ethiopian map/string/DateTime,
+    // not separate y/m/d args — use the fromEthiopian() factory instead.
+    final fromComponents = Kenat.fromEthiopian(2016, 1, 1);
+
+    print(fromComponents.getGregorian());
+    // Output: {year: 2023, month: 9, day: 12}
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -221,6 +292,7 @@ Kenat also provides functions to get holidays for a given year.
 <Tabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -237,6 +309,23 @@ Kenat also provides functions to get holidays for a given year.
 
     console.log(`Found ${publicHolidays.length} public holidays in ${year} E.C.`);
     // Expected: Lists all holidays tagged as 'public'.
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      final year = 2017; // E.C.
+
+      // Get only public holidays by passing a single tag.
+      final publicHolidays = getHolidaysForYear(year, {
+        'filter': HolidayTags.public,
+      });
+
+      print('Found ${publicHolidays.length} public holidays in $year E.C.');
+      // Found 15 public holidays in 2017 E.C.
+    }
     ```
   </Tabs.Tab>
   <Tabs.Tab>
