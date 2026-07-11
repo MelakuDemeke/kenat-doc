@@ -114,7 +114,104 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 Dart support is in progress. Planned via pub.dev.
+    ## 🛠 Install with a Package Manager
+
+    <Tabs items={['dart pub add', 'pubspec.yaml']}>
+      <Tabs.Tab>
+        ```bash
+        dart pub add kenat
+        ```
+
+        For a Flutter project:
+
+        ```bash
+        flutter pub add kenat
+        ```
+      </Tabs.Tab>
+      <Tabs.Tab>
+        Add it manually to `pubspec.yaml`:
+
+        ```yaml
+        dependencies:
+          kenat: ^1.0.0
+        ```
+
+        Then run:
+
+        ```bash
+        dart pub get
+        ```
+      </Tabs.Tab>
+    </Tabs>
+
+    ## ✅ Supported Environments
+
+    - Dart SDK ≥ 3.0.0
+    - Pure Dart — no native dependencies or platform channels
+    - Works in Flutter apps (Android, iOS, web, desktop) and plain Dart projects (CLI tools, servers)
+    - Published on [pub.dev](https://pub.dev/packages/kenat)
+
+    ## 📥 Import & Usage
+
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      // Create a date
+      final date = Kenat.now();
+      print(date.getEthiopian());
+
+      // Use named exports
+      final holidays = getHolidaysForYear(2017, { 'filter': HolidayTags.public });
+      print(holidays.length);
+
+      // Convert Gregorian to Ethiopian
+      final etDate = toEC(2025, 7, 18); // {year, month, day}
+      print(etDate);
+
+      // Format an Ethiopian date
+      final formatted = formatStandard({ 'year': 2017, 'month': 10, 'day': 5 }, 'english');
+      print(formatted);
+    }
+    ```
+
+    ## 🧪 Verify Installation
+
+    Dart has no single-line `-e` eval flag, so verifying is a tiny script instead of a one-liner:
+
+    ```dart
+    // verify_kenat.dart
+    import 'package:kenat/kenat.dart';
+
+    void main() => print(Kenat.now().toString());
+    ```
+
+    ```bash
+    dart run verify_kenat.dart
+    ```
+
+    Expected Output (varies with the current date/time):
+
+    ```bash
+    ሀምሌ 4 2018 05:53 ማታ
+    ```
+
+    ## 🗂 Quick Reference: Common Imports
+
+    - `Kenat` — the main date class (`Kenat.now()`, `Kenat.fromEthiopian(...)`, `Kenat.fromGregorian(...)`, `Kenat.fromString(...)`)
+    - `Time` — Ethiopian day/night time class
+    - `MonthGrid`, `createMonthGrid`
+    - `toEC`, `toGC`, `toGeez`, `toArabic`
+    - `getHolidaysForYear`, `getHolidaysInMonth`, `getHoliday`, `HolidayTags`
+    - `getBahireHasab`, `getMovableHoliday`
+    - `getFastingPeriod`, `getFastingInfo`, `FastingKeys`
+    - `OrthodoxSaints`
+    - Formatting: `formatStandard`, `formatWithWeekday`, `formatWithTime`, `formatInGeezAmharic`, `formatShort`, `toISODateString`
+    - `addDays`, `addMonths`, `addYears`, `diffInDays`, `diffInMonths`, `diffInYears`
+
+    ## ⚠️ Error Handling
+
+    Invalid input (e.g., an out-of-range date, a malformed string) raises a typed error such as `InvalidEthiopianDateError` or `InvalidDateFormatError`, each of which also exposes `toJson()` for structured logging.
   </Tabs.Tab>
 
   <Tabs.Tab>
