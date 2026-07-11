@@ -51,7 +51,18 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 Dart version coming soon...
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      final date = Kenat.now();
+      print(date.getEthiopian());
+      // { year: 2018, month: 11, day: 4 }
+
+      print(date.formatInGeez());
+      // ሀምሌ ፬ ፳፻፲፰
+    }
+    ```
   </Tabs.Tab>
 
   <Tabs.Tab>
