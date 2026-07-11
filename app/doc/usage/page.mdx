@@ -4,7 +4,7 @@ description: Learn how to convert, print, and format dates with Kenat.
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
 
 # 🧰 Usage Examples
 
@@ -17,6 +17,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 <Tabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -31,6 +32,21 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     const gc = toGC(2017, 9, 25);
     console.log(gc); 
     // → { year: 2025, month: 6, day: 2 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      final eth = toEC(2025, 6, 2);
+      print(eth);
+      // → {year: 2017, month: 9, day: 25}
+
+      final gc = toGC(2017, 9, 25);
+      print(gc);
+      // → {year: 2025, month: 6, day: 2}
+    }
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -55,6 +71,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 <Tabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -63,6 +80,13 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     const k = new Kenat('2016/10/5');
     console.log(k.formatInGeezAmharic());
     // → መስከረም ፭ ፳፻፲፮
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    final k = Kenat('2016/10/5');
+    print(k.formatInGeezAmharic());
+    // → ሰኔ ፭ ፳፻፲፮
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -83,6 +107,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 <Tabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -95,6 +120,18 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
     console.log(k.getEthiopian());
     // → { year: 2017, month: 5, day: 15 }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    var k = Kenat('2015/6/10');
+
+    // These methods are chainable, but (unlike JS) each one returns a new,
+    // immutable Kenat instance rather than mutating in place — reassign.
+    k = k.addDays(5).addMonths(-1).addYears(2);
+
+    print(k.getEthiopian());
+    // → {year: 2017, month: 5, day: 15}
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -122,6 +159,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 <Tabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -133,6 +171,16 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     console.log(a.diffInDays(b));    // 1095
     console.log(a.diffInMonths(b));  // 39
     console.log(a.diffInYears(b));   // 3
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    final a = Kenat('2015/5/15');
+    final b = Kenat('2012/5/15');
+
+    print(a.diffInDays(b));   // 1095
+    print(a.diffInMonths(b)); // 39
+    print(a.diffInYears(b));  // 3
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -157,6 +205,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 <Tabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -171,6 +220,24 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
     console.log(grid.days[0]);
     // → { ethiopian: { day: 1 }, gregorian: { day: 9 }, holiday: null }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    // createMonthGrid() returns a Map<String, dynamic> directly
+    final grid = createMonthGrid({ 'year': 2017, 'month': 9, 'useGeez': true });
+
+    print(grid['headers']);
+    // → [ሰኞ, ማክሰኞ, ረቡዕ, ሐሙስ, ዓርብ, ቅዳሜ, እሑድ]
+
+    // grid['days'] is a flat, weekStart-padded list — leading entries can be
+    // null, so find the first real day rather than assuming index 0:
+    final days = grid['days'] as List;
+    final firstDay = days.firstWhere((d) => d != null);
+    print(firstDay);
+    // → {ethiopian: {year: ፳፻፲፯, month: ግንቦት, day: ፩}, gregorian: {year: 2025, month: 5, day: 9}, weekday: 5, weekdayName: ዓርብ, isToday: false, holidays: []}
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -198,6 +265,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 <Tabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -225,6 +293,35 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
     #⚠️ Error Handling
     If you provide an invalid key or date, the functions return null or throw an error.
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      // Get a holiday by key and year
+      final enkutatash = getHoliday('enkutatash', 2017);
+      print(enkutatash);
+      // → {key: enkutatash, tags: [public, cultural], movable: false, name: እንቁጣጣሽ, description: ..., ethiopian: {year: 2017, month: 1, day: 1}}
+
+      // Get all public holidays for a year
+      final publicHolidays = getHolidaysForYear(2017, { 'filter': HolidayTags.public });
+      print(publicHolidays.length); // 15
+
+      // Get holidays for a specific month
+      final monthHolidays = getHolidaysInMonth(2017, 1, { 'filter': HolidayTags.public });
+      print(monthHolidays.length); // 3
+
+      // Use language option
+      final meskelEn = getHoliday('meskel', 2017, { 'lang': 'english' });
+      print(meskelEn?['name']); // 'Finding of the True Cross (Meskel)'
+    }
+    ```
+
+    ### ⚠️ Error Handling
+    `getHoliday` returns `null` for an unknown key; functions that require a
+    valid Ethiopian year (like `getHolidaysInMonth`) throw a typed error
+    (e.g. `InvalidInputTypeError`) for out-of-range input.
   </Tabs.Tab>
   <Tabs.Tab>
     ```python
