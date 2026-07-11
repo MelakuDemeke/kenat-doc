@@ -6,6 +6,19 @@
 
 @variant dark (&:where(.dark *));
 
+/* Nextra caps the navbar/sidebar/content/TOC row at --nextra-content-width
+   (default 90rem) and centers it with mx-auto, so on screens wider than
+   that the sidebar starts well right of the viewport edge instead of
+   flush against it. Let the row use the full width so the sidebar sits
+   at the left edge on large screens.
+   !important is required: nextra-theme-docs's Layout also injects its own
+   inline <style>:root{--nextra-content-width:90rem} tag into <head>, and
+   it renders after our stylesheet in the DOM, so at equal specificity it
+   wins on source order alone without this. */
+:root {
+  --nextra-content-width: 100% !important;
+}
+
 /* App landing — subtle entry motion */
 @keyframes kenat-fade-up {
   from {
