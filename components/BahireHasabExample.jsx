@@ -7,6 +7,7 @@ import Kenat, { getBahireHasab } from 'kenat'
 // +++ END: Corrected Import +++
 import { clsx } from 'clsx'
 import { FiChevronDown, FiAlertCircle } from 'react-icons/fi'
+import { FaScroll } from 'react-icons/fa'
 
 export default function BahireHasabExample() {
   const [year, setYear] = useState(() => new Kenat().getEthiopian().year)
@@ -64,7 +65,9 @@ export default function BahireHasabExample() {
 
   return (
     <div className="max-w-4xl mx-auto my-10 p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg text-zinc-800 dark:text-zinc-100">
-      <h2 className="text-xl font-semibold mb-6 text-center">📜 Bahire Hasab Calculator</h2>
+      <h2 className="text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2">
+        <FaScroll /> Bahire Hasab Calculator
+      </h2>
 
       {/* --- Controls --- */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">

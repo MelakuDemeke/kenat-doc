@@ -2,7 +2,7 @@ import { Layout, Navbar, ThemeSwitch } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
-import { FaTelegram } from 'react-icons/fa';
+import { FaTelegram, FaLaptopCode } from 'react-icons/fa';
 
 import 'nextra-theme-docs/style.css'
 import './globals.css';
@@ -12,7 +12,7 @@ export const metadata = {
   // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
 }
 
-const banner = <Banner storageKey="kenat-info">Kenat is a work in progress project 👨🏻‍💻 </Banner>
+const banner = <Banner storageKey="kenat-info">Kenat is a work in progress project <FaLaptopCode className="inline-block align-text-bottom" /></Banner>
 const navbar = (
   <Navbar
     logo={<div className="flex items-center gap-2">

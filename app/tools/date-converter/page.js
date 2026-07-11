@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { toGC, toEC } from "kenat";
 import { SectionBackground } from "../../../components/Landing/SectionBackground";
+import { FiXCircle } from "react-icons/fi";
 
 function EthiopianToGregorian() {
     const todayGC = new Date();
@@ -14,14 +15,10 @@ function EthiopianToGregorian() {
         if (ecDate && ecDate.year && ecDate.month && ecDate.day) {
             try {
                 const result = toGC(ecDate.year, ecDate.month, ecDate.day);
-                setConvertedGc(`${result.year}/${result.month}/${result.day}`);
+                setConvertedGc({ ok: true, text: `${result.year}/${result.month}/${result.day}` });
             } catch (err) {
-                if (err?.toJSON) {
-                    const e = err.toJSON();
-                    setConvertedGc(`❌ ${e.message}`);
-                } else {
-                    setConvertedGc(`❌ Invalid EC date`);
-                }
+                const message = err?.toJSON ? err.toJSON().message : "Invalid EC date";
+                setConvertedGc({ ok: false, text: message });
             }
         } else {
             setConvertedGc(null);
@@ -62,10 +59,10 @@ function EthiopianToGregorian() {
             </div>
 
             {convertedGc && (
-                <div className="mt-6 text-center bg-purple-500/10 dark:bg-purple-500/20 p-4 rounded-lg border border-purple-500/20">
-                    <p className="text-lg text-zinc-600 dark:text-zinc-300">Converted Date:</p>
-                    <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">
-                        {convertedGc}
+                <div className={`mt-6 text-center p-4 rounded-lg border ${convertedGc.ok ? 'bg-purple-500/10 dark:bg-purple-500/20 border-purple-500/20' : 'bg-red-500/10 dark:bg-red-500/20 border-red-500/20'}`}>
+                    <p className="text-lg text-zinc-600 dark:text-zinc-300">{convertedGc.ok ? 'Converted Date:' : 'Error:'}</p>
+                    <p className={`text-2xl font-bold flex items-center justify-center gap-2 ${convertedGc.ok ? 'text-purple-700 dark:text-purple-300' : 'text-red-700 dark:text-red-300'}`}>
+                        {!convertedGc.ok && <FiXCircle />} {convertedGc.text}
                     </p>
                 </div>
             )}
@@ -82,14 +79,10 @@ function GregorianToEthiopian() {
         if (gcDate && gcDate.year && gcDate.month && gcDate.day) {
             try {
                 const result = toEC(gcDate.year, gcDate.month, gcDate.day);
-                setConvertedEc(`${result.year}/${result.month}/${result.day}`);
+                setConvertedEc({ ok: true, text: `${result.year}/${result.month}/${result.day}` });
             } catch (err) {
-                if (err?.toJSON) {
-                    const e = err.toJSON();
-                    setConvertedEc(`❌ ${e.message}`);
-                } else {
-                    setConvertedEc(`❌ Invalid GC date`);
-                }
+                const message = err?.toJSON ? err.toJSON().message : "Invalid GC date";
+                setConvertedEc({ ok: false, text: message });
             }
         } else {
             setConvertedEc(null);
@@ -130,10 +123,10 @@ function GregorianToEthiopian() {
             </div>
 
             {convertedEc && (
-                <div className="mt-6 text-center bg-sky-500/10 dark:bg-sky-500/20 p-4 rounded-lg border border-sky-500/20">
-                    <p className="text-lg text-zinc-600 dark:text-zinc-300">Converted Date:</p>
-                    <p className="text-2xl font-bold text-sky-700 dark:text-sky-300">
-                        {convertedEc}
+                <div className={`mt-6 text-center p-4 rounded-lg border ${convertedEc.ok ? 'bg-sky-500/10 dark:bg-sky-500/20 border-sky-500/20' : 'bg-red-500/10 dark:bg-red-500/20 border-red-500/20'}`}>
+                    <p className="text-lg text-zinc-600 dark:text-zinc-300">{convertedEc.ok ? 'Converted Date:' : 'Error:'}</p>
+                    <p className={`text-2xl font-bold flex items-center justify-center gap-2 ${convertedEc.ok ? 'text-sky-700 dark:text-sky-300' : 'text-red-700 dark:text-red-300'}`}>
+                        {!convertedEc.ok && <FiXCircle />} {convertedEc.text}
                     </p>
                 </div>
             )}

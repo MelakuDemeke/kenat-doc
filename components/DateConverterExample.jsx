@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { toEC, toGC } from 'kenat'
+import { FiCalendar, FiArrowRight, FiXCircle } from 'react-icons/fi'
 
 export default function DateConverterExample() {
   const [ec, setEc] = useState({ year: 2016, month: 10, day: 7 })
@@ -15,7 +16,9 @@ export default function DateConverterExample() {
 
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg text-zinc-800 dark:text-zinc-100">
-      <h2 className="text-xl font-semibold mb-6 text-center">📆 EC ↔ GC Date Converter</h2>
+      <h2 className="text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2">
+        <FiCalendar /> EC ↔ GC Date Converter
+      </h2>
 
       <div className="grid gap-8">
         {/* EC to GC */}
@@ -44,8 +47,8 @@ export default function DateConverterExample() {
               placeholder="Day"
             />
           </div>
-          <p className="mt-2 text-sm text-blue-600 dark:text-blue-300 font-mono">
-            → {gcResult}
+          <p className={`mt-2 text-sm font-mono flex items-center gap-1 ${gcResult.ok ? 'text-blue-600 dark:text-blue-300' : 'text-red-600 dark:text-red-400'}`}>
+            {gcResult.ok ? <FiArrowRight /> : <FiXCircle />} {gcResult.text}
           </p>
         </div>
 
@@ -75,8 +78,8 @@ export default function DateConverterExample() {
               placeholder="Day"
             />
           </div>
-          <p className="mt-2 text-sm text-purple-600 dark:text-purple-300 font-mono">
-            → {ecResult}
+          <p className={`mt-2 text-sm font-mono flex items-center gap-1 ${ecResult.ok ? 'text-purple-600 dark:text-purple-300' : 'text-red-600 dark:text-red-400'}`}>
+            {ecResult.ok ? <FiArrowRight /> : <FiXCircle />} {ecResult.text}
           </p>
         </div>
       </div>
@@ -87,25 +90,19 @@ export default function DateConverterExample() {
 function safeToGC(y, m, d) {
   try {
     const { year, month, day } = toGC(y, m, d)
-    return `${year}/${month}/${day}`
+    return { ok: true, text: `${year}/${month}/${day}` }
   } catch (err) {
-    if (err?.toJSON) {
-      const e = err.toJSON()
-      return `❌ ${e.message}`
-    }
-    return "❌ Invalid EC date"
+    const message = err?.toJSON ? err.toJSON().message : 'Invalid EC date'
+    return { ok: false, text: message }
   }
 }
 
 function safeToEC(y, m, d) {
   try {
     const { year, month, day } = toEC(y, m, d)
-    return `${year}/${month}/${day}`
+    return { ok: true, text: `${year}/${month}/${day}` }
   } catch (err) {
-    if (err?.toJSON) {
-      const e = err.toJSON()
-      return `❌ ${e.message}`
-    }
-    return "❌ Invalid GC date"
+    const message = err?.toJSON ? err.toJSON().message : 'Invalid GC date'
+    return { ok: false, text: message }
   }
 }

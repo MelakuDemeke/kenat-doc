@@ -1,18 +1,20 @@
 ---
-title: 🧰 Usage Examples
+title: Usage Examples
 description: Learn how to convert, print, and format dates with Kenat.
 ---
 
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
+import { FaToolbox, FaBrain, FaCalculator, FaRulerCombined, FaMosque, FaBookOpen } from 'react-icons/fa'
+import { FiRefreshCw, FiCalendar, FiAlertTriangle } from 'react-icons/fi'
 
-# 🧰 Usage Examples
+# <FaToolbox className="inline-block mr-2" /> Usage Examples
 
 This page demonstrates common date operations using Kenat: conversion, formatting, calendar grids, holidays, and more.
 
 ---
 
-## 🔄 Convert Dates (Gregorian ↔ Ethiopian)
+## <FiRefreshCw className="inline-block mr-2" /> Convert Dates (Gregorian ↔ Ethiopian)
 
 <Tabs
   items={[
@@ -66,7 +68,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 ---
 
-## 🧠 Format in Geez
+## <FaBrain className="inline-block mr-2" /> Format in Geez
 
 <Tabs
   items={[
@@ -102,7 +104,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 ---
 
-## 🧮 Date Arithmetic
+## <FaCalculator className="inline-block mr-2" /> Date Arithmetic
 
 <Tabs
   items={[
@@ -154,7 +156,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 ---
 
-## 📏 Difference Between Dates
+## <FaRulerCombined className="inline-block mr-2" /> Difference Between Dates
 
 <Tabs
   items={[
@@ -200,7 +202,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 ---
 
-## 🗓 Generate a Month Grid
+## <FiCalendar className="inline-block mr-2" /> Generate a Month Grid
 
 <Tabs
   items={[
@@ -260,7 +262,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
 
 ---
 
-## 🕌 Built-in Holidays
+## <FaMosque className="inline-block mr-2" /> Built-in Holidays
 
 <Tabs
   items={[
@@ -291,7 +293,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     console.log(meskelEn.name); // 'Meskel'
     ```
 
-    #⚠️ Error Handling
+    ### <FiAlertTriangle className="inline-block mr-2" /> Error Handling
     If you provide an invalid key or date, the functions return null or throw an error.
   </Tabs.Tab>
   <Tabs.Tab>
@@ -318,7 +320,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     }
     ```
 
-    ### ⚠️ Error Handling
+    ### <FiAlertTriangle className="inline-block mr-2" /> Error Handling
     `getHoliday` returns `null` for an unknown key; functions that require a
     valid Ethiopian year (like `getHolidaysInMonth`) throw a typed error
     (e.g. `InvalidInputTypeError`) for out-of-range input.
@@ -335,7 +337,7 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   </Tabs.Tab>
 </Tabs>
 
-# 📚 Quick Reference: Named Exports
+# <FaBookOpen className="inline-block mr-2" /> Quick Reference: Named Exports
 
 Kenat exports many useful functions and constants:
 

@@ -1,10 +1,11 @@
+import { FiCalendar, FiCheckCircle } from 'react-icons/fi'
 
 # Month Grid UI
-## 📅 `useMonthGrid()`
+## <FiCalendar className="inline-block mr-2" /> `useMonthGrid()`
 
 The `useMonthGrid` hook generates an Ethiopian calendar grid with headers and date objects — ready to be rendered however you want.
 
-### ✅ Usage
+### <FiCheckCircle className="inline-block mr-2" /> Usage
 
 ```js
 import { useMonthGrid } from 'kenat-ui'
@@ -16,7 +17,7 @@ const { grid, controls, state } = useMonthGrid({
 })
 ```
 
-### ✅ Returned Values
+### <FiCheckCircle className="inline-block mr-2" /> Returned Values
 
 * `grid.headers`: Array of weekday names (localized)
 * `grid.days`: Array of day objects (with holidays, date mapping, etc.)
@@ -27,7 +28,7 @@ const { grid, controls, state } = useMonthGrid({
   * `rerender(overrides)` — change options dynamically
 * `state`: Current `year`, `month`, and config flags
 
-### ✅ Example
+### <FiCheckCircle className="inline-block mr-2" /> Example
 
 ```jsx
 <div>

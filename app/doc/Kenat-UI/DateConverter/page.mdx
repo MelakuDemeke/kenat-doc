@@ -1,9 +1,11 @@
+import { FiRefreshCw, FiCheckCircle } from 'react-icons/fi'
+
 # Date Converter UI
-## 🔄 `useDateConverter()`
+## <FiRefreshCw className="inline-block mr-2" /> `useDateConverter()`
 
 `useDateConverter` is a headless hook designed for two-way date conversion between the Ethiopian (EC) and Gregorian (GC) calendars. It manages the input states and the conversion results.
 
-### ✅ Usage
+### <FiCheckCircle className="inline-block mr-2" /> Usage
 
 Initialize the hook with an optional `initialDate` in either EC or GC format. If no date is provided, it defaults to the current system date.
 
@@ -16,19 +18,19 @@ const { state, actions } = useDateConverter({
 });
 ```
 
-### ✅ `state` object
+### <FiCheckCircle className="inline-block mr-2" /> `state` object
 
 * `ecDate`: The Ethiopian date object `{ year, month, day }` used as the source for converting to GC.
 * `gcDate`: The Gregorian date object `{ year, month, day }` used as the source for converting to EC.
 * `convertedGc`: The string result (`YYYY/M/D`) of the EC to GC conversion, or an error message if the date is invalid.
 * `convertedEc`: The string result (`YYYY/M/D`) of the GC to EC conversion, or an error message if the date is invalid.
 
-### ✅ `actions` object
+### <FiCheckCircle className="inline-block mr-2" /> `actions` object
 
 * `setEcDate(date)`: Function to update the Ethiopian date object, triggering a new conversion to Gregorian.
 * `setGcDate(date)`: Function to update the Gregorian date object, triggering a new conversion to Ethiopian.
 
-### ✅ Example
+### <FiCheckCircle className="inline-block mr-2" /> Example
 
 ```jsx
 function ConverterComponent() {

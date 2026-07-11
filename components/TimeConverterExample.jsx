@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Time } from 'kenat'
 import { Switch } from '@headlessui/react'
 import { clsx } from 'clsx'
+import { FiClock, FiArrowRight } from 'react-icons/fi'
 
 export default function TimeConverterExample() {
   const [liveTime, setLiveTime] = useState(new Date())
@@ -62,7 +63,9 @@ export default function TimeConverterExample() {
 
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg text-zinc-800 dark:text-zinc-100">
-      <h2 className="text-xl font-semibold mb-2 text-center">🕒 Time Converter</h2>
+      <h2 className="text-xl font-semibold mb-2 text-center flex items-center justify-center gap-2">
+        <FiClock /> Time Converter
+      </h2>
       <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mb-6">
         Live Time: {liveTime.toLocaleTimeString()} GC / {liveTimeEth.format({ lang: 'english', useGeez })} EC
       </p>
@@ -94,8 +97,8 @@ export default function TimeConverterExample() {
               className={inputClass}
             />
           </div>
-          <p className="mt-3 text-sm text-center text-blue-600 dark:text-blue-300">
-            → Converts to: <span className="font-bold text-lg">{ethiopian.format({ lang: 'english', useGeez, zeroAsDash: false })}</span>
+          <p className="mt-3 text-sm text-center text-blue-600 dark:text-blue-300 flex items-center justify-center gap-1">
+            <FiArrowRight /> Converts to: <span className="font-bold text-lg">{ethiopian.format({ lang: 'english', useGeez, zeroAsDash: false })}</span>
           </p>
         </div>
 
@@ -125,8 +128,8 @@ export default function TimeConverterExample() {
               <option value="night">night</option>
             </select>
           </div>
-          <p className="mt-3 text-sm text-center text-purple-600 dark:text-purple-300">
-            → Converts to: <span className="font-bold text-lg">{String(gregorian.hour).padStart(2, '0')}:{String(gregorian.minute).padStart(2, '0')}</span>
+          <p className="mt-3 text-sm text-center text-purple-600 dark:text-purple-300 flex items-center justify-center gap-1">
+            <FiArrowRight /> Converts to: <span className="font-bold text-lg">{String(gregorian.hour).padStart(2, '0')}:{String(gregorian.minute).padStart(2, '0')}</span>
           </p>
         </div>
 

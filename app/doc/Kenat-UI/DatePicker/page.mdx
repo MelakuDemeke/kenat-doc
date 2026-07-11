@@ -1,5 +1,7 @@
+import { FiCalendar, FiCheckCircle } from 'react-icons/fi'
+
 # Date Picker UI
-## 📆 `useDatePicker()`
+## <FiCalendar className="inline-block mr-2" /> `useDatePicker()`
 
 `useDatePicker` is a headless hook for building an Ethiopian date picker. It manages:
 
@@ -8,7 +10,7 @@
 * Grid navigation
 * Formatted display
 
-### ✅ Usage
+### <FiCheckCircle className="inline-block mr-2" /> Usage
 
 ```js
 import { useDatePicker } from 'kenat-ui'
@@ -16,7 +18,7 @@ import { useDatePicker } from 'kenat-ui'
 const { state, actions } = useDatePicker()
 ```
 
-### ✅ `state` object
+### <FiCheckCircle className="inline-block mr-2" /> `state` object
 
 * `selectedDate`: `{ year, month, day }`
 * `formatted`: `"YYYY/MM/DD"` string
@@ -25,14 +27,14 @@ const { state, actions } = useDatePicker()
 * `headers`, `days`: Grid data
 * `inputRef`: Ref for the input field
 
-### ✅ `actions` object
+### <FiCheckCircle className="inline-block mr-2" /> `actions` object
 
 * `toggleOpen()`, `close()`
 * `selectDate(day)`
 * `nextMonth()`, `prevMonth()`
 * `nextYear()`, `prevYear()`
 
-### ✅ Example
+### <FiCheckCircle className="inline-block mr-2" /> Example
 
 ```jsx
 <input

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Kenat, { toEC, toGC, MonthGrid, getBahireHasab, Time, toGeez, HolidayTags, monthNames } from "kenat";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
-import { FiCopy, FiCheck, FiChevronLeft, FiChevronRight, FiCalendar, FiClock, FiSettings, FiActivity } from "react-icons/fi";
+import { FiCopy, FiCheck, FiChevronLeft, FiChevronRight, FiCalendar, FiClock, FiSettings, FiActivity, FiXCircle } from "react-icons/fi";
 import { clsx } from "clsx";
 
 const CODE_TEMPLATES = {
@@ -143,18 +143,18 @@ function ConverterDemo() {
   const gcResult = useMemo(() => {
     try {
       const { year, month, day } = toGC(ec.year, ec.month, ec.day);
-      return `${year}/${month}/${day}`;
+      return { ok: true, text: `${year}/${month}/${day}` };
     } catch {
-      return "❌ Invalid Ethiopian Date";
+      return { ok: false, text: "Invalid Ethiopian Date" };
     }
   }, [ec]);
 
   const ecResult = useMemo(() => {
     try {
       const { year, month, day } = toEC(gc.year, gc.month, gc.day);
-      return `${year}/${month}/${day}`;
+      return { ok: true, text: `${year}/${month}/${day}` };
     } catch {
-      return "❌ Invalid Gregorian Date";
+      return { ok: false, text: "Invalid Gregorian Date" };
     }
   }, [gc]);
 
@@ -198,8 +198,8 @@ function ConverterDemo() {
               placeholder="Day"
             />
           </div>
-          <p className="mt-3 text-sm font-mono text-sky-600 dark:text-sky-400 font-semibold">
-            GC Date: <span className="underline decoration-dotted">{gcResult}</span>
+          <p className={`mt-3 text-sm font-mono font-semibold flex items-center gap-1 ${gcResult.ok ? 'text-sky-600 dark:text-sky-400' : 'text-red-600 dark:text-red-400'}`}>
+            {!gcResult.ok && <FiXCircle />} GC Date: <span className="underline decoration-dotted">{gcResult.text}</span>
           </p>
         </div>
 
@@ -229,8 +229,8 @@ function ConverterDemo() {
               placeholder="Day"
             />
           </div>
-          <p className="mt-3 text-sm font-mono text-purple-600 dark:text-purple-400 font-semibold">
-            EC Date: <span className="underline decoration-dotted">{ecResult}</span>
+          <p className={`mt-3 text-sm font-mono font-semibold flex items-center gap-1 ${ecResult.ok ? 'text-purple-600 dark:text-purple-400' : 'text-red-600 dark:text-red-400'}`}>
+            {!ecResult.ok && <FiXCircle />} EC Date: <span className="underline decoration-dotted">{ecResult.text}</span>
           </p>
         </div>
       </div>

@@ -5,14 +5,16 @@ description: Full reference for the Kenat Ethiopian calendar class and its metho
 
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
+import { FiSettings, FiCalendar, FiClock, FiPlus } from 'react-icons/fi'
+import { FaHammer, FaRulerCombined, FaPuzzlePiece, FaTools } from 'react-icons/fa'
 
-# ⚙️ Kenat Class
+# <FiSettings className="inline-block mr-2" /> Kenat Class
 
 The `Kenat` class provides a high-level API for working with Ethiopian calendar dates. You can create instances, format dates, manipulate them, and print calendars.
 
 ---
 
-## 🏗 Constructor
+## <FaHammer className="inline-block mr-2" /> Constructor
 
 `new Kenat(dateStringOrDict?)`
 
@@ -82,12 +84,12 @@ Creates a new instance of an Ethiopian date.
     from_dict = Kenat({'year': 2016, 'month': 6, 'day': 10})
     ```
   </Tabs.Tab>
-  <Tabs.Tab>🚧 PHP version coming soon...</Tabs.Tab>
+  <Tabs.Tab><FaTools className="inline-block mr-2" /> PHP version coming soon...</Tabs.Tab>
 </Tabs>
 
 ---
 
-## 📆 Date Access & Formatting
+## <FiCalendar className="inline-block mr-2" /> Date Access & Formatting
 
 Multiple methods are available to get the date in different formats.
 
@@ -149,7 +151,7 @@ Multiple methods are available to get the date in different formats.
 
 ---
 
-## 🕒 Time Handling
+## <FiClock className="inline-block mr-2" /> Time Handling
 
 The `Time` class handles time calculations, conversions, and formatting separately from the date.
 
@@ -209,7 +211,7 @@ The `Time` class handles time calculations, conversions, and formatting separate
 
 ---
 
-## ➕ Date Arithmetic
+## <FiPlus className="inline-block mr-2" /> Date Arithmetic
 
 These functions are available in the `kenat.day_arithmetic` module and take a `Kenat` object as the first argument.
 
@@ -260,7 +262,7 @@ These functions are available in the `kenat.day_arithmetic` module and take a `K
 
 ---
 
-## 📏 Compare Dates
+## <FaRulerCombined className="inline-block mr-2" /> Compare Dates
 
 These functions take two `Kenat` objects and return the difference. They are available in the `kenat.day_arithmetic` module.
 
@@ -305,7 +307,7 @@ These functions take two `Kenat` objects and return the difference. They are ava
 
 ---
 
-## 🗓 Calendar & Holiday Tools
+## <FiCalendar className="inline-block mr-2" /> Calendar & Holiday Tools
 
 The library includes powerful tools for generating monthly calendars and retrieving holiday information.
 
@@ -376,7 +378,7 @@ Kenat('2016/1/1').printThisMonth(true);
 
 ---
 
-# 🧩 Advanced Features & Utilities
+# <FaPuzzlePiece className="inline-block mr-2" /> Advanced Features & Utilities
 
 ## Kenat Static Methods
 

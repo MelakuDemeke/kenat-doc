@@ -1,9 +1,11 @@
+import { FiRefreshCw, FiCheckCircle } from 'react-icons/fi'
+
 # Time Converter UI
-## ⇆ `useTimeConverter()`
+## <FiRefreshCw className="inline-block mr-2" /> `useTimeConverter()`
 
 The `useTimeConverter` hook provides the logic for converting between standard 24-hour Gregorian time and the 12-hour Ethiopian time system, which includes "day" and "night" periods.
 
-### ✅ Usage
+### <FiCheckCircle className="inline-block mr-2" /> Usage
 
 You can initialize the hook with a specific time in either format. If no initial time is provided, it defaults to the current time.
 
@@ -15,17 +17,17 @@ const { state, actions } = useTimeConverter({
 });
 ```
 
-### ✅ `state` object
+### <FiCheckCircle className="inline-block mr-2" /> `state` object
 
 * `ethiopian`: A `kenat.Time` instance representing the time in the Ethiopian format.
 * `gregorian`: A plain object `{ hour, minute }` representing the equivalent Gregorian time.
 
-### ✅ `actions` object
+### <FiCheckCircle className="inline-block mr-2" /> `actions` object
 
 * `setGregorianTime(hour, minute)`: Updates the time using a Gregorian source and automatically converts it to Ethiopian time
 * `setEthiopianTime(hour, minute, period)`: Updates the time using an Ethiopian source and automatically converts it to Gregorian time.
 
-### ✅ Example
+### <FiCheckCircle className="inline-block mr-2" /> Example
 
 ```jsx
 function TimeConverterComponent() {

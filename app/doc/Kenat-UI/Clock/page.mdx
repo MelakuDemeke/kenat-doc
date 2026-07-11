@@ -1,9 +1,11 @@
+import { FiClock, FiCheckCircle } from 'react-icons/fi'
+
 # Clock UI
-## 🕒 `useEthiopianClock()`
+## <FiClock className="inline-block mr-2" /> `useEthiopianClock()`
 
 `useEthiopianClock` is a headless hook that provides real-time Ethiopian and Gregorian time, updating every second. It's ideal for creating live digital or analog clocks.
 
-### ✅ Usage
+### <FiCheckCircle className="inline-block mr-2" /> Usage
 
 ```js
 import { useEthiopianClock } from 'kenat-ui'
@@ -11,13 +13,13 @@ import { useEthiopianClock } from 'kenat-ui'
 const { now, ethiopianTime, gregorianTime } = useEthiopianClock()
 ```
 
-### ✅ `state` object
+### <FiCheckCircle className="inline-block mr-2" /> `state` object
 
 * `now`: The raw JavaScript `Date` object, which updates every second. This is useful for powering analog clock hands.
 * `ethiopianTime`: A `kenat.Time` instance representing the current Ethiopian time, which is derived from the current hour and minute.
 * `gregorianTime`: A plain object `{ hour, minute, second }` for the current Gregorian time.
 
-### ✅ Example
+### <FiCheckCircle className="inline-block mr-2" /> Example
 
 ```jsx
 import { useEthiopianClock } from 'kenat-ui';

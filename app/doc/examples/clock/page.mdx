@@ -1,6 +1,8 @@
 import ClockExample from '../../../../components/ClockExample'
+import { FiClock, FiSettings, FiRepeat } from 'react-icons/fi'
+import { FaBrain } from 'react-icons/fa'
 
-# 🕒 Ethiopian Clock Example
+# <FiClock className="inline-block mr-2" /> Ethiopian Clock Example
 
 <div className="flex justify-center my-8">
   <ClockExample />
@@ -8,18 +10,18 @@ import ClockExample from '../../../../components/ClockExample'
 
 ---
 
-## 🧠 How It Works
+## <FaBrain className="inline-block mr-2" /> How It Works
 
 This clock displays both **analog and digital** Ethiopian time using the `kenat` library.
 
-### 🔁 Features
+### <FiRepeat className="inline-block mr-2" /> Features
 
 - Real-time ticking with animation
 - Accurate **Ethiopian time** conversion via `Time.fromGregorian(...)`
 - Toggle to display time using **Ge’ez numerals**
 - Styled analog face with hour, minute, and second hands
 
-### ⚙️ Powered by
+### <FiSettings className="inline-block mr-2" /> Powered by
 
 - `kenat` — Ethiopian time system
 - `toGeez` — numeral conversion

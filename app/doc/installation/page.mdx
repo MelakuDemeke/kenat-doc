@@ -5,8 +5,10 @@ description: How to install Kenat in JavaScript, Python, Dart, and PHP.
 
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
+import { FiPackage, FiTool, FiCheckCircle, FiDownload, FiRefreshCw, FiAlertTriangle, FiFolder } from 'react-icons/fi'
+import { FaFlask, FaTools } from 'react-icons/fa'
 
-# 📦 Installation
+# <FiPackage className="inline-block mr-2" /> Installation
 
 <Tabs
   items={[
@@ -17,7 +19,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
   ]}
 >
   <Tabs.Tab>
-    ## 🛠 Install with a Package Manager
+    ## <FiTool className="inline-block mr-2" /> Install with a Package Manager
 
     <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
       <Tabs.Tab>
@@ -42,14 +44,14 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
       </Tabs.Tab>
     </Tabs>
 
-    ## ✅ Supported Environments
+    ## <FiCheckCircle className="inline-block mr-2" /> Supported Environments
 
     - Node.js ≥ 14
     - Modern browsers (ES6+)
     - Works with React, Vue, Svelte, etc.
     - Not tested on legacy browsers like IE11
 
-    ## 📥 Import & Usage
+    ## <FiDownload className="inline-block mr-2" /> Import & Usage
 
     Kenat supports both default and named imports:
 
@@ -73,7 +75,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     console.log(formatted);
     ```
 
-    ## 🔄 ES Modules & CommonJS
+    ## <FiRefreshCw className="inline-block mr-2" /> ES Modules & CommonJS
 
     Kenat is published as an ES module. For CommonJS, use dynamic import:
 
@@ -85,7 +87,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     })();
     ```
 
-    ## 🧪 Verify Installation
+    ## <FaFlask className="inline-block mr-2" /> Verify Installation
 
     ```bash
     node -e "import('kenat').then(m => console.log(new m.default().toString()))"
@@ -97,7 +99,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     Ethiopian: 2017-9-21
     ```
 
-    ## 🗂 Quick Reference: Named Exports
+    ## <FiFolder className="inline-block mr-2" /> Quick Reference: Named Exports
 
     - `Kenat` (default)
     - `MonthGrid`
@@ -108,13 +110,13 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     - `getBahireHasab`, `getFastingPeriod`
     - Formatting: `formatStandard`, `formatWithWeekday`, `formatWithTime`, `formatInGeezAmharic`, `formatShort`, `toISODateString`
 
-    ## ⚠️ Error Handling
+    ## <FiAlertTriangle className="inline-block mr-2" /> Error Handling
 
     If you provide invalid input (e.g., out-of-range date, wrong format), Kenat will throw an error describing the issue.
   </Tabs.Tab>
 
   <Tabs.Tab>
-    ## 🛠 Install with a Package Manager
+    ## <FiTool className="inline-block mr-2" /> Install with a Package Manager
 
     <Tabs items={['dart pub add', 'pubspec.yaml']}>
       <Tabs.Tab>
@@ -144,14 +146,14 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
       </Tabs.Tab>
     </Tabs>
 
-    ## ✅ Supported Environments
+    ## <FiCheckCircle className="inline-block mr-2" /> Supported Environments
 
     - Dart SDK ≥ 3.0.0
     - Pure Dart — no native dependencies or platform channels
     - Works in Flutter apps (Android, iOS, web, desktop) and plain Dart projects (CLI tools, servers)
     - Published on [pub.dev](https://pub.dev/packages/kenat)
 
-    ## 📥 Import & Usage
+    ## <FiDownload className="inline-block mr-2" /> Import & Usage
 
     ```dart
     import 'package:kenat/kenat.dart';
@@ -175,7 +177,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     }
     ```
 
-    ## 🧪 Verify Installation
+    ## <FaFlask className="inline-block mr-2" /> Verify Installation
 
     Dart has no single-line `-e` eval flag, so verifying is a tiny script instead of a one-liner:
 
@@ -196,7 +198,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     ሀምሌ 4 2018 05:53 ማታ
     ```
 
-    ## 🗂 Quick Reference: Common Imports
+    ## <FiFolder className="inline-block mr-2" /> Quick Reference: Common Imports
 
     - `Kenat` — the main date class (`Kenat.now()`, `Kenat.fromEthiopian(...)`, `Kenat.fromGregorian(...)`, `Kenat.fromString(...)`)
     - `Time` — Ethiopian day/night time class
@@ -209,23 +211,23 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     - Formatting: `formatStandard`, `formatWithWeekday`, `formatWithTime`, `formatInGeezAmharic`, `formatShort`, `toISODateString`
     - `addDays`, `addMonths`, `addYears`, `diffInDays`, `diffInMonths`, `diffInYears`
 
-    ## ⚠️ Error Handling
+    ## <FiAlertTriangle className="inline-block mr-2" /> Error Handling
 
     Invalid input (e.g., an out-of-range date, a malformed string) raises a typed error such as `InvalidEthiopianDateError` or `InvalidDateFormatError`, each of which also exposes `toJson()` for structured logging.
   </Tabs.Tab>
 
   <Tabs.Tab>
-    ## 🛠 Install with a Package Manager
+    ## <FiTool className="inline-block mr-2" /> Install with a Package Manager
 
     ```bash
     pip install kenat
     ```
 
-    ## ✅ Supported Environments
+    ## <FiCheckCircle className="inline-block mr-2" /> Supported Environments
 
     - Python ≥ 3.6
 
-    ## 📥 Basic Import & Usage
+    ## <FiDownload className="inline-block mr-2" /> Basic Import & Usage
 
     ```python
     from kenat import Kenat
@@ -234,7 +236,7 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
     print(date.get_ethiopian())
     ```
 
-    ## 🧪 Verify Installation
+    ## <FaFlask className="inline-block mr-2" /> Verify Installation
 
     ```bash
     python -c "from kenat import Kenat; print(Kenat())"
@@ -248,6 +250,6 @@ import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
   </Tabs.Tab>
 
   <Tabs.Tab>
-    🚧 PHP version planned (via Composer).
+    <FaTools className="inline-block mr-2" /> PHP version planned (via Composer).
   </Tabs.Tab>
 </Tabs>
