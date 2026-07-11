@@ -4,7 +4,7 @@ description: An exploration of the ancient Ethiopian calendar calculation system
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
 
 # Bahire Hasab (ባሕረ ሐሳብ)
 
@@ -143,6 +143,7 @@ If you pass an invalid year or holiday key, Kenat will throw an error (e.g., `Un
 <Tabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
+    <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
     <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
   ]}
 >
@@ -168,6 +169,38 @@ console.log('Fast of Nineveh:', bahireHasab.ninevehDate);
 const fasika = bahireHasab.movableFeasts.fasika;
 console.log(`${fasika.name}:`, fasika.ethiopian);
 // Fasika: { year: 2017, month: 8, day: 1 }
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```dart
+import 'package:kenat/kenat.dart';
+
+void main() {
+  // Get the Bahire Hasab data for that year
+  final bahireHasab = getBahireHasab(2017);
+
+  print('--- Bahire Hasab for 2017 E.C. ---');
+  print('Amete Alem: ${bahireHasab['ameteAlem']}'); // 7517
+  print('Evangelist: ${bahireHasab['evangelist']}'); // {name: ማቴዎስ, remainder: 1}
+  print('Wenber: ${bahireHasab['wenber']}'); // 11
+  print('Metqi: ${bahireHasab['metqi']}'); // 29
+
+  // The base date for all movable holidays — note the key is 'nineveh',
+  // not 'ninevehDate', on the Dart side
+  print('Fast of Nineveh: ${bahireHasab['nineveh']}');
+  // {year: 2017, month: 6, day: 3}
+
+  // Get the date for Easter (Fasika)
+  final fasika = bahireHasab['movableFeasts']['fasika'];
+  print('${fasika['name']}: ${fasika['ethiopian']}');
+  // ፋሲካ: {year: 2017, month: 8, day: 12}
+
+  // Or get just the date directly by key
+  final easter = getMovableHoliday('fasika', 2017);
+  print(easter); // {year: 2017, month: 8, day: 12}
+}
 ```
 
 </Tabs.Tab>
