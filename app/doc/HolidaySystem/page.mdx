@@ -4,7 +4,7 @@ description: Understanding how Kenat handles fixed, movable, and tagged holidays
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
 
 # The Ethiopian Holiday System in Kenat
 
@@ -109,7 +109,7 @@ const publicHolidaysEn = getHolidaysForYear(year, {
 ```
 
 <Tabs
-  items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>, <div key="py" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>]}
+  items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>, <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>, <div key="py" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>]}
 >
   <Tabs.Tab>
     ```js
@@ -143,6 +143,40 @@ const publicHolidaysEn = getHolidaysForYear(year, {
     import { getHoliday } from 'kenat';
     const meskel = getHoliday('meskel', year);
     console.log(meskel);
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```dart
+    import 'package:kenat/kenat.dart';
+
+    void main() {
+      final year = 2017; // E.C.
+
+      // Example 1: Get only public holidays by passing a single tag.
+      final publicHolidays = getHolidaysForYear(year, {
+        'filter': HolidayTags.public,
+      });
+
+      print('Found ${publicHolidays.length} public holidays in $year E.C.');
+      // Found 15 public holidays in 2017 E.C.
+
+      // Example 2: Get holidays that are 'muslim' OR 'state'.
+      // Pass a List of tags to the filter option.
+      final muslimOrStateHolidays = getHolidaysForYear(year, {
+        'filter': [HolidayTags.muslim, HolidayTags.state],
+      });
+
+      print('Found ${muslimOrStateHolidays.length} holidays that are either Muslim or State holidays.');
+      // Found 9 holidays that are either Muslim or State holidays.
+
+      // Example 3: Get holidays for a specific month
+      final monthHolidays = getHolidaysInMonth(year, 1, { 'filter': HolidayTags.public });
+      print(monthHolidays.length); // 3
+
+      // Example 4: Get a single holiday by key
+      final meskel = getHoliday('meskel', year);
+      print(meskel?['name']); // መስቀል
+    }
     ```
   </Tabs.Tab>
   <Tabs.Tab>
