@@ -4,7 +4,7 @@ description: Understanding how Kenat handles fixed, movable, and tagged holidays
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # The Ethiopian Holiday System in Kenat
 
@@ -109,7 +109,7 @@ const publicHolidaysEn = getHolidaysForYear(year, {
 ```
 
 <Tabs
-  items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>, <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>, <div key="py" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>]}
+  items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>, <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>, <div key="py" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>, <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>]}
 >
   <Tabs.Tab>
     ```js
@@ -197,6 +197,39 @@ const publicHolidaysEn = getHolidaysForYear(year, {
     muslim_or_state_holidays = get_holidays_for_year(year, filter_by=[HolidayTags.MUSLIM, HolidayTags.STATE])
 
     print(f"Found {len(muslim_or_state_holidays)} holidays that are either Muslim or State holidays.")
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Holidays;
+    use Kenat\HolidayTags;
+
+    $year = 2017; // E.C.
+
+    // Example 1: Get only public holidays by passing a single tag.
+    $publicHolidays = Holidays::getHolidaysForYear($year, [
+        'filter' => HolidayTags::PUBLIC,
+    ]);
+
+    echo "Found " . count($publicHolidays) . " public holidays in {$year} E.C.";
+    // Found 15 public holidays in 2017 E.C.
+
+    // Example 2: Get holidays that are 'MUSLIM' OR 'STATE'.
+    // Pass an array of tags to the filter option.
+    $muslimOrStateHolidays = Holidays::getHolidaysForYear($year, [
+        'filter' => [HolidayTags::MUSLIM, HolidayTags::STATE],
+    ]);
+
+    echo "Found " . count($muslimOrStateHolidays) . " holidays that are either Muslim or State holidays.";
+    // Found 9 holidays that are either Muslim or State holidays.
+
+    // Example 3: Get holidays for a specific month
+    $monthHolidays = Holidays::getHolidaysInMonth($year, 1, ['filter' => HolidayTags::PUBLIC]);
+    echo count($monthHolidays); // 3
+
+    // Example 4: Get a single holiday by key
+    $meskel = Holidays::getHoliday('meskel', $year);
+    echo $meskel?->name; // መስቀል
     ```
   </Tabs.Tab>
 </Tabs>
