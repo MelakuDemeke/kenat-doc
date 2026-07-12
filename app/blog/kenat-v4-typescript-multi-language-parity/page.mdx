@@ -1,0 +1,145 @@
+---
+title: "Kenat v2 / v4: A TypeScript Core, Full Python & Dart Parity, a New PHP Port, and a Rebuilt Docs Site"
+description: The core library moved to TypeScript, Python and Dart were brought to full feature parity, a brand-new PHP port shipped from scratch, and the docs site got a full refresh.
+date: 2026-07-12
+image: "https://github.com/MelakuDemeke/kenat-doc/releases/download/blog-assets/kenat-v4-typescript-multi-language-parity-cover.png"
+---
+
+import { FiExternalLink } from 'react-icons/fi'
+
+# Kenat v2 / v4: A TypeScript Core, Full Python & Dart Parity, a New PHP Port, and a Rebuilt Docs Site
+
+<img src="https://github.com/MelakuDemeke/kenat-doc/releases/download/blog-assets/kenat-v4-typescript-multi-language-parity-cover.png" alt="Kenat release banner" className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 my-6" />
+
+**Kenat** (ቀናት) is a toolkit for working with the Ethiopian calendar — date conversion, Bahire Hasab, holidays, fasting periods, Geez numerals, and calendar grids — available in JavaScript/TypeScript, Python, Dart, and now PHP. This release is the biggest since the project started: the core library moved to TypeScript, both the Python and Dart ports were brought all the way up to feature parity with it, a brand-new PHP port shipped from scratch, and the docs site got a full refresh.
+
+Five things shipped together:
+
+- **`kenat`** (npm) — JavaScript → TypeScript migration → **v4.0.0**
+- **`kenat_py`** (PyPI) — full parity update → **v2.0.0**
+- **`kenat-dart`** (pub.dev) — full parity update → **v2.0.0**
+- **`kenat-php`** (Packagist) — brand-new port → **v1.0.0**
+- **kenat-doc** (kenat.systems) — documentation site rebuilt to cover all three previously-supported languages
+
+---
+
+## 1. `kenat`: The TypeScript Migration
+
+The original JavaScript library has been fully converted to TypeScript, with strict mode on. Every module — `Kenat`, `MonthGrid`, `Time`, `bahireHasab`, `conversions`, `dayArithmetic`, `formatting`, `holidays`, `fasting`, `geezConverter`, `utils`, and the error hierarchy — now ships typed, with declarations generated directly from source (no more hand-maintained `.d.ts` mirror).
+
+Highlights:
+
+- **`nigs.js` → `nigs.json`**: the Orthodox monthly commemoration ("Nigs") data — used to overlay saints' days on calendar grids — was restructured from a 1,281-line hand-written JS file into a clean, uniform, day-keyed JSON schema (30 buckets, each a flat list of `{ id, name, description, major, negs }` entries). This is now the canonical data source both other ports were rebuilt against.
+- **Modernized release pipeline**: publishing is now CI-only. `npm run release:patch|minor|major` just bumps the version and pushes a tag; a GitHub Actions workflow re-typechecks, re-tests, rebuilds, and publishes with npm provenance. Nothing is ever published from a local machine anymore.
+- Bundled via `tsup` into ESM, CJS, and a minified browser IIFE global, all built from the same TypeScript source.
+
+`feature/typescript-migration` merged cleanly into `main` with all 245 tests green, and shipped as a **major version bump (3.2.0 → 4.0.0)** given the scope of the internal rewrite.
+
+```bash
+npm install kenat
+```
+
+---
+
+## 2. `kenat_py`: Brought Up to Full Parity
+
+Until this release, the Python port had drifted significantly behind the JS/TS library — some of it was outright broken, and a few large features didn't exist at all.
+
+**Correctness fixes:**
+- Bahire Hasab crashed outright for any Ethiopian year where the computed `metqi` value was exactly 0 (e.g. EY 2006) instead of correcting it to 30 — this took down holiday and fasting calculations for those years.
+- `addDays` had no backward-rollover logic, so subtracting days near a month/year boundary silently produced invalid dates like day `-2` instead of crossing the boundary.
+- The Nations, Nationalities and Peoples' Day holiday was pinned to the wrong date (day 20 instead of day 29), and Good Friday was missing its `PUBLIC` tag.
+- Several formatting mismatches versus the TS reference (ISO string night-time suffix, zero-minute placeholder character).
+
+**New features ported from scratch:**
+- **The entire `fasting` module** — `get_fasting_period`, `get_fasting_info`, `get_fasting_days`, and the weekly Wednesday/Friday fast logic — didn't exist in Python at all before this release.
+- **Orthodox saints (Nigs) data**, sourced directly from `nigs.json`, wired into `MonthGrid` via a new `mode` (`christian` / `muslim` / `public`) and `show_all_saints` option — including Friday Jummah injection for `mode='muslim'`.
+- **The distance-to-date API**: `distance_to`, `distance_from_today`, `distance_to_holiday`, human-readable `format_distance` strings.
+- **Gregorian-calendar rendering**: pass `calendar='gregorian'` to `format()`, `to_iso_string()`, or `get_date()` instead of hand-rolling a second code path.
+- A console calendar-grid printer (`print_this_month()`), structured `to_json()` serialization on `Kenat` and the whole exception hierarchy, and a much more complete `Kenat` class overall (`set_time`, `subtract`, `add_days/add_months/add_years`, `diff_in_months/diff_in_years`, `is_same_month/is_same_year`, generic `start_of`/`end_of`, static calendar/date-range helpers).
+
+132 new tests were added alongside this work; the full suite sits at **307 passing tests**, up from 175.
+
+Shipped as a **major version bump (1.0.4 → 2.0.0)**.
+
+```bash
+pip install kenat
+```
+
+---
+
+## 3. `kenat-dart`: Brought Up to Full Parity
+
+The Dart port was closer to the reference than Python's was, but had its own set of real bugs — including one with a very visible, wrong-by-default user-facing effect.
+
+**The big one:** Christian-mode calendar grids were showing *every* Orthodox saint that recurs on a given day-of-month, every month, instead of only the saint's actual major-feast month. The `showAllSaints` option existed but was never wired up, so it silently behaved as if it were always `true`. `saints.dart` has been rewritten from the ground up, sourced directly from `nigs.json`'s day-keyed schema (replacing the old id-keyed, multi-event structure that had drifted from it), with the `negs`/`showAllSaints` gating logic now matching the reference exactly.
+
+**Other fixes:**
+- `MonthGrid`'s default `weekStart` was Sunday; the reference defaults to Monday — a real default-output change for anyone not passing it explicitly.
+- `KenatError.toJson()['type']` always reported the literal string `'KenatError'`, regardless of which error subclass was actually thrown.
+- `gregorianToHijri` was a broken stub that literally copied the Gregorian month/day as if they were already Hijri values — now uses the real tabular Islamic-calendar conversion already present elsewhere in the file.
+- An undocumented "previous Gregorian day" fallback in the Islamic-holiday lookup, with no basis in the reference implementation, was removed.
+- The Ramadan fasting description text is now correct in both languages.
+
+**New features:**
+- The same distance-to-date API (`distanceTo`, `distanceFromToday`, `Kenat.distanceToHoliday`, `Kenat.formatDistance`, `Kenat.generateDateRange`).
+- Gregorian-calendar rendering (`calendar: 'gregorian'` across `format`/`getDate`/`toISOString`).
+- Static `Kenat.getStaticMonthCalendar` / `Kenat.getYearCalendar`, and a console `printThisMonth()`.
+- `getDate`, `isSameMonth`, `isSameYear`, `toJson`, `isHoliday`, `startOf`/`endOf('year')`.
+- `setTime` is now always immutable (it previously mutated in place in one code path), and `startOf('day')`'s internal time value was corrected to match the reference.
+
+100 new tests were added; the suite is now **17 test files, 304 tests, all passing**.
+
+Shipped as a **major version bump (1.0.1 → 2.0.0)**.
+
+```yaml
+dependencies:
+  kenat: ^2.0.0
+```
+
+---
+
+## 4. `kenat-php`: A New Port, Built on the TypeScript Core
+
+Kenat's fourth language, built from scratch against the new TypeScript source rather than the old JS one — same holiday data, same Bahire Hasab algorithm, same API shape, adapted to idiomatic modern PHP.
+
+**What it looks like in PHP specifically:**
+
+- **Typed, immutable value objects** instead of loose object shapes: `EthiopianDate`, `GregorianDate`, `Holiday`, `DateRange`, and `DiffBreakdown` are all readonly, `JsonSerializable` DTOs that flow through the whole API — a deliberate departure from the more dynamically-typed original, aimed at making the library feel native to PHP rather than a literal transliteration.
+- **Static utility classes** (`Conversions`, `DayArithmetic`, `Formatting`, `Holidays`, `BahireHasab`, `Fasting`, `GeezConverter`, `Utils`) mirror the original's "pure functions operate on plain dates" architecture — `Kenat` itself is a thin, stateful, chainable wrapper around them, exactly like the TS version.
+- **Islamic calendar dates** (Eid al-Fitr, Eid al-Adha, Moulid, Ramadan) use a self-contained, dependency-free tabular Hijri calendar (Julian-Day-Number based) — PHP has no built-in equivalent to the JS original's ICU `islamic` calendar binding without requiring `ext-intl`. Same approach `kenat_py` already uses; documented as a known, accepted divergence rather than a bug to chase.
+- **`resources/nigs.json`**, the Orthodox saints/commemoration data, is copied verbatim from the upstream `kenat` project and consumed by `MonthGrid` in `'christian'` mode, same as every other port.
+
+166 PHPUnit tests / 300 assertions, with fixtures ported and verified against the TS source's own test suite rather than assumed.
+
+Shipped as the **initial release, v1.0.0**.
+
+```bash
+composer require melakudemeke/kenat-php
+```
+
+---
+
+## 5. Documentation: Three of Four Languages, Finally Represented Equally
+
+The docs site at [kenat.systems](https://www.kenat.systems/) had fallen behind the Dart library's actual maturity — several pages still said "🚧 Dart version coming soon" or "planned via pub.dev," and a handful of guides (Getting Started, Usage Examples, Formatting, Holiday System, Bahire Hasab) only had JavaScript and Python tabs at all.
+
+Every one of those gaps is closed:
+
+- The homepage, installation guide, and API reference no longer stub out Dart — they document the real, current API.
+- Every guide that had JS/Python tabs now has a matching Dart tab, written and verified against the actual `kenat-dart` package rather than guessed from the JS docs (which, worth calling out, surfaced a few genuine cross-language behavioral differences worth knowing about — e.g. Dart's `addDays`/`addMonths` return new immutable instances rather than mutating, and string-constructed `Kenat` instances carry a default noon-day time that JS's don't).
+- PHP tabs are still left as "coming soon" for now — `kenat-php` shipped this cycle, but writing and verifying a full docs pass for it (mirroring the Dart effort above) is follow-up work, not part of this release.
+
+---
+
+## Get It
+
+| Library | Registry | Version |
+|---|---|---|
+| [`kenat`](https://www.npmjs.com/package/kenat) | npm | `4.0.0` |
+| [`kenat`](https://pypi.org/project/kenat/) | PyPI | `2.0.0` |
+| [`kenat`](https://pub.dev/packages/kenat) | pub.dev | `2.0.0` |
+| [`melakudemeke/kenat-php`](https://packagist.org/packages/melakudemeke/kenat-php) | Packagist | `1.0.0` |
+
+Docs: [kenat.systems](https://www.kenat.systems/) <FiExternalLink className="inline-block" />
+Source: [github.com/MelakuDemeke/kenat](https://github.com/MelakuDemeke/kenat) · [kenat_py](https://github.com/MelakuDemeke/kenat_py) · [kenat-dart](https://github.com/MelakuDemeke/kenat-dart) · [kenat-php](https://github.com/MelakuDemeke/kenat-php)

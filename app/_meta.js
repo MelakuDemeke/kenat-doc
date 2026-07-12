@@ -7,6 +7,10 @@ export default {
         title: 'Documentation',
         type: 'page'
     },
+    blog: {
+        title: 'Blog',
+        type: 'page'
+    },
     tools: {
         title: 'Tools',
         type: 'page'
