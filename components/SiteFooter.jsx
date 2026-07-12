@@ -19,6 +19,7 @@ const libraries = [
   { label: "kenat_py", href: "https://github.com/MelakuDemeke/kenat_py" },
   { label: "kenat-cli", href: "https://github.com/MelakuDemeke/kenat-cli" },
   { label: "kenat-dart", href: "https://github.com/MelakuDemeke/kenat-dart" },
+  { label: "kenat-php", href: "https://github.com/MelakuDemeke/kenat-php" },
 ];
 
 export function SiteFooter() {
