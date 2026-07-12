@@ -4,7 +4,7 @@ description: An exploration of the ancient Ethiopian calendar calculation system
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # Bahire Hasab (ባሕረ ሐሳብ)
 
@@ -144,7 +144,8 @@ If you pass an invalid year or holiday key, Kenat will throw an error (e.g., `Un
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -226,6 +227,37 @@ print('Fast of Nineveh:', bahire_hasab['nineveh_date'])
 fasika = bahire_hasab['movable_feasts']['fasika']
 print(f"{fasika['name']}:", fasika['ethiopian'])
 # Fasika: {'year': 2017, 'month': 8, 'day': 1}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```php
+use Kenat\BahireHasab;
+
+// Get the Bahire Hasab data for that year
+$bahireHasab = BahireHasab::calculate(2017);
+
+echo "--- Bahire Hasab for 2017 E.C. ---\n";
+echo "Amete Alem: {$bahireHasab['ameteAlem']}\n"; // 7517
+echo "Evangelist: {$bahireHasab['evangelist']['name']}\n"; // ማቴዎስ
+echo "Wenber: {$bahireHasab['wenber']}\n"; // 11
+echo "Metqi: {$bahireHasab['metqi']}\n"; // 29
+
+// The base date for all movable holidays — note the key is 'nineveh',
+// not 'ninevehDate', same as the Dart port
+$nineveh = $bahireHasab['nineveh'];
+echo "Fast of Nineveh: {$nineveh->year}-{$nineveh->month}-{$nineveh->day}\n";
+// 2017-6-3
+
+// Get the date for Easter (Fasika)
+$fasika = $bahireHasab['movableFeasts']['fasika'];
+echo "{$fasika->name}: {$fasika->ethiopian->year}-{$fasika->ethiopian->month}-{$fasika->ethiopian->day}\n";
+// ፋሲካ: 2017-8-12
+
+// Or get just the date directly by key
+$easter = BahireHasab::getMovableHoliday('fasika', 2017);
+echo "{$easter->year}-{$easter->month}-{$easter->day}"; // 2017-8-12
 ```
 
 </Tabs.Tab>
