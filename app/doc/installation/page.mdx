@@ -6,7 +6,7 @@ description: How to install Kenat in JavaScript, Python, Dart, and PHP.
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 import { FiPackage, FiTool, FiCheckCircle, FiDownload, FiRefreshCw, FiAlertTriangle, FiFolder } from 'react-icons/fi'
-import { FaFlask, FaTools } from 'react-icons/fa'
+import { FaFlask } from 'react-icons/fa'
 
 # <FiPackage className="inline-block mr-2" /> Installation
 
@@ -250,6 +250,71 @@ import { FaFlask, FaTools } from 'react-icons/fa'
   </Tabs.Tab>
 
   <Tabs.Tab>
-    <FaTools className="inline-block mr-2" /> PHP version planned (via Composer).
+    ## <FiTool className="inline-block mr-2" /> Install with Composer
+
+    ```bash
+    composer require melakudemeke/kenat-php
+    ```
+
+    ## <FiCheckCircle className="inline-block mr-2" /> Supported Environments
+
+    - PHP ≥ 8.1
+    - PSR-4 autoloading, zero runtime dependencies (requires only `ext-json`)
+    - Immutable, typed value objects — works great with static analysis (PHPStan/Psalm)
+    - Published on [Packagist](https://packagist.org/packages/melakudemeke/kenat-php)
+
+    ## <FiDownload className="inline-block mr-2" /> Import & Usage
+
+    ```php
+    use Kenat\Kenat;
+    use Kenat\Holidays;
+    use Kenat\HolidayTags;
+    use Kenat\Conversions;
+
+    // Create a date
+    $date = new Kenat();
+    echo $date->format(); // e.g. "ጥቅምት 5 2018"
+
+    // Get holidays
+    $holidays = Holidays::getHolidaysForYear(2017, ['filter' => HolidayTags::PUBLIC]);
+    echo count($holidays);
+
+    // Convert Gregorian to Ethiopian
+    $etDate = Conversions::toEC(2025, 7, 18); // EthiopianDate{ year, month, day }
+    echo $etDate->year;
+
+    // Format an Ethiopian date
+    $formatted = (new Kenat('2017/10/5'))->format(['lang' => 'english']);
+    echo $formatted;
+    ```
+
+    ## <FaFlask className="inline-block mr-2" /> Verify Installation
+
+    ```bash
+    php -r "require 'vendor/autoload.php'; echo (new Kenat\Kenat())->format(), PHP_EOL;"
+    ```
+
+    Expected Output (varies with the current date):
+
+    ```bash
+    ሀምሌ 4 2018
+    ```
+
+    ## <FiFolder className="inline-block mr-2" /> Quick Reference: Common Classes
+
+    - `Kenat` — the main date class (immutable; every mutating method returns a *new* instance)
+    - `Time` — Ethiopian 12-hour day/night time class
+    - `Conversions::toEC()`, `Conversions::toGC()`
+    - `GeezConverter::toGeez()`, `GeezConverter::toArabic()`
+    - `Holidays::getHolidaysForYear()`, `Holidays::getHolidaysInMonth()`, `Holidays::getHoliday()`, `HolidayTags`
+    - `BahireHasab::calculate()`
+    - `Fasting::getFastingPeriod()`, `FastingKeys`
+    - `MonthGrid::create()`
+    - `Formatting::formatStandard()`, `formatWithWeekday()`, `formatWithTime()`, `formatInGeezAmharic()`, `formatShort()`, `toISODateString()`
+    - `DayArithmetic::addDays()`, `addMonths()`, `addYears()`, `diffInDays()`, `diffInMonths()`, `diffInYears()`
+
+    ## <FiAlertTriangle className="inline-block mr-2" /> Error Handling
+
+    Invalid input (e.g., an out-of-range date, a malformed string) throws a typed exception from `Kenat\Exceptions`, such as `InvalidEthiopianDateException` or `InvalidDateFormatException`.
   </Tabs.Tab>
 </Tabs>
