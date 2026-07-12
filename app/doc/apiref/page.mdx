@@ -6,7 +6,7 @@ description: Full reference for the Kenat Ethiopian calendar class and its metho
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 import { FiSettings, FiCalendar, FiClock, FiPlus } from 'react-icons/fi'
-import { FaHammer, FaRulerCombined, FaPuzzlePiece, FaTools } from 'react-icons/fa'
+import { FaHammer, FaRulerCombined, FaPuzzlePiece } from 'react-icons/fa'
 
 # <FiSettings className="inline-block mr-2" /> Kenat Class
 
@@ -84,7 +84,25 @@ Creates a new instance of an Ethiopian date.
     from_dict = Kenat({'year': 2016, 'month': 6, 'day': 10})
     ```
   </Tabs.Tab>
-  <Tabs.Tab><FaTools className="inline-block mr-2" /> PHP version coming soon...</Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Kenat;
+
+    // No argument: uses current system date (Gregorian)
+    $k = new Kenat();
+
+    // From a string (Ethiopian date, supports 'YYYY/MM/DD' or 'YYYY-MM-DD')
+    $custom = new Kenat('2016/6/10');
+    $custom2 = new Kenat('2016-6-10');
+
+    // From an array with year, month, day (Ethiopian)
+    $fromArray = new Kenat(['year' => 2016, 'month' => 6, 'day' => 10]);
+
+    // From a native DateTimeInterface object (Gregorian)
+    // Note: PHP's DateTime months are already 1-based (June = 6)
+    $fromDate = new Kenat(new DateTimeImmutable('2016-06-10'));
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ---
@@ -109,7 +127,8 @@ Multiple methods are available to get the date in different formats.
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
     <Tabs.Tab>
@@ -146,6 +165,26 @@ Multiple methods are available to get the date in different formats.
         print(k.format_with_time(t)) # መስከረም 5 2016 8:30 ቀን
         ```
     </Tabs.Tab>
+    <Tabs.Tab>
+        ```php
+        use Kenat\Kenat;
+        use Kenat\Time;
+        use Kenat\Formatting;
+
+        $k = new Kenat('2016/1/5');
+        $et = $k->getEthiopian();
+        echo "{$et->year}-{$et->month}-{$et->day}"; // 2016-1-5
+        echo $k->toString();                        // መስከረም 5 2016 12:00 ጠዋት
+        echo $k->format(['lang' => 'english']);      // September 5 2016
+        echo $k->formatInGeezAmharic();               // መስከረም ፭ ፳፻፲፮
+        echo $k->formatWithWeekday();                 // ማክሰኞ, መስከረም 5 2016
+
+        $t = new Time(8, 30, 'day');
+        echo Formatting::formatWithTime($et, $t); // መስከረም 5 2016 08:30 ጠዋት
+        ```
+        Note: like Dart, string/array-constructed `Kenat` instances always
+        carry a default noon-day time internally, so `toString()` includes it.
+    </Tabs.Tab>
 </Tabs>
 
 
@@ -169,7 +208,8 @@ The `Time` class handles time calculations, conversions, and formatting separate
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
     <Tabs.Tab>
@@ -207,6 +247,25 @@ The `Time` class handles time calculations, conversions, and formatting separate
         print(t2) # 4:00 night
         ```
     </Tabs.Tab>
+    <Tabs.Tab>
+        ```php
+        use Kenat\Kenat;
+        use Kenat\Time;
+
+        $k = new Kenat();
+        $t = $k->getCurrentTime();
+        echo $t->format(); // e.g. ፲፩:፴ ማታ
+
+        // Create time from Ethiopian
+        $t1 = new Time(3, 30, 'night');
+        print_r($t1->toGregorian()); // ['hour' => 21, 'minute' => 30]
+        echo $t1->format(['lang' => 'amharic', 'useGeez' => true]); // ፫:፴ ማታ
+
+        // Create time from Gregorian
+        $t2 = Time::fromGregorian(22, 0); // 10 PM
+        echo $t2->format(['useGeez' => false]); // 04:_ night
+        ```
+    </Tabs.Tab>
 </Tabs>
 
 ---
@@ -225,7 +284,8 @@ These functions are available in the `kenat.day_arithmetic` module and take a `K
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
     <Tabs.Tab>
@@ -258,6 +318,22 @@ These functions are available in the `kenat.day_arithmetic` module and take a `K
         print(k_minus_1_month.get_ethiopian()) # {'year': 2014, 'month': 4, 'day': 5}
         ```
     </Tabs.Tab>
+    <Tabs.Tab>
+        ```php
+        use Kenat\Kenat;
+
+        // Kenat is immutable in PHP too: addDays/addMonths/addYears return a
+        // NEW instance rather than mutating in place, but they still chain.
+        $k = new Kenat('2014/5/5');
+        $k = $k->addDays(10)->addMonths(-1);
+        $et = $k->getEthiopian();
+        echo "{$et->year}-{$et->month}-{$et->day}"; // 2014-4-15
+        ```
+
+        `DayArithmetic::addDays()`/`addMonths()`/`addYears()` are also
+        available as static functions operating directly on `EthiopianDate`
+        value objects, mirroring the module-level functions in Dart/Python.
+    </Tabs.Tab>
 </Tabs>
 
 ---
@@ -276,7 +352,8 @@ These functions take two `Kenat` objects and return the difference. They are ava
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
     <Tabs.Tab>
@@ -303,6 +380,19 @@ These functions take two `Kenat` objects and return the difference. They are ava
         print(diff_in_years(a, b)) # → 3
         ```
     </Tabs.Tab>
+    <Tabs.Tab>
+        ```php
+        use Kenat\Kenat;
+
+        $a = new Kenat('2015/6/10');
+        $b = new Kenat('2012/6/10');
+        echo $a->diffInYears($b); // → 3
+
+        // Kenat also exposes isBefore(), isAfter(), isSameDay(),
+        // isSameMonth(), isSameYear() for comparisons.
+        echo $a->isAfter($b) ? 'true' : 'false'; // → true
+        ```
+    </Tabs.Tab>
 </Tabs>
 
 ---
@@ -323,7 +413,8 @@ The library includes powerful tools for generating monthly calendars and retriev
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
     <Tabs.Tab>
@@ -374,6 +465,30 @@ Kenat('2016/1/1').printThisMonth(true);
         print(len(all_2016_holidays))
         ```
     </Tabs.Tab>
+    <Tabs.Tab>
+
+```php
+use Kenat\MonthGrid;
+use Kenat\Holidays;
+use Kenat\Kenat;
+
+// Get a calendar grid for Meskerem 2016
+$grid = MonthGrid::create(['year' => 2016, 'month' => 1, 'useGeez' => true, 'weekStart' => 0]);
+print_r($grid['headers']);
+// [እሑድ, ሰኞ, ማክሰኞ, ረቡዕ, ሐሙስ, ዓርብ, ቅዳሜ]
+
+// Get info for a specific holiday
+$gena = Holidays::getHoliday('gena', 2016);
+echo $gena?->name; // ገና
+
+// Get all holidays in a year
+$allHolidays2016 = Holidays::getHolidaysForYear(2016);
+echo count($allHolidays2016); // 23
+
+// Or print an ASCII grid straight to the console
+(new Kenat('2016/1/1'))->printThisMonth(true);
+```
+    </Tabs.Tab>
 </Tabs>
 
 ---
@@ -396,6 +511,16 @@ instance member to share a name):
 final monthCalendar = Kenat.getStaticMonthCalendar(2017, 1, { 'useGeez': false });
 final yearCalendar = Kenat.getYearCalendar(2017); // List of 13 month objects
 final range = Kenat.generateDateRange(Kenat.fromEthiopian(2017, 1, 1), Kenat.fromEthiopian(2017, 1, 10));
+```
+
+**PHP equivalent:** same naming as Dart — `getStaticMonthCalendar()` for the
+same reason (the instance method `getMonthCalendar()` already exists with a
+different shape):
+
+```php
+$monthCalendar = Kenat::getStaticMonthCalendar(2017, 1, ['useGeez' => false]);
+$yearCalendar = Kenat::getYearCalendar(2017); // array of 13 month arrays
+$range = Kenat::generateDateRange(new Kenat(['year' => 2017, 'month' => 1, 'day' => 1]), new Kenat(['year' => 2017, 'month' => 1, 'day' => 10]));
 ```
 
 ## MonthGrid Usage
@@ -421,6 +546,17 @@ print(grid['days']);    // List<Map<String, dynamic>?> (padding entries are null
 final nextMonth = (grid['up'] as Function)();
 ```
 
+**PHP equivalent:** `MonthGrid::create()` also returns a plain array, and
+also includes `'up'`/`'down'` closures for navigating months:
+
+```php
+$grid = MonthGrid::create(['year' => 2016, 'month' => 1]);
+print_r($grid['headers']); // [ሰኞ, ማክሰኞ, ረቡዕ, ሐሙስ, ዓርብ, ቅዳሜ, እሑድ]
+print_r($grid['days']);    // array<int, array|null> (padding entries are null)
+
+$nextMonth = ($grid['up'])();
+```
+
 ## Holiday Filtering
 
 All holiday functions support filtering by tags:
@@ -436,6 +572,12 @@ const publicHolidays = getHolidaysForYear(2016, { filter: [HolidayTags.PUBLIC] }
 final publicHolidays = getHolidaysForYear(2016, { 'filter': [HolidayTags.public] });
 ```
 
+**PHP equivalent:**
+
+```php
+$publicHolidays = Holidays::getHolidaysForYear(2016, ['filter' => [HolidayTags::PUBLIC]]);
+```
+
 ## Geez Numeral Conversion
 
 - `toGeez(number)` — Converts numbers to Geez numerals.
@@ -443,6 +585,10 @@ final publicHolidays = getHolidaysForYear(2016, { 'filter': [HolidayTags.public]
 
 **Dart equivalent:** identical names and behavior — `toGeez(2016)` →
 `'፳፻፲፮'`, `toArabic('፳፻፲፮')` → `2016`.
+
+**PHP equivalent:** `GeezConverter::toGeez()`/`GeezConverter::toArabic()`,
+same behavior — `GeezConverter::toGeez(2016)` → `'፳፻፲፮'`,
+`GeezConverter::toArabic('፳፻፲፮')` → `2016`.
 
 ## Date Validation & Utilities
 
@@ -457,6 +603,15 @@ options object:
 isValidEthiopianDate(2016, 1, 5);      // true
 isEthiopianLeapYear(2015);             // true
 getWeekday(2016, 1, 5);                // 6
+```
+
+**PHP equivalent:** the same three checks live as static methods on `Utils`,
+also with positional arguments:
+
+```php
+Utils::isValidEthiopianDate(2016, 1, 5);      // true
+Utils::isEthiopianLeapYear(2015);             // true
+Utils::getWeekday(['year' => 2016, 'month' => 1, 'day' => 5]); // 6
 ```
 
 ## Error Classes
@@ -474,3 +629,10 @@ Kenat exports error classes for robust error handling:
 Dart-specific ones, like `InvalidDateFormatError` and `UnrecognizedInputError`),
 all extending a common `KenatError` and each exposing `toJson()` with a `type`
 field for structured logging.
+
+**PHP equivalent:** the same six exceptions exist under `Kenat\Exceptions`
+as `InvalidEthiopianDateException`, `InvalidGregorianDateException`,
+`InvalidInputTypeException`, `InvalidTimeException`, `InvalidGridConfigException`,
+and `UnknownHolidayException` (plus `InvalidDateFormatException`,
+`UnrecognizedInputException`, and `GeezConverterException`), all extending a
+common `KenatException`.
