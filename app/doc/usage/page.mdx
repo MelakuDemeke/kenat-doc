@@ -4,7 +4,7 @@ description: Learn how to convert, print, and format dates with Kenat.
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 import { FaToolbox, FaBrain, FaCalculator, FaRulerCombined, FaMosque, FaBookOpen } from 'react-icons/fa'
 import { FiRefreshCw, FiCalendar, FiAlertTriangle } from 'react-icons/fi'
 
@@ -20,7 +20,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
@@ -64,6 +65,20 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     # 2025-06-02
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Conversions;
+
+    // toEC()/toGC() return typed EthiopianDate/GregorianDate value objects
+    $eth = Conversions::toEC(2025, 6, 2);
+    echo "{$eth->year}-{$eth->month}-{$eth->day}";
+    // → 2017-9-25
+
+    $gc = Conversions::toGC(2017, 9, 25);
+    echo "{$gc->year}-{$gc->month}-{$gc->day}";
+    // → 2025-6-2
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ---
@@ -74,7 +89,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
@@ -100,6 +116,15 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     # → ሰኔ ፭ ፳፻፲፮
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Kenat;
+
+    $k = new Kenat('2016/10/5');
+    echo $k->formatInGeezAmharic();
+    // → ሰኔ ፭ ፳፻፲፮
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ---
@@ -110,7 +135,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
@@ -152,6 +178,21 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     # → {'year': 2017, 'month': 5, 'day': 15}
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Kenat;
+
+    $k = new Kenat('2015/6/10');
+
+    // Kenat is immutable in PHP too: these methods return a NEW instance,
+    // but they still chain.
+    $k = $k->addDays(5)->addMonths(-1)->addYears(2);
+
+    $et = $k->getEthiopian();
+    echo "{$et->year}-{$et->month}-{$et->day}";
+    // → 2017-5-15
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ---
@@ -162,7 +203,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
@@ -198,6 +240,18 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     print(diff_in_years(a, b))   # 3
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Kenat;
+
+    $a = new Kenat('2015/5/15');
+    $b = new Kenat('2012/5/15');
+
+    echo $a->diffInDays($b);   // 1095
+    echo $a->diffInMonths($b); // 39
+    echo $a->diffInYears($b);  // 3
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ---
@@ -208,7 +262,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
@@ -258,6 +313,23 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     print(first_day_of_first_week)
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\MonthGrid;
+
+    // MonthGrid::create() returns an array directly — same shape as Dart's
+    $grid = MonthGrid::create(['year' => 2017, 'month' => 9, 'useGeez' => true]);
+
+    print_r($grid['headers']);
+    // → [እሑድ, ሰኞ, ማክሰኞ, ...]
+
+    // $grid['days'] is a flat, weekStart-padded array — leading entries can
+    // be null, so find the first real day rather than assuming index 0:
+    $firstDay = array_values(array_filter($grid['days'], fn ($d) => $d !== null))[0];
+    print_r($firstDay);
+    // → ['ethiopian' => [...], 'gregorian' => [...], 'weekday' => ..., 'holidays' => [...]]
+    ```
+  </Tabs.Tab>
 </Tabs>
 
 ---
@@ -268,7 +340,8 @@ This page demonstrates common date operations using Kenat: conversion, formattin
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
   <Tabs.Tab>
@@ -335,6 +408,33 @@ This page demonstrates common date operations using Kenat: conversion, formattin
     # → {'key': 'enkutatash', 'tags': ['national', 'christian'], 'movable': False, 'name': 'አዲስ ዓመት', 'description': 'Ethiopian New Year', 'ethiopian': {'year': 2017, 'month': 1, 'day': 1}}
     ```
   </Tabs.Tab>
+  <Tabs.Tab>
+    ```php
+    use Kenat\Holidays;
+    use Kenat\HolidayTags;
+
+    // Get a holiday by key and year — returns a typed Holiday value object, or null
+    $enkutatash = Holidays::getHoliday('enkutatash', 2017);
+    echo "{$enkutatash->name}: {$enkutatash->ethiopian->month}/{$enkutatash->ethiopian->day}";
+    // → አዲስ ዓመት: 1/1
+
+    // Get all public holidays for a year
+    $publicHolidays = Holidays::getHolidaysForYear(2017, ['filter' => HolidayTags::PUBLIC]);
+    echo count($publicHolidays); // 15
+
+    // Get holidays for a specific month
+    $monthHolidays = Holidays::getHolidaysInMonth(2017, 1, ['filter' => HolidayTags::PUBLIC]);
+    echo count($monthHolidays); // 3
+
+    // Use the lang option
+    $meskelEn = Holidays::getHoliday('meskel', 2017, ['lang' => 'english']);
+    echo $meskelEn->name; // 'Meskel'
+    ```
+
+    ### <FiAlertTriangle className="inline-block mr-2" /> Error Handling
+    `getHoliday` returns `null` for an unknown key; functions that require a
+    valid Ethiopian date throw a typed exception (e.g. `InvalidInputTypeException`).
+  </Tabs.Tab>
 </Tabs>
 
 # <FaBookOpen className="inline-block mr-2" /> Quick Reference: Named Exports
@@ -349,3 +449,10 @@ Kenat exports many useful functions and constants:
 - `HolidayTags`, `monthNames`
 - `getBahireHasab`, `getFastingPeriod`
 - Formatting: `formatStandard`, `formatWithWeekday`, `formatWithTime`, `formatInGeezAmharic`, `formatShort`, `toISODateString`
+
+**PHP equivalent:** same functionality, organized as static methods on
+namespaced classes instead of top-level functions — `Kenat`, `MonthGrid`,
+`Time`, `Conversions::toEC/toGC`, `GeezConverter::toGeez/toArabic`,
+`Holidays::getHolidaysForYear/getHolidaysInMonth/getHoliday`, `HolidayTags`,
+`BahireHasab::calculate/getMovableHoliday`, `Fasting::getFastingPeriod`, and
+`Formatting::formatStandard/formatWithWeekday/formatWithTime/formatInGeezAmharic/formatShort/toISODateString`.
