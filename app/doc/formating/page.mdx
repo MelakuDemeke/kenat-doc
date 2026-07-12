@@ -4,7 +4,7 @@ description: Flexible formatting options for Ethiopian dates using the kenat.for
 ---
 
 import { Tabs } from 'nextra/components'
-import { SiJavascript, SiDart, SiPython } from 'react-icons/si'
+import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # Formatting Ethiopian Dates with Kenat
 
@@ -35,7 +35,8 @@ Formats a date into a standard "Month Day Year" string.
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -103,6 +104,32 @@ print(format_standard(today, lang='english'))
 # Output: Meskerem 10 2016
 ```
 </Tabs.Tab>
+<Tabs.Tab>
+```php
+use Kenat\Kenat;
+use Kenat\Formatting;
+
+// Kenat's constructor accepts a string, an array, or a DateTimeInterface
+$today = new Kenat('2016/1/10');
+// or: new Kenat(['year' => 2016, 'month' => 1, 'day' => 10])
+// or: new Kenat(new DateTimeImmutable('2016-01-10'))
+
+// Using Kenat instance method (default Amharic)
+echo $today->format();
+// Output: መስከረም 10 2016
+
+// Using Kenat instance method (English)
+echo $today->format(['lang' => 'english']);
+// Output: Meskerem 10 2016
+
+// Using the named formatting function — takes the EthiopianDate value
+// object, not the Kenat instance itself
+echo Formatting::formatStandard($today->getEthiopian());
+// Output: መስከረም 10 2016
+echo Formatting::formatStandard($today->getEthiopian(), 'english');
+// Output: Meskerem 10 2016
+```
+</Tabs.Tab>
 </Tabs>
 
 
@@ -114,7 +141,8 @@ Includes the day of the week in the output.
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -173,6 +201,27 @@ print(format_with_weekday(today, use_geez=True))
 # Output: ማክሰኞ, መስከረም ፲ ፳፻፲፮
 ```
 </Tabs.Tab>
+<Tabs.Tab>
+```php
+use Kenat\Kenat;
+use Kenat\Formatting;
+
+$today = new Kenat('2016/1/10');
+
+// Using Kenat instance method
+echo $today->formatWithWeekday();
+// Output: ሐሙስ, መስከረም 10 2016
+echo $today->formatWithWeekday('english', true);
+// Output: Thursday, Meskerem ፲ ፳፻፲፮
+
+// Using named formatting function (takes the EthiopianDate value object)
+echo Formatting::formatWithWeekday($today->getEthiopian());
+// Output: ሐሙስ, መስከረም 10 2016
+echo Formatting::formatWithWeekday($today->getEthiopian(), 'english', true);
+// Output: Thursday, Meskerem ፲ ፳፻፲፮
+// Args: lang ('amharic'|'english'), useGeez (bool)
+```
+</Tabs.Tab>
 </Tabs>
 
 
@@ -184,7 +233,8 @@ Combines a date and a Time object into a single string.
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -235,6 +285,27 @@ print(format_with_time(today, time))
 # Output: መስከረም 10 2016 8:30 ቀን
 ```
 </Tabs.Tab>
+<Tabs.Tab>
+```php
+use Kenat\Kenat;
+use Kenat\Time;
+use Kenat\Formatting;
+
+$today = new Kenat('2016/1/10');
+$time = new Time(8, 30, 'day');
+
+// The Kenat instance method doesn't take a Time argument — attach the
+// time to the instance first with setTime(), which returns a new Kenat.
+$todayWithTime = $today->setTime(8, 30, 'day');
+echo $todayWithTime->format(['includeTime' => true]);
+// Output: መስከረም 10 2016 08:30 ጠዋት
+
+// The named formatting function does take a Time directly
+echo Formatting::formatWithTime($today->getEthiopian(), $time);
+// Output: መስከረም 10 2016 08:30 ጠዋት
+// Args: lang ('amharic'|'english')
+```
+</Tabs.Tab>
 </Tabs>
 
 
@@ -246,7 +317,8 @@ Formats the date using Ge'ez numerals for the day and year.
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -289,6 +361,22 @@ print(format_in_geez_amharic(today))
 # Output: መስከረም ፲ ፳፻፲፮
 ```
 </Tabs.Tab>
+<Tabs.Tab>
+```php
+use Kenat\Kenat;
+use Kenat\Formatting;
+
+$today = new Kenat('2016/1/10');
+
+// Using Kenat instance method
+echo $today->formatInGeezAmharic();
+// Output: መስከረም ፲ ፳፻፲፮
+
+// Using named formatting function (takes the EthiopianDate value object)
+echo Formatting::formatInGeezAmharic($today->getEthiopian());
+// Output: መስከረም ፲ ፳፻፲፮
+```
+</Tabs.Tab>
 </Tabs>
 
 
@@ -300,7 +388,8 @@ Returns the date in a compact YYYY/MM/DD format.
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -343,6 +432,22 @@ print(format_short(today))
 # Output: 2016/01/10
 ```
 </Tabs.Tab>
+<Tabs.Tab>
+```php
+use Kenat\Kenat;
+use Kenat\Formatting;
+
+$today = new Kenat('2016/1/10');
+
+// Using Kenat instance method
+echo $today->formatShort();
+// Output: 2016/01/10
+
+// Using named formatting function (takes the EthiopianDate value object)
+echo Formatting::formatShort($today->getEthiopian());
+// Output: 2016/01/10
+```
+</Tabs.Tab>
 </Tabs>
 
 
@@ -354,7 +459,8 @@ Returns an ISO-like string, with optional time.
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
-    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>
+    <div key="python" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>,
+    <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
 <Tabs.Tab>
@@ -416,6 +522,31 @@ print(to_iso_date_string(today))
 time = Time(8, 30, 'day')
 print(to_iso_date_string(today, time))
 # Output: 2016-01-10T08:30
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```php
+use Kenat\Kenat;
+use Kenat\Formatting;
+
+$today = new Kenat('2016/1/10');
+
+// Note: like Dart, a string-constructed Kenat always carries a default
+// noon-day time internally, so toISOString() already includes a time.
+echo $today->toISOString();
+// Output: 2016-01-10T12:00
+
+// The named function takes the EthiopianDate value object with no
+// implicit time:
+echo Formatting::toISODateString($today->getEthiopian());
+// Output: 2016-01-10
+
+// With an explicit time — setTime() returns a NEW Kenat instance
+$todayWithTime = $today->setTime(8, 30, 'day');
+echo $todayWithTime->toISOString();
+// Output: 2016-01-10T08:30
+echo Formatting::toISODateString($today->getEthiopian(), ['hour' => 8, 'minute' => 30, 'period' => 'day']);
+// Output: 2016-01-10T08:30
 ```
 </Tabs.Tab>
 </Tabs>
