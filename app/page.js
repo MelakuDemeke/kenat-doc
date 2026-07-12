@@ -13,7 +13,7 @@ import {
   FiGithub,
   FiBookOpen,
 } from "react-icons/fi";
-import { SiNpm, SiPypi, SiDart } from "react-icons/si";
+import { SiNpm, SiPypi, SiDart, SiPhp } from "react-icons/si";
 import { clsx } from "clsx";
 
 import { useHasMounted } from "@/hooks/useHasMounted";
@@ -30,12 +30,14 @@ const INSTALL_COMMANDS = {
   npm: "npm install kenat kenat-ui",
   pip: "pip install kenat",
   pub: "dart pub add kenat",
+  composer: "composer require melakudemeke/kenat-php",
 };
 
 const INSTALLER_TABS = [
   { key: "npm", Icon: SiNpm, label: "npm" },
   { key: "pip", Icon: SiPypi, label: "pip" },
   { key: "pub", Icon: SiDart, label: "pub" },
+  { key: "composer", Icon: SiPhp, label: "composer" },
 ];
 
 export default function Home() {
@@ -285,6 +287,7 @@ export default function Home() {
                 { name: "kenat_py", url: "https://github.com/MelakuDemeke/kenat_py" },
                 { name: "kenat-cli", url: "https://github.com/MelakuDemeke/kenat-cli" },
                 { name: "kenat-dart", url: "https://github.com/MelakuDemeke/kenat-dart" },
+                { name: "kenat-php", url: "https://github.com/MelakuDemeke/kenat-php" },
               ].map((repo) => (
                 <a
                   key={repo.name}
