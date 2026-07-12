@@ -6,7 +6,7 @@ description: Kenat – the Ethiopian Calendar Toolkit for all platforms.
 import { Tabs } from 'nextra/components'
 import { SiJavascript, SiPython, SiDart, SiPhp } from 'react-icons/si'
 import { FiGlobe, FiTool, FiRefreshCw, FiCalendar, FiClock, FiZap, FiPackage, FiTrendingUp } from 'react-icons/fi'
-import { FaCalculator, FaSortNumericDown, FaLandmark, FaSchool, FaTools } from 'react-icons/fa'
+import { FaCalculator, FaSortNumericDown, FaLandmark, FaSchool } from 'react-icons/fa'
 
 # <FiGlobe className="inline-block mr-2" /> Introduction
 
@@ -81,7 +81,17 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
   </Tabs.Tab>
 
   <Tabs.Tab>
-    <FaTools className="inline-block mr-2" /> PHP version coming soon...
+    ```php
+    use Kenat\Kenat;
+
+    $date = new Kenat();
+    $et = $date->getEthiopian();
+    echo "{$et->year}-{$et->month}-{$et->day}";
+    // 2018-11-4
+
+    echo $date->formatInGeezAmharic();
+    // ሀምሌ ፬ ፳፻፲፰
+    ```
   </Tabs.Tab>
 </Tabs>
 
