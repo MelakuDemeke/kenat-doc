@@ -1,6 +1,6 @@
 "use client";
 
-import { SiJavascript, SiNodedotjs, SiPython, SiReact, SiTypescript, SiFlutter } from "react-icons/si";
+import { SiJavascript, SiNodedotjs, SiPython, SiReact, SiTypescript, SiFlutter, SiPhp } from "react-icons/si";
 
 const ICONS = [
   {
@@ -45,6 +45,13 @@ const ICONS = [
     iconClass: "text-sky-400",
     chipClass: "bg-sky-50/90 dark:bg-sky-500/10 border-sky-200/70 dark:border-sky-500/20 text-zinc-700 dark:text-zinc-300",
   },
+  {
+    key: "php",
+    label: "PHP",
+    Icon: SiPhp,
+    iconClass: "text-indigo-500",
+    chipClass: "bg-indigo-50/90 dark:bg-indigo-500/10 border-indigo-200/70 dark:border-indigo-500/20 text-zinc-700 dark:text-zinc-300",
+  },
 ];
 
 const PLACEMENTS = [
@@ -54,6 +61,7 @@ const PLACEMENTS = [
   { bottom: "24%", right: "1%" },
   { bottom: "10%", left: "2%" },
   { top: "6%", right: "2%" },
+  { top: "44%", left: "2.5%" },
 ];
 
 const FLOAT_PARAMS = [
@@ -63,6 +71,7 @@ const FLOAT_PARAMS = [
   { dur: "4.8s", delay: "-0.7s" },
   { dur: "5.5s", delay: "-3.1s" },
   { dur: "4.4s", delay: "-1.8s" },
+  { dur: "5.0s", delay: "-2.1s" },
 ];
 
 export function OrbitingLanguageIcons() {
