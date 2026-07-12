@@ -4,11 +4,12 @@ export async function GET() {
   const startDate = "2024-01-01";
   const endDate = new Date().toISOString().split("T")[0];
 
-  const [kenatNpm, kenatUiNpm, pubDev, pypi] = await Promise.all([
+  const [kenatNpm, kenatUiNpm, pubDev, pypi, packagist] = await Promise.all([
     fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat`).then((r) => r.json()).catch(() => null),
     fetch(`https://api.npmjs.org/downloads/range/${startDate}:${endDate}/kenat-ui`).then((r) => r.json()).catch(() => null),
     fetch("https://pub.dev/api/packages/kenat/score").then((r) => r.json()).catch(() => null),
     fetch("https://pypistats.org/api/packages/kenat/overall").then((r) => r.json()).catch(() => null),
+    fetch("https://packagist.org/packages/melakudemeke/kenat-php.json").then((r) => r.json()).catch(() => null),
   ]);
 
   let total = 0;
@@ -20,6 +21,7 @@ export async function GET() {
       .filter((d) => d.category === "without_mirrors")
       .reduce((s, d) => s + d.downloads, 0);
   }
+  if (packagist?.package?.downloads?.total) total += packagist.package.downloads.total;
 
   return Response.json({ total });
 }
