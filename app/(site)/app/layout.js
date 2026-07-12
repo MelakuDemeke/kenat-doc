@@ -9,7 +9,7 @@ const jsonLd = {
   operatingSystem: 'Android, iOS',
   description:
     'Ethiopian calendar app with accurate Ethiopic–Gregorian conversion, Bahire Hasab, holidays, and optional Pro sync and Telegram integration.',
-  image: `https://www.kenat.systems${APP_ICON_PATH}`,
+  image: `https://kenat-doc.vercel.app${APP_ICON_PATH}`,
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -31,11 +31,11 @@ export const metadata = {
     title: 'Ethiopian calendar | Kenat',
     description:
       'Precision date conversion, Bahire Hasab, holidays, and Pro cloud sync. Download Kenat for Android and iOS.',
-    url: 'https://www.kenat.systems/app',
+    url: 'https://kenat-doc.vercel.app/app',
     siteName: 'Kenat',
     images: [
       {
-        url: 'https://www.kenat.systems/kenat%20icon.png',
+        url: 'https://kenat-doc.vercel.app/kenat%20icon.png',
         width: 512,
         height: 512,
         alt: 'Kenat app icon',

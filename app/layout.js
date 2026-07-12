@@ -43,7 +43,7 @@ export default async function RootLayout({ children }) {
         <meta name="description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more." />
         <meta property="og:title" content="Kenat Ethiopian Calendar Toolkit" />
         <meta property="og:description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more." />
-        <meta property="og:url" content="https://www.kenat.systems" />
+        <meta property="og:url" content="https://kenat-doc.vercel.app" />
         <meta property="og:image" content="/ogimage.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Kenat Ethiopian Calendar Toolkit" />
@@ -56,10 +56,10 @@ export default async function RootLayout({ children }) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "Kenat Ethiopian Calendar Toolkit",
-          "url": "https://www.kenat.systems",
+          "url": "https://kenat-doc.vercel.app",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://www.kenat.systems/search?q={search_term_string}",
+            "target": "https://kenat-doc.vercel.app/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }`}} />
