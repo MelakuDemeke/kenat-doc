@@ -202,9 +202,9 @@ export default function PrivacyPage() {
             sending an email to{" "}
             <a
               className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
-              href="mailto:support@kenat.systems"
+              href="mailto:melaku,demeke789@gmail.com"
             >
-              support@kenat.systems
+              melaku,demeke789@gmail.com
             </a>{" "}
             with your account details. Upon request, all your synced events and
             profile information will be permanently removed from our servers.

@@ -1,3 +1,4 @@
+import { EtDatetime } from "kenat";
 import Link from "next/link";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { FaTelegram } from "react-icons/fa";
@@ -24,6 +25,7 @@ const libraries = [
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
+  const etYear = new EtDatetime().year;
   return (
     <footer className="w-full border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 bg-grid-dots">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 pb-8">
@@ -136,7 +138,7 @@ export function SiteFooter() {
         {/* Bottom bar */}
         <div className="mt-14 border-t border-zinc-200 dark:border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-zinc-500">
-            © {year} Kenat by{" "}
+            © {year} GC / {etYear} EC Kenat by{" "}
             <a
               href="https://github.com/MelakuDemeke"
               target="_blank"
