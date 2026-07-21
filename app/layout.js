@@ -8,8 +8,25 @@ import 'nextra-theme-docs/style.css'
 import './globals.css';
 
 export const metadata = {
-  // Define your metadata here
-  // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+  metadataBase: new URL("https://kenat-doc.vercel.app"),
+  title: {
+    default: "Kenat Ethiopian Calendar Toolkit",
+    template: "%s | Kenat",
+  },
+  description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
+  openGraph: {
+    title: "Kenat Ethiopian Calendar Toolkit",
+    description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
+    url: "https://kenat-doc.vercel.app",
+    images: [{ url: "/ogimage.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kenat Ethiopian Calendar Toolkit",
+    description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs.",
+    images: ["/ogimage.png"],
+  },
 }
 
 const banner = <Banner storageKey="kenat-info">Kenat is a work in progress project <FaLaptopCode className="inline-block align-text-bottom" /></Banner>
@@ -38,19 +55,6 @@ export default async function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <Head>
-        {/* SEO meta tags */}
-        <title>Kenat Ethiopian Calendar Toolkit</title>
-        <meta name="description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more." />
-        <meta property="og:title" content="Kenat Ethiopian Calendar Toolkit" />
-        <meta property="og:description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more." />
-        <meta property="og:url" content="https://kenat-doc.vercel.app" />
-        <meta property="og:image" content="/ogimage.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Kenat Ethiopian Calendar Toolkit" />
-        <meta name="twitter:description" content="Kenat provides a robust, standalone library for all your Ethiopian calendar needs." />
-        <meta name="twitter:image" content="/ogimage.png" />
-
-        {/* Structured Data for Google Rich Results */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: `{
           "@context": "https://schema.org",
