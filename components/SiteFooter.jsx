@@ -1,4 +1,3 @@
-import { EtDatetime } from "kenat";
 import Link from "next/link";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { FaTelegram } from "react-icons/fa";
@@ -24,8 +23,10 @@ const libraries = [
 ];
 
 export function SiteFooter() {
-  const year = new Date().getFullYear();
-  const etYear = new EtDatetime().year;
+  const now = new Date();
+  const year = now.getFullYear();
+  // Ethiopian New Year falls ~Sept 11; after August ET year = GY - 7, before = GY - 8
+  const etYear = now.getMonth() >= 8 ? year - 7 : year - 8;
   return (
     <footer className="w-full border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 bg-grid-dots">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 pb-8">
