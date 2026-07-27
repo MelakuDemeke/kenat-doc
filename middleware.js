@@ -11,7 +11,7 @@ import { fail } from "@/lib/api/respond.js";
 export async function middleware(req) {
   try {
     const { keyId, plan } = await authenticate(req);
-    const limitHeaders = enforce(`${keyId}:${plan.name}`, plan);
+    const limitHeaders = await enforce(`${keyId}:${plan.name}`, plan);
 
     const headers = new Headers(req.headers);
     headers.set("x-kenat-key-id", keyId);
