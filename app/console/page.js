@@ -1,10 +1,33 @@
 import Link from "next/link";
 import { FiExternalLink, FiShield } from "react-icons/fi";
+import { toEC, toGeez, monthNames } from "kenat";
 import { currentUser } from "@/lib/firebase/session.js";
 import { Plans } from "@/lib/api/auth.js";
 import { getDb } from "@/lib/firebase/admin.js";
 import { SignIn } from "@/components/console/SignIn.jsx";
 import { KeyManager } from "@/components/console/KeyManager.jsx";
+
+/**
+ * Computed on the server so the sign-in page cannot flash a mismatched date during
+ * hydration. Safe because this route is already force-dynamic.
+ */
+function todayInEthiopia() {
+  const now = new Date();
+  const ec = toEC(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  const pad = (n) => String(n).padStart(2, "0");
+
+  return {
+    ...ec,
+    dayGeez: toGeez(ec.day),
+    monthAmharic: monthNames.amharic[ec.month - 1],
+    ethiopianIso: `${ec.year}-${pad(ec.month)}-${pad(ec.day)}`,
+    gregorianLabel: now.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }),
+  };
+}
 
 // Reads a session cookie, so it can never be statically rendered.
 export const dynamic = "force-dynamic";
@@ -48,7 +71,7 @@ export default async function ConsolePage() {
           <KeyManager user={user} plan={plan} />
         </>
       ) : (
-        <SignIn />
+        <SignIn today={todayInEthiopia()} />
       )}
     </div>
   );

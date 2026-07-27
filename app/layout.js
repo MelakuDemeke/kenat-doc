@@ -1,8 +1,9 @@
 import { Layout, Navbar, ThemeSwitch } from 'nextra-theme-docs'
-import { Banner, Head } from 'nextra/components'
+import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
-import { FaTelegram, FaLaptopCode } from 'react-icons/fa';
+import { FaTelegram } from 'react-icons/fa';
+import { ConditionalSearch } from '@/components/ConditionalSearch.jsx';
 
 import 'nextra-theme-docs/style.css'
 import './globals.css';
@@ -29,7 +30,6 @@ export const metadata = {
   },
 }
 
-const banner = <Banner storageKey="kenat-info">Kenat is a work in progress project <FaLaptopCode className="inline-block align-text-bottom" /></Banner>
 const navbar = (
   <Navbar
     logo={<div className="flex items-center gap-2">
@@ -70,8 +70,9 @@ export default async function RootLayout({ children }) {
       </Head>
       <body>
         <Layout
-          banner={banner}
           navbar={navbar}
+          // Scoped to /doc — the search index only covers documentation pages.
+          search={<ConditionalSearch />}
           pageMap={await getPageMap()}
           docsRepositoryBase="https://github.com/MelakuDemeke/kenat-doc"
         // ... Your additional layout options
