@@ -22,6 +22,7 @@ import { FeatureCard } from "@/components/Landing/FeatureCard";
 import { OrbitingLanguageIcons } from "@/components/Landing/OrbitingLanguageIcons";
 import InteractivePlayground from "@/components/Landing/InteractivePlayground";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ApiSection } from "@/components/Landing/ApiSection";
 
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
 const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
@@ -260,6 +261,11 @@ export default function Home() {
         </section>
 
         {/* --- Dotted Separator Layout Rail --- */}
+        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800 my-12" />
+
+        {/* --- HTTP API & Pricing --- */}
+        <ApiSection />
+
         <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800 my-12" />
 
         {/* --- CTA Section --- */}

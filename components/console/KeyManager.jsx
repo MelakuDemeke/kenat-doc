@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import {
-  FiCopy, FiTrash2, FiPlus, FiCheck, FiKey, FiLogOut, FiArrowRight, FiTerminal,
+  FiCopy, FiTrash2, FiPlus, FiCheck, FiKey, FiLogOut, FiArrowRight, FiTerminal, FiClock,
 } from "react-icons/fi";
 import { auth } from "@/lib/firebase/client.js";
 import { API_BASE } from "@/lib/site.js";
+import { PricingCards } from "@/components/pricing/PricingCards.jsx";
+import { UpgradeDialog } from "@/components/console/UpgradeDialog.jsx";
 
 const PLAN_STYLE = {
   free: "text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800",
@@ -177,6 +179,8 @@ export function KeyManager({ user, plan }) {
   const [newSecret, setNewSecret] = useState(null);
   const [name, setName] = useState("");
   const [error, setError] = useState(null);
+  const [requests, setRequests] = useState([]);
+  const [upgradePlan, setUpgradePlan] = useState(null);
 
   async function load() {
     const res = await fetch("/api/console/keys");
@@ -184,8 +188,14 @@ export function KeyManager({ user, plan }) {
     setLoading(false);
   }
 
+  async function loadRequests() {
+    const res = await fetch("/api/console/upgrade");
+    if (res.ok) setRequests((await res.json()).requests);
+  }
+
   useEffect(() => {
     load();
+    loadRequests();
   }, []);
 
   async function create(explicitName) {
@@ -222,6 +232,7 @@ export function KeyManager({ user, plan }) {
   const live = keys.filter((k) => !k.revoked);
   const used = live.reduce((sum, k) => sum + (k.usage ?? 0), 0);
   const atLimit = live.length >= 5;
+  const pending = requests.find((r) => r.status === "pending");
 
   return (
     <div className="space-y-5">
@@ -310,6 +321,48 @@ export function KeyManager({ user, plan }) {
             </div>
           </div>
         </>
+      )}
+
+      <section className="pt-4">
+        <div className="mb-4">
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-white">Plans</h2>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            Paid by Telebirr transfer and confirmed by hand.
+          </p>
+        </div>
+
+        {pending && (
+          <div className="mb-4 flex items-start gap-2.5 px-4 py-3 rounded-xl border border-amber-300 dark:border-amber-800/60 bg-amber-50 dark:bg-amber-950/20">
+            <FiClock size={16} className="mt-0.5 shrink-0 text-amber-600 dark:text-amber-400" />
+            <div className="text-sm">
+              <p className="font-medium text-amber-900 dark:text-amber-200">
+                {pending.plan.charAt(0).toUpperCase() + pending.plan.slice(1)} upgrade awaiting confirmation
+              </p>
+              <p className="text-amber-800/80 dark:text-amber-300/80 mt-0.5">
+                Transaction <span className="font-mono">{pending.txnId}</span> submitted{" "}
+                {new Date(pending.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}.
+                Your plan changes once the transfer is verified.
+              </p>
+            </div>
+          </div>
+        )}
+
+        <PricingCards
+          currentPlan={plan.name}
+          pendingPlan={pending?.plan}
+          onChoose={(id) => setUpgradePlan(id)}
+        />
+      </section>
+
+      {upgradePlan && (
+        <UpgradeDialog
+          planId={upgradePlan}
+          onClose={() => setUpgradePlan(null)}
+          onSubmitted={async () => {
+            setUpgradePlan(null);
+            await loadRequests();
+          }}
+        />
       )}
     </div>
   );
