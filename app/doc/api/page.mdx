@@ -1,0 +1,110 @@
+---
+title: HTTP API
+description: Ethiopian calendar conversion, holidays and Bahire Hasab over HTTP.
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Kenat HTTP API
+
+The same calendar engine as the [`kenat`](/doc/installation) library, served over HTTP for
+stacks where installing a package is not an option — and, more usefully, for holiday data
+that stays correct without you shipping a release.
+
+<Callout type="info">
+  If you are writing JavaScript, Python, PHP or Dart, **use the library instead**. It is free,
+  MIT-licensed, has zero dependencies and runs locally with no network round trip. The API exists
+  for everything else, and for holiday data you do not want to redeploy to update.
+</Callout>
+
+## Why the API rather than the library
+
+- **Holiday dates that change.** Eid al-Fitr and Eid al-Adha depend on the official Ethiopian
+  moon-sighting announcement, and the government occasionally declares one-off public holidays.
+  A pinned library version is wrong the moment a date is announced; the API is right that day.
+- **Any language.** Anything that can make an HTTP request.
+- **No calendar logic in your codebase.** Business-day math and Bahire Hasab stay on our side.
+
+## Quick start
+
+<Steps>
+
+### Get a key
+
+Sign in at the [API Console](/console) with GitHub or Google and create a key. It is shown once.
+
+### Make a request
+
+```bash
+curl -H "Authorization: Bearer sk_live_your_key_here" \
+  "https://www.kenat.systems/api/v1/convert/to-ethiopian?date=2026-07-27"
+```
+
+```json
+{
+  "data": {
+    "gregorian": { "year": 2026, "month": 7, "day": 27 },
+    "ethiopian": { "year": 2018, "month": 11, "day": 20 }
+  },
+  "meta": { "calendar": "ethiopian" }
+}
+```
+
+### Check your usage
+
+Usage and remaining quota are in the [console](/console), and on every response as headers.
+
+</Steps>
+
+## Base URL
+
+```
+https://www.kenat.systems/api/v1
+```
+
+The version is in the path and will not change meaning. Breaking changes ship as `/v2`.
+
+## Response shape
+
+Every success is `{ data, meta }`. Every failure is `{ error }`. There is no third shape, so
+you can branch on the presence of `error` and be done.
+
+<Tabs items={['Success', 'Failure']}>
+  <Tabs.Tab>
+```json
+{
+  "data": { "...": "the result" },
+  "meta": { "calendar": "ethiopian", "count": 14 }
+}
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```json
+{
+  "error": {
+    "code": "INVALID_DATE",
+    "message": "Invalid Gregorian date: 2026/2/31",
+    "docs": "https://www.kenat.systems/doc/api/errors#invalid_date"
+  }
+}
+```
+  </Tabs.Tab>
+</Tabs>
+
+## Plans
+
+| | Free | Pro | Business |
+|---|---|---|---|
+| Requests / month | 1,000 | 100,000 | 2,000,000 |
+| Burst limit | 60/min | 600/min | 3,000/min |
+| Conversion & holidays | ✅ | ✅ | ✅ |
+| Bulk endpoints | — | ✅ | ✅ |
+
+Billing is arranged manually while the API is in early access — create a free key, and
+[get in touch](https://t.me/kenat_bot) when you need more.
+
+## Caching
+
+Responses are cacheable and say so. Past years are `immutable`; the current and future years
+carry a one-hour TTL so a late holiday announcement reaches you the same day. Respect
+`Cache-Control` and most of your traffic never leaves your own network.

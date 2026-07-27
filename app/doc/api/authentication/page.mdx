@@ -1,0 +1,58 @@
+---
+title: Authentication
+description: How to authenticate against the Kenat HTTP API.
+---
+
+import { Callout } from 'nextra/components'
+
+# Authentication
+
+Every request carries an API key as a bearer token:
+
+```bash
+curl -H "Authorization: Bearer sk_live_your_key_here" \
+  "https://www.kenat.systems/api/v1/holidays/2018"
+```
+
+## Getting a key
+
+Sign in at the [API Console](/console) with GitHub or Google, then create a key.
+
+<Callout type="warning">
+  The key is displayed **once**, at creation. We store only its SHA-256 hash, so we cannot show
+  it to you again or recover it — if you lose it, revoke it and create another.
+</Callout>
+
+You can hold up to five active keys. Use separate keys per environment so revoking a leaked
+staging key does not take production down with it.
+
+## Keeping keys safe
+
+- **Server-side only.** A key in browser JavaScript is public, and anyone can read it out of
+  your bundle and spend your quota. Proxy through your own backend instead.
+- **Environment variables, never source control.** If a key reaches a public commit, treat it as
+  burned and revoke it — deleting the commit is not enough, since it is already cloned and cached.
+- **Revoke immediately** if a key leaks. Revocation takes effect on the next request.
+
+## Rate limits and quota
+
+Every response carries the current state, so you never have to guess:
+
+| Header | Meaning |
+|---|---|
+| `X-RateLimit-Limit` | Requests allowed per minute on your plan |
+| `X-RateLimit-Remaining` | Requests left in the current minute |
+| `X-RateLimit-Reset` | Unix seconds when the minute window resets |
+| `X-Quota-Limit` | Requests included per month |
+| `X-Quota-Remaining` | Requests left this month |
+
+Exceeding the burst limit returns **429** with a `Retry-After` header — back off and retry.
+
+Exhausting the monthly quota returns **402**, not 429, because retrying will not help: the
+month's allowance is gone and you need to upgrade or wait for the reset. Quotas reset on the
+1st of each month, UTC.
+
+<Callout type="info">
+  Cached responses do not reach us and do not count against your quota. Honouring
+  `Cache-Control` is the cheapest way to stay inside a plan.
+</Callout>

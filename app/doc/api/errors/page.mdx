@@ -1,0 +1,68 @@
+---
+title: Errors
+description: Error codes returned by the Kenat HTTP API.
+---
+
+# Errors
+
+Failures return a single shape. The `code` is stable and safe to branch on; the `message` is
+for humans and may be reworded.
+
+```json
+{
+  "error": {
+    "code": "INVALID_DATE",
+    "message": "Invalid Gregorian date: 2026/2/31",
+    "docs": "https://www.kenat.systems/doc/api/errors#invalid_date"
+  }
+}
+```
+
+Codes are never repurposed. New failure modes get new codes, so an unrecognised `code` always
+means "something new", never "something changed underneath you".
+
+## `invalid_request`
+
+**400** — Parameters are missing, malformed, or contradictory. The message names the offending
+field, e.g. `tags: tags must be a comma-separated list of: public, religious, …`.
+
+## `invalid_date`
+
+**400** — Well-formed input that is not a real calendar date, such as `2026-02-31`, or a date
+outside the supported range. Ethiopian months are 1–13; Gregorian are 1–12.
+
+## `bulk_limit_exceeded`
+
+**400** — More than 1,000 dates in one `POST /convert/bulk` call. Split into batches.
+
+## `missing_api_key`
+
+**401** — No `Authorization` header. The expected form is `Authorization: Bearer sk_live_…`.
+
+## `invalid_api_key`
+
+**401** — The key is unknown or has been revoked. Check for a copy-paste truncation, then
+confirm the key is still active in the [console](/console).
+
+## `plan_required`
+
+**403** — The endpoint needs a paid plan. Bulk conversion is Pro and above.
+
+## `not_found`
+
+**404** — No such endpoint. Check the path and that `/v1` is present.
+
+## `rate_limited`
+
+**429** — Too many requests this minute. A `Retry-After` header says how many seconds to wait.
+Back off and retry; this one is transient.
+
+## `quota_exceeded`
+
+**402** — The month's included requests are used up. Retrying will not help, which is why this
+is 402 and not 429 — upgrade, or wait for the reset on the 1st (UTC).
+
+## `internal`
+
+**500** — Our fault, and logged on our side. Safe to retry with backoff. If it persists,
+[report it](https://github.com/MelakuDemeke/kenat/issues) with the time and the request you sent.

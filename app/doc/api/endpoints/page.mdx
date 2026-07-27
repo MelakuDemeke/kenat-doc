@@ -1,0 +1,153 @@
+---
+title: Endpoints
+description: Every endpoint in the Kenat HTTP API v1.
+---
+
+import { Callout } from 'nextra/components'
+
+# Endpoints
+
+Base URL `https://www.kenat.systems/api/v1`. All requests need an
+[API key](/doc/api/authentication).
+
+Ethiopian months run **1–13**, where 13 is Pagume. Dates accept either
+`?date=YYYY-MM-DD` or discrete `?year=&month=&day=` parameters.
+
+## Conversion
+
+### `GET /convert/to-ethiopian`
+
+Gregorian to Ethiopian.
+
+| Parameter | Required | Description |
+|---|---|---|
+| `date` | one of | Gregorian date as `YYYY-MM-DD` |
+| `year` `month` `day` | one of | Gregorian date as separate values |
+
+```bash
+curl -H "Authorization: Bearer $KENAT_KEY" \
+  "https://www.kenat.systems/api/v1/convert/to-ethiopian?date=2026-07-27"
+```
+
+```json
+{
+  "data": {
+    "gregorian": { "year": 2026, "month": 7, "day": 27 },
+    "ethiopian": { "year": 2018, "month": 11, "day": 20 }
+  },
+  "meta": { "calendar": "ethiopian" }
+}
+```
+
+### `GET /convert/to-gregorian`
+
+Ethiopian to Gregorian. Same parameters, read as an Ethiopian date.
+
+```bash
+curl -H "Authorization: Bearer $KENAT_KEY" \
+  "https://www.kenat.systems/api/v1/convert/to-gregorian?year=2018&month=11&day=20"
+```
+
+### `POST /convert/bulk`
+
+Up to 1,000 dates in one request. **Pro and Business only.**
+
+```bash
+curl -X POST -H "Authorization: Bearer $KENAT_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"direction":"to-ethiopian","dates":["2026-07-27","2026-02-31"]}' \
+  "https://www.kenat.systems/api/v1/convert/bulk"
+```
+
+One invalid date does not fail the batch — each item reports its own outcome, so converting a
+spreadsheet gives you partial success rather than nothing:
+
+```json
+{
+  "data": {
+    "direction": "to-ethiopian",
+    "results": [
+      { "input": "2026-07-27", "ok": true, "result": { "year": 2018, "month": 11, "day": 20 } },
+      { "input": "2026-02-31", "ok": false,
+        "error": { "code": "INVALID_DATE", "message": "Invalid Gregorian date: 2026/2/31" } }
+    ]
+  },
+  "meta": { "count": 2, "failed": 1 }
+}
+```
+
+<Callout type="info">
+  A malformed date *string* (wrong shape) rejects the whole request with `400`. A well-formed but
+  impossible date fails only its own item, as above.
+</Callout>
+
+## Holidays
+
+All holiday endpoints accept:
+
+| Parameter | Default | Description |
+|---|---|---|
+| `lang` | `amharic` | `amharic` or `english` |
+| `tags` | all | Comma-separated: `public`, `religious`, `christian`, `muslim`, `state`, `cultural`, `other` |
+
+### `GET /holidays/{year}`
+
+Every holiday in an Ethiopian year.
+
+```bash
+curl -H "Authorization: Bearer $KENAT_KEY" \
+  "https://www.kenat.systems/api/v1/holidays/2018?tags=public&lang=english"
+```
+
+```json
+{
+  "data": [
+    {
+      "key": "enkutatash",
+      "tags": ["public", "cultural"],
+      "movable": false,
+      "name": "Ethiopian New Year (Enkutatash)",
+      "description": "Marks the start of the Ethiopian year…",
+      "ethiopian": { "year": 2018, "month": 1, "day": 1 }
+    }
+  ],
+  "meta": { "year": 2018, "lang": "english", "tags": ["public"], "count": 14 }
+}
+```
+
+### `GET /holidays/{year}/{month}`
+
+Holidays in one Ethiopian month (1–13).
+
+### `GET /holidays/is-holiday`
+
+Whether a specific date is a holiday. The endpoint most systems call per-date.
+
+| Parameter | Default | Description |
+|---|---|---|
+| `date` | required | `YYYY-MM-DD` |
+| `calendar` | `ethiopian` | Which calendar `date` is expressed in |
+
+```bash
+curl -H "Authorization: Bearer $KENAT_KEY" \
+  "https://www.kenat.systems/api/v1/holidays/is-holiday?date=2018-01-17&lang=english"
+```
+
+```json
+{
+  "data": {
+    "isHoliday": true,
+    "ethiopian": { "year": 2018, "month": 1, "day": 17 },
+    "gregorian": { "year": 2025, "month": 9, "day": 27 },
+    "holidays": [
+      { "key": "meskel", "tags": ["public", "religious", "christian"],
+        "name": "Finding of the True Cross (Meskel)", "movable": false,
+        "ethiopian": { "year": 2018, "month": 1, "day": 17 } }
+    ]
+  },
+  "meta": { "lang": "english", "tags": null }
+}
+```
+
+Pass `calendar=gregorian` to ask about a Gregorian date instead — the response always returns
+both calendars, so no follow-up conversion call is needed.

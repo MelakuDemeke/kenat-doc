@@ -15,6 +15,10 @@ export default {
         title: 'Tools',
         type: 'page'
     },
+    console: {
+        title: 'API',
+        type: 'page'
+    },
     app: {
         title: 'App',
         type: 'page'

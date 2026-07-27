@@ -19,4 +19,13 @@ function migrateNextraTurboToRootTurbopack(config) {
   return out;
 }
 
-export default migrateNextraTurboToRootTurbopack(withNextra({}));
+export default migrateNextraTurboToRootTurbopack(
+  withNextra({
+    /**
+     * firebase-admin pulls in jwks-rsa, which `require()`s the ESM-only `jose`.
+     * Bundling it triggers ERR_REQUIRE_ESM at build time, so leave it external and
+     * let Node resolve it at runtime.
+     */
+    serverExternalPackages: ["firebase-admin"],
+  })
+);

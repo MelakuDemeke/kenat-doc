@@ -1,4 +1,4 @@
-import { FiPackage, FiSettings, FiFeather, FiBookOpen, FiMonitor } from 'react-icons/fi'
+import { FiPackage, FiSettings, FiFeather, FiBookOpen, FiMonitor, FiServer } from 'react-icons/fi'
 import { FaRocket, FaToolbox, FaGift, FaWater, FaPalette } from 'react-icons/fa'
 
 const withIcon = (Icon, label) => (
@@ -17,5 +17,6 @@ export default {
     bahireHasab: withIcon(FaWater, "Bahire Hasab"),
     "Kenat-UI": withIcon(FaPalette, "Kenat UI"),
     "kenat-cli": withIcon(FiMonitor, "Kenat CLI"),
+    api: withIcon(FiServer, "HTTP API"),
     examples: withIcon(FiBookOpen, "Examples"),
 }

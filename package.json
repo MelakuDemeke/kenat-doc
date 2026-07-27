@@ -15,6 +15,8 @@
     "@headlessui/react": "^2.2.4",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
+    "firebase": "^12.16.0",
+    "firebase-admin": "^14.2.0",
     "kenat": "^4.0.0",
     "kenat-ui": "^1.0.0",
     "next": "15.5.14",
@@ -25,6 +27,7 @@
     "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "server-only": "^0.0.1",
     "three": "^0.184.0",
     "zod": "^3.25.76"
   },
@@ -38,5 +41,8 @@
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.7",
     "typescript": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
