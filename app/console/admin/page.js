@@ -4,6 +4,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import { currentUser } from "@/lib/firebase/session.js";
 import { AdminPanel } from "@/components/console/AdminPanel.jsx";
 import { UpgradeQueue } from "@/components/console/UpgradeQueue.jsx";
+import { PricingEditor } from "@/components/console/PricingEditor.jsx";
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +40,7 @@ export default async function AdminPage() {
       {/* Payments first: it is the only part of this page with work waiting on it. */}
       <div className="space-y-10">
         <UpgradeQueue />
+        <PricingEditor />
         <section>
           <h2 className="text-base font-semibold text-zinc-900 dark:text-white mb-3">Accounts</h2>
           <AdminPanel />

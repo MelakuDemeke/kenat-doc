@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FiArrowRight, FiRefreshCw, FiGlobe, FiShield, FiBookOpen } from "react-icons/fi";
 import { PricingCards } from "@/components/pricing/PricingCards.jsx";
 import { API_BASE } from "@/lib/site.js";
-import { TELEBIRR_NUMBER } from "@/lib/api/pricing.js";
+import { usePricing } from "@/components/pricing/usePricing.js";
 
 const REASONS = [
   {
@@ -25,6 +25,7 @@ const REASONS = [
 ];
 
 export function ApiSection() {
+  const { telebirrNumber } = usePricing();
   const example = `curl -H "Authorization: Bearer sk_live_..." \\\n  "${API_BASE}/holidays/is-holiday?date=2018-01-17"`;
 
   return (
@@ -77,7 +78,7 @@ export function ApiSection() {
           <h3 className="text-2xl font-extrabold tracking-tight">Pricing</h3>
           <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
             Start free, no card. Paid plans are settled by Telebirr transfer to{" "}
-            <span className="font-mono text-zinc-700 dark:text-zinc-300">{TELEBIRR_NUMBER}</span>{" "}
+            <span className="font-mono text-zinc-700 dark:text-zinc-300">{telebirrNumber}</span>{" "}
             and confirmed by hand.
           </p>
         </div>

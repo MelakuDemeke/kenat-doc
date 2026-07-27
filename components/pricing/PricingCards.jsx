@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { FiCheck, FiX, FiArrowRight } from "react-icons/fi";
-import { PRICING, PLAN_ORDER, CURRENCY } from "@/lib/api/pricing.js";
+import { PLAN_ORDER, CURRENCY } from "@/lib/api/pricing.js";
+import { usePricing } from "./usePricing.js";
 
 /**
  * Shared by the marketing page and the console.
@@ -12,6 +13,8 @@ import { PRICING, PLAN_ORDER, CURRENCY } from "@/lib/api/pricing.js";
  * anything until they have an account.
  */
 export function PricingCards({ currentPlan, onChoose, pendingPlan }) {
+  const { plans: PRICING } = usePricing();
+
   return (
     <div className="grid gap-5 md:grid-cols-3">
       {PLAN_ORDER.map((id) => {

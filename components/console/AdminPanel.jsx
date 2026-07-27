@@ -8,6 +8,29 @@ const BILLING = ["unbilled", "invoiced", "paid", "overdue"];
 
 const QUOTA = { free: 1_000, pro: 100_000, business: 2_000_000 };
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+/** A week's notice is enough to chase a renewal before service drops. */
+const EXPIRING_SOON_DAYS = 7;
+
+/**
+ * Expiry is enforced at the edge from the Redis mirror, so a lapsed account is
+ * already back on free limits by the time it shows here. This is for chasing
+ * renewals, not for gating access.
+ */
+function expiryState(user) {
+  if (!user.planExpiresAt || user.plan === "free") return null;
+  const daysLeft = Math.ceil((user.planExpiresAt - Date.now()) / DAY_MS);
+  if (daysLeft < 0) return { kind: "expired", daysLeft, label: `Expired ${Math.abs(daysLeft)}d ago` };
+  if (daysLeft <= EXPIRING_SOON_DAYS) return { kind: "soon", daysLeft, label: `${daysLeft}d left` };
+  return { kind: "active", daysLeft, label: `${daysLeft}d left` };
+}
+
+const EXPIRY_STYLE = {
+  expired: "text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-900/40",
+  soon: "text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/40",
+  active: "text-zinc-500 bg-zinc-100 dark:bg-zinc-800",
+};
+
 const PLAN_STYLE = {
   free: "text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800",
   pro: "text-sky-700 dark:text-sky-300 bg-sky-100 dark:bg-sky-900/40",
@@ -96,6 +119,7 @@ function UserCard({ user, periods, onPatch }) {
 
   // recentPeriods returns newest first; a chart reads left to right through time.
   const series = [...periods].reverse().map((p) => user.usage?.[p] ?? 0);
+  const expiry = expiryState(user);
   const quota = QUOTA[user.plan ?? "free"];
 
   const field =
@@ -131,6 +155,11 @@ function UserCard({ user, periods, onPatch }) {
           <Pill className={BILLING_STYLE[user.billingStatus ?? "unbilled"]}>
             {user.billingStatus ?? "unbilled"}
           </Pill>
+          {expiry && (
+            <Pill className={EXPIRY_STYLE[expiry.kind]}>
+              <span title={new Date(user.planExpiresAt).toLocaleDateString("en-GB")}>{expiry.label}</span>
+            </Pill>
+          )}
           <span className="text-xs font-mono text-zinc-400 w-8 text-right" title="Active keys">
             {user.keyCount}🔑
           </span>
@@ -210,6 +239,7 @@ export function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(null);
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("all");
 
   async function load() {
     const res = await fetch("/api/admin/users");
@@ -247,8 +277,31 @@ export function AdminPanel() {
     const q = query.trim().toLowerCase();
     return users
       .filter((u) => !q || u.email?.toLowerCase().includes(q) || u.name?.toLowerCase().includes(q))
-      .sort((a, b) => (b.currentUsage ?? 0) - (a.currentUsage ?? 0));
-  }, [users, query]);
+      .filter((u) => {
+        if (filter === "all") return true;
+        const state = expiryState(u);
+        if (filter === "soon") return state?.kind === "soon";
+        if (filter === "expired") return state?.kind === "expired";
+        if (filter === "paid") return u.plan && u.plan !== "free";
+        return true;
+      })
+      // Renewals first when filtering by expiry, otherwise busiest accounts first.
+      .sort((a, b) =>
+        filter === "soon" || filter === "expired"
+          ? (a.planExpiresAt ?? Infinity) - (b.planExpiresAt ?? Infinity)
+          : (b.currentUsage ?? 0) - (a.currentUsage ?? 0)
+      );
+  }, [users, query, filter]);
+
+  const counts = useMemo(() => {
+    const states = users.map(expiryState);
+    return {
+      all: users.length,
+      soon: states.filter((s) => s?.kind === "soon").length,
+      expired: states.filter((s) => s?.kind === "expired").length,
+      paid: users.filter((u) => u.plan && u.plan !== "free").length,
+    };
+  }, [users]);
 
   const totalThisMonth = users.reduce((sum, u) => sum + (u.currentUsage ?? 0), 0);
   const paying = users.filter((u) => u.plan && u.plan !== "free").length;
@@ -261,9 +314,32 @@ export function AdminPanel() {
           <Stat label="Users" value={users.length} hint={`${paying} on a paid plan`} />
           <Stat label="Requests" value={totalThisMonth.toLocaleString()} hint="this month" />
           <Stat label="Awaiting payment" value={owed} hint="invoiced or overdue" />
+          <Stat label="Expiring" value={counts.soon} hint={`${counts.expired} already lapsed`} />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex rounded-lg border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+            {[
+              { id: "all", label: "All" },
+              { id: "paid", label: "Paid" },
+              { id: "soon", label: "Expiring" },
+              { id: "expired", label: "Lapsed" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setFilter(tab.id)}
+                className={[
+                  "px-2.5 py-2 text-xs transition-colors cursor-pointer border-r border-zinc-200 dark:border-zinc-800 last:border-r-0",
+                  filter === tab.id
+                    ? "bg-sky-600 text-white"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800",
+                ].join(" ")}
+              >
+                {tab.label}
+                {counts[tab.id] > 0 && <span className="ml-1 opacity-70">{counts[tab.id]}</span>}
+              </button>
+            ))}
+          </div>
           <div className="relative">
             <FiSearch size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400" />
             <input

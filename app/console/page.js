@@ -41,9 +41,11 @@ export default async function ConsolePage() {
   const user = await currentUser();
 
   let plan = Plans.free;
+  let planExpiresAt = null;
   if (user) {
     const profile = await (await getDb()).collection("users").doc(user.uid).get();
     plan = Plans[profile.data()?.plan ?? "free"] ?? Plans.free;
+    planExpiresAt = profile.data()?.planExpiresAt ?? null;
   }
 
   return (
@@ -68,7 +70,7 @@ export default async function ConsolePage() {
               <FiShield size={14} /> Admin dashboard
             </Link>
           )}
-          <KeyManager user={user} plan={plan} />
+          <KeyManager user={user} plan={plan} planExpiresAt={planExpiresAt} />
         </>
       ) : (
         <SignIn today={todayInEthiopia()} />

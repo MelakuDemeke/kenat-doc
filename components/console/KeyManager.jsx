@@ -96,7 +96,26 @@ function NewKey({ secret, onDismiss }) {
   );
 }
 
-function UsageMeter({ used, plan }) {
+/**
+ * Expiry is enforced at the edge, so a lapsed plan is already back on free limits.
+ * Saying so plainly beats letting someone discover it through a 429.
+ */
+function renewalState(plan, expiresAt) {
+  if (!expiresAt || plan.name === "free") return null;
+  const days = Math.ceil((expiresAt - Date.now()) / 86_400_000);
+  const on = new Date(expiresAt).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+
+  if (days < 0) {
+    return { tone: "text-rose-600 dark:text-rose-400", message: `Your ${plan.name} plan expired on ${on}. You are on free limits until it is renewed.` };
+  }
+  if (days <= 7) {
+    return { tone: "text-amber-600 dark:text-amber-400", message: `Your ${plan.name} plan ends in ${days} ${days === 1 ? "day" : "days"}, on ${on}. Renew below to keep your limits.` };
+  }
+  return { tone: "text-zinc-500", message: `${plan.name.charAt(0).toUpperCase() + plan.name.slice(1)} plan renews on ${on}.` };
+}
+
+function UsageMeter({ used, plan, expiresAt }) {
+  const renewal = renewalState(plan, expiresAt);
   const ratio = Math.min(100, (used / plan.monthlyQuota) * 100);
   const tone = ratio > 90 ? "bg-rose-500" : ratio > 70 ? "bg-amber-500" : "bg-sky-500";
 
@@ -115,6 +134,9 @@ function UsageMeter({ used, plan }) {
       <p className="mt-2.5 text-xs text-zinc-500">
         Up to {plan.limit.toLocaleString()} requests a minute. Resets on the 1st, UTC.
       </p>
+      {renewal && (
+        <p className={`mt-1.5 text-xs ${renewal.tone}`}>{renewal.message}</p>
+      )}
     </div>
   );
 }
@@ -171,7 +193,7 @@ function KeyRow({ apiKey, onRevoke }) {
   );
 }
 
-export function KeyManager({ user, plan }) {
+export function KeyManager({ user, plan, planExpiresAt }) {
   const router = useRouter();
   const [keys, setKeys] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -273,7 +295,7 @@ export function KeyManager({ user, plan }) {
         <FirstKey onCreate={create} creating={creating} />
       ) : (
         <>
-          <UsageMeter used={used} plan={plan} />
+          <UsageMeter used={used} plan={plan} expiresAt={planExpiresAt} />
 
           <div className={`${panel} overflow-hidden`}>
             <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-200 dark:border-zinc-800">

@@ -13,7 +13,7 @@ import { fail } from "@/lib/api/respond.js";
  */
 export async function middleware(req) {
   try {
-    const { keyId, uid, plan } = await authenticate(req);
+    const { keyId, uid, plan, lapsed } = await authenticate(req);
     // Counters are keyed by the key itself, so one user's two keys get separate
     // burst allowances but both roll up to the same account in the dashboard.
     const limitHeaders = await enforce(keyId, plan);
@@ -25,6 +25,8 @@ export async function middleware(req) {
 
     const res = NextResponse.next({ request: { headers } });
     for (const [key, value] of Object.entries(limitHeaders)) res.headers.set(key, value);
+    // Tells a caller why their limits dropped, instead of leaving them to guess.
+    if (lapsed) res.headers.set("X-Plan-Lapsed", "true");
     return res;
   } catch (err) {
     return fail(err);

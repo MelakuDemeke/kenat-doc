@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { FiX, FiCopy, FiCheck, FiSmartphone, FiAlertCircle } from "react-icons/fi";
-import { PRICING, TELEBIRR_NUMBER, CURRENCY } from "@/lib/api/pricing.js";
+import { CURRENCY } from "@/lib/api/pricing.js";
+import { usePricing } from "@/components/pricing/usePricing.js";
 
 /**
  * Telebirr has no API we can verify against, so this collects a claim: the user
@@ -11,7 +12,8 @@ import { PRICING, TELEBIRR_NUMBER, CURRENCY } from "@/lib/api/pricing.js";
  * expects instant access and does not get it will assume the payment failed.
  */
 export function UpgradeDialog({ planId, onClose, onSubmitted }) {
-  const plan = PRICING[planId];
+  const { plans, telebirrNumber: TELEBIRR_NUMBER } = usePricing();
+  const plan = plans[planId];
   const [txnId, setTxnId] = useState("");
   const [payerPhone, setPayerPhone] = useState("");
   const [note, setNote] = useState("");
