@@ -4,6 +4,8 @@ description: Ethiopian calendar conversion, holidays and Bahire Hasab over HTTP.
 ---
 
 import { Callout, Steps, Tabs } from 'nextra/components'
+import { API_BASE, SITE_URL } from '@/lib/site.js'
+import { CodeExample } from '@/components/CodeExample.jsx'
 
 # Kenat HTTP API
 
@@ -35,10 +37,8 @@ Sign in at the [API Console](/console) with GitHub or Google and create a key. I
 
 ### Make a request
 
-```bash
-curl -H "Authorization: Bearer sk_live_your_key_here" \
-  "https://www.kenat.systems/api/v1/convert/to-ethiopian?date=2026-07-27"
-```
+<CodeExample lang="bash">{`curl -H "Authorization: Bearer sk_live_your_key_here" \\
+  "${API_BASE}/convert/to-ethiopian?date=2026-07-27"`}</CodeExample>
 
 ```json
 {
@@ -58,9 +58,7 @@ Usage and remaining quota are in the [console](/console), and on every response 
 
 ## Base URL
 
-```
-https://www.kenat.systems/api/v1
-```
+<CodeExample>{API_BASE}</CodeExample>
 
 The version is in the path and will not change meaning. Breaking changes ship as `/v2`.
 
@@ -79,15 +77,13 @@ you can branch on the presence of `error` and be done.
 ```
   </Tabs.Tab>
   <Tabs.Tab>
-```json
-{
+<CodeExample lang="json">{`{
   "error": {
     "code": "INVALID_DATE",
     "message": "Invalid Gregorian date: 2026/2/31",
-    "docs": "https://www.kenat.systems/doc/api/errors#invalid_date"
+    "docs": "${SITE_URL}/doc/api/errors#invalid_date"
   }
-}
-```
+}`}</CodeExample>
   </Tabs.Tab>
 </Tabs>
 

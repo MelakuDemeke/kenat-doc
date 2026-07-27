@@ -4,12 +4,13 @@ import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
 import { FaTelegram } from 'react-icons/fa';
 import { ConditionalSearch } from '@/components/ConditionalSearch.jsx';
+import { SITE_URL } from '@/lib/site.js';
 
 import 'nextra-theme-docs/style.css'
 import './globals.css';
 
 export const metadata = {
-  metadataBase: new URL("https://kenat-doc.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Kenat Ethiopian Calendar Toolkit",
     template: "%s | Kenat",
@@ -18,7 +19,7 @@ export const metadata = {
   openGraph: {
     title: "Kenat Ethiopian Calendar Toolkit",
     description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
-    url: "https://kenat-doc.vercel.app",
+    url: SITE_URL,
     images: [{ url: "/ogimage.png", width: 1200, height: 630 }],
     type: "website",
   },
@@ -60,10 +61,10 @@ export default async function RootLayout({ children }) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "Kenat Ethiopian Calendar Toolkit",
-          "url": "https://kenat-doc.vercel.app",
+          "url": "${SITE_URL}",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://kenat-doc.vercel.app/search?q={search_term_string}",
+            "target": "${SITE_URL}/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }`}} />

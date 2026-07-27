@@ -3,20 +3,22 @@ title: Errors
 description: Error codes returned by the Kenat HTTP API.
 ---
 
+import { API_BASE, SITE_URL } from '@/lib/site.js'
+import { CodeExample } from '@/components/CodeExample.jsx'
+
+
 # Errors
 
 Failures return a single shape. The `code` is stable and safe to branch on; the `message` is
 for humans and may be reworded.
 
-```json
-{
+<CodeExample lang="json">{`{
   "error": {
     "code": "INVALID_DATE",
     "message": "Invalid Gregorian date: 2026/2/31",
-    "docs": "https://www.kenat.systems/doc/api/errors#invalid_date"
+    "docs": "${SITE_URL}/doc/api/errors#invalid_date"
   }
-}
-```
+}`}</CodeExample>
 
 Codes are never repurposed. New failure modes get new codes, so an unrecognised `code` always
 means "something new", never "something changed underneath you".

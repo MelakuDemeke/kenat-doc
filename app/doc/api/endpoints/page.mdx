@@ -4,11 +4,18 @@ description: Every endpoint in the Kenat HTTP API v1.
 ---
 
 import { Callout } from 'nextra/components'
+import { API_BASE, SITE_URL } from '@/lib/site.js'
+import { CodeExample } from '@/components/CodeExample.jsx'
 
 # Endpoints
 
-Base URL `https://www.kenat.systems/api/v1`. All requests need an
+Base URL is <code>{API_BASE}</code>. All requests need an
 [API key](/doc/api/authentication).
+
+Set these once and every example below runs as written:
+
+<CodeExample lang="bash">{`export KENAT_API="${API_BASE}"
+export KENAT_KEY="sk_live_your_key_here"`}</CodeExample>
 
 Ethiopian months run **1–13**, where 13 is Pagume. Dates accept either
 `?date=YYYY-MM-DD` or discrete `?year=&month=&day=` parameters.
@@ -26,7 +33,7 @@ Gregorian to Ethiopian.
 
 ```bash
 curl -H "Authorization: Bearer $KENAT_KEY" \
-  "https://www.kenat.systems/api/v1/convert/to-ethiopian?date=2026-07-27"
+  "$KENAT_API/convert/to-ethiopian?date=2026-07-27"
 ```
 
 ```json
@@ -45,7 +52,7 @@ Ethiopian to Gregorian. Same parameters, read as an Ethiopian date.
 
 ```bash
 curl -H "Authorization: Bearer $KENAT_KEY" \
-  "https://www.kenat.systems/api/v1/convert/to-gregorian?year=2018&month=11&day=20"
+  "$KENAT_API/convert/to-gregorian?year=2018&month=11&day=20"
 ```
 
 ### `POST /convert/bulk`
@@ -56,7 +63,7 @@ Up to 1,000 dates in one request. **Pro and Business only.**
 curl -X POST -H "Authorization: Bearer $KENAT_KEY" \
   -H "Content-Type: application/json" \
   -d '{"direction":"to-ethiopian","dates":["2026-07-27","2026-02-31"]}' \
-  "https://www.kenat.systems/api/v1/convert/bulk"
+  "$KENAT_API/convert/bulk"
 ```
 
 One invalid date does not fail the batch — each item reports its own outcome, so converting a
@@ -96,7 +103,7 @@ Every holiday in an Ethiopian year.
 
 ```bash
 curl -H "Authorization: Bearer $KENAT_KEY" \
-  "https://www.kenat.systems/api/v1/holidays/2018?tags=public&lang=english"
+  "$KENAT_API/holidays/2018?tags=public&lang=english"
 ```
 
 ```json
@@ -130,7 +137,7 @@ Whether a specific date is a holiday. The endpoint most systems call per-date.
 
 ```bash
 curl -H "Authorization: Bearer $KENAT_KEY" \
-  "https://www.kenat.systems/api/v1/holidays/is-holiday?date=2018-01-17&lang=english"
+  "$KENAT_API/holidays/is-holiday?date=2018-01-17&lang=english"
 ```
 
 ```json

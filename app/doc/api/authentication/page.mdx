@@ -4,15 +4,15 @@ description: How to authenticate against the Kenat HTTP API.
 ---
 
 import { Callout } from 'nextra/components'
+import { API_BASE, SITE_URL } from '@/lib/site.js'
+import { CodeExample } from '@/components/CodeExample.jsx'
 
 # Authentication
 
 Every request carries an API key as a bearer token:
 
-```bash
-curl -H "Authorization: Bearer sk_live_your_key_here" \
-  "https://www.kenat.systems/api/v1/holidays/2018"
-```
+<CodeExample lang="bash">{`curl -H "Authorization: Bearer sk_live_your_key_here" \\
+  "${API_BASE}/holidays/2018"`}</CodeExample>
 
 ## Getting a key
 
