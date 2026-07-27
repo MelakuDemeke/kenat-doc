@@ -15,7 +15,7 @@
     "@headlessui/react": "^2.2.4",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
-    "kenat": "^2.1.1",
+    "kenat": "^4.0.0",
     "kenat-ui": "^1.0.0",
     "next": "15.5.14",
     "nextra": "^4.2.17",
@@ -25,7 +25,8 @@
     "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "three": "^0.184.0"
+    "three": "^0.184.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
