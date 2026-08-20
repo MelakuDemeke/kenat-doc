@@ -1,0 +1,162 @@
+---
+title: "Kenat App: Holiday Artwork, Tasks, and Widgets That Dress for the Day"
+description: Build 8 of the Kenat Android app adds illustrated artwork for every major holiday, full-screen celebrations tuned to each holiday's tone, tasks alongside events, event recurrence, and three new home widgets.
+date: 2026-08-20
+image: "/blog/kenat-holidays-cover.png"
+---
+
+import { FiExternalLink } from 'react-icons/fi'
+
+# Kenat App: Holiday Artwork, Tasks, and Widgets That Dress for the Day
+
+<img src="/blog/kenat-holidays-cover.png" alt="Kenat holiday artwork — countdown widgets, calendar and celebrations for Enkutatash, Meskel and Moulid" className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 my-6" />
+
+Everything since [Kenat 2.0](/blog/kenat-app-v2-five-calendar-views) in July. The version name is unchanged — this ships as **build 8** — but it is not a small update. Ethiopian holidays now have illustrated artwork and full-screen celebrations, tasks live alongside events, events can repeat, and three new home widgets join the set.
+
+Here is what shipped.
+
+---
+
+## Holiday Artwork
+
+Until now a holiday in Kenat was a coloured dot and a name. It is now a piece of artwork.
+
+**87 assets ship with this build** — 79 motifs across 18 holiday sets, plus 8 shared particle sprites, for about 1.3 MB. Every element is flat vector: no outlines, two or three flat tones plus one soft inner shade, rendered mostly in warm cream so a single asset reads correctly on both the light and dark themes. The app supplies the holiday's colour as a full-screen gradient wash behind the motif.
+
+Timket gets a tabot, a hand cross, a ceremonial umbrella and an arc of water. Meskel gets the demera, torches, flames and the cross-daisy. Adwa gets the shield, the spear, the wreath. Enkutatash gets the daisies.
+
+---
+
+## The Celebration
+
+Open a holiday's detail popup and the celebration plays full-screen. It also plays once, on its own, the day a holiday arrives. Tap anywhere to dismiss it early.
+
+**The holiday's name arrives a piece at a time**, each unit scaling in from depth in the holiday's own colours. Most Amharic holiday names are a single word, so those spell out character by character — Ge'ez characters are syllables, so a single character is a whole beat rather than a fragment of one.
+
+<figure className="my-6">
+  <img src="/blog/holiday-update/celebration.png" alt="Full-screen celebrations for Enkutatash, Meskel and Moulid" className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800" />
+  <figcaption className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-2">እንቁጣጣሽ, መስቀል and መውሊድ — each celebration in its own colour wash, hero motif and particles.</figcaption>
+</figure>
+
+### Three Tiers of Motion
+
+Ethiopian holidays are not uniformly celebratory, and a confetti burst on Siklet would read as tone-deaf. So the motion is chosen per holiday, in three tiers:
+
+- **Festive** — Enkutatash, Meskel, Genna, Timket, Fasika, Hosanna, Nations and Nationalities Day, Eid al-Fitr, Eid al-Adha and Moulid burst outward, particles and all.
+- **Proud** — Adwa, Patriots' Victory Day and Labour Day rise slowly instead. Dignified motion, no bounce, no confetti.
+- **Solemn** — Siklet and Martyrs' Day fade a single motif in over a muted wash, with **no particles at all**. Filseta drifts. The restraint is the design.
+
+---
+
+## Artwork in the Calendar
+
+**Calendar days are marked** with the holiday's artwork, sized from the row so the fullscreen chips grid scales it up rather than pinning it to a fixed size.
+
+Fasting periods are deliberately excluded from day marking. Abiy Tsome alone runs 55 days — stamping one icon across two months of the grid would turn the artwork into noise.
+
+**Holiday cards are rebuilt** on both the holidays page and the event list under the calendar. Each card is now built around that holiday's own colour and artwork instead of a flat app accent, so the holidays page reads as a set of distinct days rather than a list of identical rows.
+
+<figure className="my-6">
+  <img src="/blog/holiday-update/calendar.png" alt="Meskerem in the month grid, with holiday artwork marking Enkutatash and Meskel" className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800" />
+  <figcaption className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-2">Meskerem — Enkutatash on the 1st, Meskel on the 17th, each day carrying its own artwork.</figcaption>
+</figure>
+
+---
+
+## Widgets That Dress for the Holiday
+
+The artwork does not stop at the app.
+
+- The **2×2 calendar widget** carries a holiday badge.
+- **Agenda rows** swap their colour dot for the holiday's motif.
+- The **Month Photo widget** shows a five-day window around a holiday — two days either side.
+- The **countdown widget dresses as its holiday** when pointed at one: the celebration's wash becomes its background, the bright centre of that wash becomes its accent, and the artwork sits full-height behind the copy. A custom panel or accent colour still overrides both, so anyone who has styled their widget keeps their styling.
+
+<figure className="my-6">
+  <img src="/blog/holiday-update/widgets.png" alt="Countdown widgets dressed as Moulid, Enkutatash and Meskel" className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800" />
+  <figcaption className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-2">The same countdown widget, pointed at three different holidays.</figcaption>
+</figure>
+
+---
+
+## A Greeting on the Morning
+
+Every holiday morning brings a **greeting notification** carrying that holiday's artwork. The name is always in Amharic. Tapping it opens the calendar on that day and replays the celebration.
+
+All of it is optional. **Customize Events → Holiday Artwork** holds three separate switches: animations, calendar icons, and the greeting.
+
+---
+
+## Tasks
+
+Tasks now live alongside events, with their own model, their own storage, and their own reminder window. The add sheet gained an **Event | Task** toggle at the top.
+
+Tasks appear everywhere the calendar already shows something:
+
+- Checkable rows in the day and schedule lists
+- Cards in the upcoming list
+- Chips in the week grid and month cells
+
+Search matches a task's title, its notes, **and its step titles** — people look for "the one about the passport photos", not the title they actually gave it.
+
+---
+
+## Event Recurrence
+
+Events can now repeat on an interval — "every 2 weeks" — with end rules that stop after N occurrences or on a given date. Individual occurrences can be excepted without touching the series.
+
+---
+
+## New Home Widgets
+
+Beyond the holiday dressing, the widget set itself grew:
+
+- **A two-month widget** showing the current and next Ethiopian month at once.
+- **Month navigation on the 4×2 calendar widget** — page back and forward without opening the app.
+- **A clock widget** with an Ethiopian / standard time chooser. It ships with the digital face only; the analog dial is finished but withheld until it is genuinely ready.
+
+Widget deep links now carry an explicit Ethiopian date, so tapping a day opens exactly that day rather than the nearest interpretation of it.
+
+---
+
+## The Always-On Date Notification
+
+The persistent Ethiopian date in the status bar got the attention it was overdue.
+
+**It has its own switch at last.** Turning it off previously meant turning off Event Reminders — so anyone who wanted a quiet status bar lost every event alert with it.
+
+**The expanded shade view is redesigned.** The header no longer repeats the collapsed row, event times sit beside their titles rather than wrapping beneath them, and the today marker is rounded.
+
+**The status bar icon is legible again.** The month and day were drawn at a fixed size that lost most of its weight scaling down to the ~24dp the status bar actually renders, leaving it faint against a light shade.
+
+---
+
+## Bug Fixes
+
+- **Black screen after saving an event** — the add sheet dismissed itself when it handed the event over, then the save handler popped again once the async save finished, removing the route underneath. From the calendar that route was the calendar itself, leaving an empty navigator that only a restart cleared. The day detail modal had the same double pop.
+- **Refused event deletions reported as success** — a delete the calendar provider rejected still returned true, so the row vanished from the UI and reappeared on the next refresh.
+- **Event links were not persisted**, and editing an all-day event could shift its date.
+- **Orphaned native alarms** — cancelling an event notification left its native alarm scheduled.
+
+---
+
+## Performance
+
+The holiday index scans 400 days of holidays and was being rebuilt on every home-widget refresh — including after every single event save. It is now cached against the day it was built for.
+
+---
+
+## Get the App
+
+Kenat is live on Google Play.
+
+<a
+  href="https://play.google.com/store/apps/details?id=me.melaku.kenat"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex mt-2"
+>
+  <img src="/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12 w-auto" />
+</a>
+
+The Ethiopian calendar logic underneath it comes from the `kenat` library, available on npm, PyPI, pub.dev, and Packagist. Full documentation at [kenat-doc.vercel.app](https://kenat-doc.vercel.app/) <FiExternalLink className="inline-block" />.
