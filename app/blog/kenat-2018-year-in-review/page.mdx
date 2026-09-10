@@ -1,0 +1,124 @@
+---
+title: "Kenat in 2018: From a Library I Needed to a Toolkit in Five Languages"
+description: Ethiopian year 2018 ends today. A look back at how Kenat grew from a date-conversion library built for one project into an open-source toolkit in five languages, an Android app on Google Play, a browser extension, and a small community, with a desktop app up next.
+date: 2026-09-10
+image: "/blog/kenat-2018-cover.png"
+---
+
+import { FiExternalLink } from 'react-icons/fi'
+
+# Kenat in 2018: From a Library I Needed to a Toolkit in Five Languages
+
+<img src="/blog/kenat-2018-cover.png" alt="Kenat in 2018 — an Enkutatash calendar card surrounded by Python, Java, React, Go, Git and Node icons, a phone, a terminal and a browser, framed by Adey daisies" className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 my-6" />
+
+Today is **ጳጉሜ 5, 2018**. Tomorrow is Enkutatash, and the Ethiopian year rolls over to 2019. Before it does, this is a look back at what Kenat became this year, written for everyone who followed along on the [Telegram channel](https://t.me/kenat_tool_kit) and for anyone who just found the project.
+
+The short version: a year ago Kenat was one JavaScript package. Today it is a calendar engine in five languages, an Android app on Google Play, a headless UI library, a command-line tool, a browser extension, and a docs site with live tools. None of that was the plan.
+
+---
+
+## Where It Started
+
+There was no plan, honestly. I did not know what to build.
+
+What I had was a different project that needed to show Ethiopian dates, and every library I tried either converted dates and stopped there, or had been abandoned years ago. So I wrote the conversion myself, then the Ge'ez numerals, then the month grid, and at some point it was clearly its own thing. I named it **Kenat** (ቀናት, "days"), published `kenat@1.0.0` to npm, and opened the channel on Ginbot 20, 2017 to ask one question: *what features should I add next?*
+
+The answers came fast. Holidays, formatting in Amharic and Ge'ez, Ethiopian time, and a domain: the channel voted, and **kenat.systems** went live on June 4, 2025. Within a month the library had grown through six releases and gained its first community package, an [Ethiopian date picker for shadcn/ui](https://www.npmjs.com/package/ethiopian-datepicker-shadcn) built on top of it. That was the moment it stopped being a library for my project and became a project of its own.
+
+By the time 2018 began, the foundation was there:
+
+- **Bahire Hasab.** Kenat 2.0 shipped a full ባሕረ ሃሳብ engine, so every movable feast and fast is computed the way the church computes it, not looked up from a table.
+- **Python.** `kenat` landed on PyPI on June 17, 2025, the first port beyond JavaScript.
+- **kenat-ui and kenat-cli.** Headless React hooks for building calendar UIs, and a terminal tool for converting dates, printing calendars and listing holidays.
+- **Fasting periods.** Abiy Tsome, Tsome Nebiyat, Tsome Hawariyat, Tsome Nenewe and Ramadan, each with names and descriptions in Amharic and English.
+- **TypeScript types**, contributed by Dagim G in a community pull request, which became Kenat 3.0.
+- The **first contributor** and the **first full-year calendar** ever generated with the library.
+
+---
+
+## 2018: The Year of the App
+
+The year opened with library work. Kenat 3.1 brought method chaining and immutable dates. Kenat 3.2 added the distance API, so "how many days until Meskel?" became a single call. Then on Meskerem 13, the channel got a two-word post: **"Coming soon."**
+
+That was the Android app.
+
+I asked the channel what one feature would make an Ethiopian calendar app "perfect," and then spent Hidar through Megabit building in public. Layout drafts. The Bahire Hasab screen. Orthodox mode. A full-month calendar living in the notification shade, so you never have to open the app at all. Haptic feedback on the calendar scroll, which is a small thing that makes the whole app feel different. Widget after widget, some of them straight from designs the community shared.
+
+**Closed beta opened on Megabit 27.** One of the first testers wrote back in Amharic that they had been switching between four or five Ethiopian calendar apps and deleted all of them after a week with Kenat. I have read that message more times than I will admit.
+
+**Kenat launched on Google Play on April 24, 2026** (Miazia 16, 2018), with public, cultural and religious holidays, sync with Google and Samsung calendars, and a full set of customisable home widgets. Two weeks later it had its first Pro subscriber. This week, Pro subscriptions reached double digits.
+
+Then the app kept going:
+
+- **[Kenat 2.0](/blog/kenat-app-v2-five-calendar-views)** in Hamle: five calendar views, Ethiopian time (ጠዋት / ከሰዓት / ምሽት / ሌሊት) across the whole app, spanning event bars, cloud sync, native Ethiopian recurrence and a full Material 3 redesign.
+- **Tasks** with Ethiopian due dates and checkable steps, alongside events.
+- **[Holiday artwork](/blog/kenat-app-holiday-artwork-tasks-widgets)** in Nehase: illustrated motifs for 18 holidays, full-screen celebrations tuned to each holiday's tone, and widgets that dress for the day.
+- A two-month widget, a clock widget, a redesigned countdown widget, and a calendar grid widget that keeps getting refined.
+
+---
+
+## Five Languages, One Engine
+
+The app is the visible part. Underneath it, the library became a family.
+
+In Miazia the engine that powers the Android app was open-sourced as **kenat-dart** on pub.dev, so any Flutter developer can build on the same core. In Hamle came the [biggest library release yet](/blog/kenat-v4-typescript-multi-language-parity): the JavaScript core migrated to TypeScript as **Kenat 4.0**, Python and Dart were brought to full feature parity, and a brand-new **PHP port** shipped on Packagist. In Nehase, [Henaorth](https://github.com/henaorth16/kenat-java) released an independent **Java 21** rewrite on Maven Central, the same developer who built the very first community package back in 2017.
+
+Here is the full list of what you can install today.
+
+| Package | Language | Registry | Install |
+| --- | --- | --- | --- |
+| `kenat` | JavaScript / TypeScript | npm | `npm install kenat` |
+| `kenat` | Python | PyPI | `pip install kenat` |
+| `kenat` | Dart / Flutter | pub.dev | `dart pub add kenat` |
+| `melakudemeke/kenat-php` | PHP | Packagist | `composer require melakudemeke/kenat-php` |
+| `io.github.henaorth16:kenat` | Java / Kotlin | Maven Central | community port by Henaorth |
+| `kenat-ui` | React hooks | npm | `npm install kenat-ui` |
+| `kenat-cli` | Terminal | npm | `npm install -g kenat-cli` |
+
+Every port covers the same ground: Ethiopian ↔ Gregorian conversion, Bahire Hasab, holidays with tag filtering, fasting periods, Orthodox saints' days, Ge'ez numerals, the 12-hour Ethiopian time system, and month grids.
+
+---
+
+## Beyond the Library
+
+- **Kenat for Android** on [Google Play](https://play.google.com/store/apps/details?id=me.melaku.kenat).
+- **Kenat browser extension.** A friend had been asking for a Chrome new-tab page for months, so in Hamle it shipped: Ge'ez clock, weather, agenda, todos, countdowns, quick links and search, in English and Amharic. A community contributor ported it to Firefox the same day. Both builds are on [GitHub](https://github.com/MelakuDemeke/kenat_chrome-extension/releases).
+- **Live tools on the docs site.** Date converter, time converter, month grid, Bahire Hasab calculator and a holiday browser, all at [kenat-doc.vercel.app](https://kenat-doc.vercel.app/) <FiExternalLink className="inline-block" />.
+- **Kenat inside other apps.** The Totals budgeting app merged an Ethiopian calendar and Ethiopian time end-to-end in a pull request driven by kenat-dart, and shipped it to its users in Ginbot. Seeing the library show up in someone else's product was one of the best days of the year.
+
+---
+
+## The People
+
+Kenat is still mostly one person, but this year it stopped being *only* one person.
+
+Contributors sent TypeScript types, a Firefox port, bug reports and widget designs. Henaorth built two independent projects on top of it. The channel voted on the domain, argued about camelCase versus snake_case in the Python port, picked widget layouts, and beta-tested the app before anyone else saw it. If you are reading this and you are one of them: thank you. Genuinely.
+
+---
+
+## What's Next in 2019
+
+Two things are already in motion.
+
+**A desktop app.** The "something new is coming" teaser from earlier this month is exactly that. Kenat is coming to the desktop, built on the same engine as the Android app, with the calendar, holidays, Bahire Hasab and widgets you already know. More on that soon.
+
+**The library keeps going.** Every port will stay in sync with the TypeScript core, and the docs will keep growing to match.
+
+Kenat started because I needed an Ethiopian date library and could not find one I trusted. A year later I would like it to be the one nobody has to write again.
+
+**መልካም አዲስ ዓመት.** See you in 2019.
+
+---
+
+## Get Kenat
+
+<a
+  href="https://play.google.com/store/apps/details?id=me.melaku.kenat"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex mt-2 play-badge"
+>
+  <img src="/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12 w-auto" />
+</a>
+
+Source code for every package lives on [GitHub](https://github.com/MelakuDemeke/kenat) <FiExternalLink className="inline-block" />. Full documentation at [kenat-doc.vercel.app](https://kenat-doc.vercel.app/) <FiExternalLink className="inline-block" />, and updates on [Telegram](https://t.me/kenat_tool_kit) <FiExternalLink className="inline-block" />.
