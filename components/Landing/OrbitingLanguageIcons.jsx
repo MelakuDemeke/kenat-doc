@@ -1,97 +1,27 @@
-"use client";
-
 import { SiJavascript, SiNodedotjs, SiPython, SiReact, SiTypescript, SiFlutter, SiPhp } from "react-icons/si";
 
 const ICONS = [
-  {
-    key: "javascript",
-    label: "JavaScript",
-    Icon: SiJavascript,
-    iconClass: "text-amber-500",
-    chipClass: "bg-amber-50/90 dark:bg-amber-500/10 border-amber-200/70 dark:border-amber-500/20 text-zinc-700 dark:text-zinc-300",
-  },
-  {
-    key: "typescript",
-    label: "TypeScript",
-    Icon: SiTypescript,
-    iconClass: "text-blue-600",
-    chipClass: "bg-blue-50/90 dark:bg-blue-500/10 border-blue-200/70 dark:border-blue-500/20 text-zinc-700 dark:text-zinc-300",
-  },
-  {
-    key: "python",
-    label: "Python",
-    Icon: SiPython,
-    iconClass: "text-emerald-600",
-    chipClass: "bg-emerald-50/90 dark:bg-emerald-500/10 border-emerald-200/70 dark:border-emerald-500/20 text-zinc-700 dark:text-zinc-300",
-  },
-  {
-    key: "react",
-    label: "React",
-    Icon: SiReact,
-    iconClass: "text-cyan-500",
-    chipClass: "bg-cyan-50/90 dark:bg-cyan-500/10 border-cyan-200/70 dark:border-cyan-500/20 text-zinc-700 dark:text-zinc-300",
-  },
-  {
-    key: "node",
-    label: "Node.js",
-    Icon: SiNodedotjs,
-    iconClass: "text-lime-600",
-    chipClass: "bg-lime-50/90 dark:bg-lime-500/10 border-lime-200/70 dark:border-lime-500/20 text-zinc-700 dark:text-zinc-300",
-  },
-  {
-    key: "flutter",
-    label: "Flutter",
-    Icon: SiFlutter,
-    iconClass: "text-sky-400",
-    chipClass: "bg-sky-50/90 dark:bg-sky-500/10 border-sky-200/70 dark:border-sky-500/20 text-zinc-700 dark:text-zinc-300",
-  },
-  {
-    key: "php",
-    label: "PHP",
-    Icon: SiPhp,
-    iconClass: "text-indigo-500",
-    chipClass: "bg-indigo-50/90 dark:bg-indigo-500/10 border-indigo-200/70 dark:border-indigo-500/20 text-zinc-700 dark:text-zinc-300",
-  },
+  { key: "javascript", label: "JavaScript", Icon: SiJavascript, iconClass: "text-amber-500", pos: { top: "-1.1rem", left: "-3.5rem" }, dur: "4.2s", delay: "0s" },
+  { key: "flutter", label: "Flutter", Icon: SiFlutter, iconClass: "text-sky-500", pos: { top: "-1.3rem", right: "1.5rem" }, dur: "5.1s", delay: "-1.3s" },
+  { key: "typescript", label: "TypeScript", Icon: SiTypescript, iconClass: "text-blue-600 dark:text-blue-400", pos: { top: "24%" }, cls: "-right-6 xl:-right-[4.5rem]", dur: "3.9s", delay: "-2.5s" },
+  { key: "python", label: "Python", Icon: SiPython, iconClass: "text-emerald-600 dark:text-emerald-400", pos: { top: "46%" }, cls: "-left-6 xl:-left-20", dur: "4.8s", delay: "-0.7s" },
+  { key: "react", label: "React", Icon: SiReact, iconClass: "text-cyan-500", pos: {}, cls: "-right-5 bottom-[1.6rem] xl:-right-16 xl:bottom-[22%]", dur: "5.5s", delay: "-3.1s" },
+  { key: "php", label: "PHP", Icon: SiPhp, iconClass: "text-indigo-500 dark:text-indigo-400", pos: { bottom: "12%" }, cls: "-left-5 xl:-left-[3.25rem]", dur: "4.4s", delay: "-1.8s" },
+  { key: "node", label: "Node.js", Icon: SiNodedotjs, iconClass: "text-lime-600 dark:text-lime-400", pos: { bottom: "-1.2rem", right: "35%" }, dur: "5.0s", delay: "-2.1s" },
 ];
 
-const PLACEMENTS = [
-  { top: "10%", left: "1.5%" },
-  { top: "32%", right: "1.5%" },
-  { top: "56%", left: "0.8%" },
-  { bottom: "24%", right: "1%" },
-  { bottom: "10%", left: "2%" },
-  { top: "6%", right: "2%" },
-  { top: "44%", left: "2.5%" },
-];
-
-const FLOAT_PARAMS = [
-  { dur: "4.2s", delay: "0s" },
-  { dur: "5.1s", delay: "-1.3s" },
-  { dur: "3.9s", delay: "-2.5s" },
-  { dur: "4.8s", delay: "-0.7s" },
-  { dur: "5.5s", delay: "-3.1s" },
-  { dur: "4.4s", delay: "-1.8s" },
-  { dur: "5.0s", delay: "-2.1s" },
-];
-
+/** Language chips that drift gently around the Today card (md and up). */
 export function OrbitingLanguageIcons() {
   return (
-    <div
-      className="pointer-events-none absolute inset-0 hidden md:block overflow-hidden"
-      aria-hidden="true"
-    >
-      {ICONS.map(({ key, Icon, iconClass, chipClass, label }, i) => (
+    <div className="pointer-events-none absolute inset-0 z-20 hidden md:block" aria-hidden="true">
+      {ICONS.map(({ key, Icon, iconClass, label, pos, cls = "", dur, delay }) => (
         <div
           key={key}
-          className={`absolute flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border backdrop-blur-sm lang-float ${chipClass}`}
-          style={{
-            ...PLACEMENTS[i],
-            "--float-dur": FLOAT_PARAMS[i].dur,
-            "--float-delay": FLOAT_PARAMS[i].delay,
-          }}
+          className={`lang-float absolute ${cls} flex items-center gap-1.5 rounded-full border k-border bg-[var(--bg)] px-3 py-1.5 shadow-[0_6px_20px_-8px_rgb(0_0_0_/_0.25)] dark:bg-[var(--surface)]`}
+          style={{ ...pos, "--float-dur": dur, "--float-delay": delay }}
         >
-          <Icon className={`text-base shrink-0 ${iconClass}`} />
-          <span className="font-mono text-[11px] font-medium opacity-75">{label}</span>
+          <Icon className={`shrink-0 text-[15px] ${iconClass}`} />
+          <span className="text-xs font-medium k-muted">{label}</span>
         </div>
       ))}
     </div>
