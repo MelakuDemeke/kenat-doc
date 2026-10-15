@@ -19,14 +19,14 @@ export const metadata = {
     title: "Kenat Ethiopian Calendar Toolkit",
     description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
     url: "https://kenat-doc.vercel.app",
-    images: [{ url: "/ogimage.png", width: 1200, height: 630 }],
+    images: [{ url: "/ogimage.jpg", width: 1200, height: 630, type: "image/jpeg", alt: "Kenat: the Ethiopian calendar, computed for your code" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Kenat Ethiopian Calendar Toolkit",
     description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs.",
-    images: ["/ogimage.png"],
+    images: ["/ogimage.jpg"],
   },
 }
 
