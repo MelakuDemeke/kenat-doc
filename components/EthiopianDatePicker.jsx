@@ -58,7 +58,7 @@ export default function EthiopianDatePicker() {
     return (
         <div className="relative w-full max-w-md mx-auto text-lg">
             {/* Input */}
-            <div className="flex items-center w-full max-w-lg border rounded-xl bg-white/30 dark:bg-zinc-800/60 backdrop-blur px-5 py-4">
+            <div className="flex items-center w-full max-w-lg border rounded-lg bg-white/50 dark:bg-zinc-900 px-5 py-4">
                 <input
                     type="text"
                     readOnly

@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import Kenat, { toEC, toGC, MonthGrid, getBahireHasab, Time, toGeez, HolidayTags, monthNames } from "kenat";
-import Clock from "react-clock";
-import "react-clock/dist/Clock.css";
-import { FiCopy, FiCheck, FiChevronLeft, FiChevronRight, FiCalendar, FiClock, FiSettings, FiActivity, FiXCircle } from "react-icons/fi";
+import { EthiopianTimePanel } from "@/components/EthiopianTimePanel";
+import { FiCopy, FiCheck, FiChevronLeft, FiChevronRight, FiXCircle } from "react-icons/fi";
 import { clsx } from "clsx";
 
 const CODE_TEMPLATES = {
@@ -45,7 +44,7 @@ console.log(data.movableFeasts.fasika.ethiopian); // Easter date`,
 const ethTime = Time.fromGregorian(17, 30); // 5:30 PM
 
 console.log(ethTime.hour);   // 11 (11th hour of day)
-console.log(ethTime.period); // "ማታ" (Night)
+console.log(ethTime.period); // "night" (ምሽት, evening)
 console.log(toGeez(ethTime.hour)); // "፲፩"`
 };
 
@@ -61,77 +60,69 @@ export default function InteractivePlayground() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto my-12 border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white/40 dark:bg-zinc-950/40 backdrop-blur-md overflow-hidden shadow-xl">
-      {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between border-b border-zinc-200 dark:border-zinc-800 px-6 py-4 bg-zinc-50/50 dark:bg-zinc-900/20">
-        <div className="flex items-center gap-2 mb-3 sm:mb-0">
-          <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="font-mono text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Interactive Playground</span>
-        </div>
-        <div className="flex flex-wrap gap-1">
-          {["converter", "grid", "bahire", "clock"].map((tab) => (
+    <div className="w-full k-card overflow-hidden">
+      <div className="border-b k-border px-4 sm:px-5 py-3 overflow-x-auto">
+        <div role="tablist" aria-label="Playground demos" className="inline-flex rounded-lg bg-[var(--surface)] p-1 text-sm">
+          {TABS.map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+              key={tab.key}
+              role="tab"
+              aria-selected={activeTab === tab.key}
+              onClick={() => setActiveTab(tab.key)}
               className={clsx(
-                "px-3 py-1.5 rounded-lg font-mono text-xs capitalize transition-all duration-200 border",
-                activeTab === tab
-                  ? "bg-zinc-900 text-white dark:bg-white dark:text-black border-zinc-950 dark:border-white shadow-sm font-semibold"
-                  : "bg-transparent text-zinc-600 dark:text-zinc-400 border-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-white"
+                "whitespace-nowrap rounded-md px-3.5 py-1.5 transition-colors",
+                activeTab === tab.key
+                  ? "bg-[var(--bg)] text-[var(--fg)] font-medium shadow-sm"
+                  : "k-muted hover:text-[var(--fg)]"
               )}
             >
-              {tab === "bahire" ? "Bahire Hasab" : tab}
+              {tab.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Main Split view */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
-        {/* Left Column: Interactive Demos */}
-        <div className="col-span-1 lg:col-span-6 p-6 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-zinc-200 dark:border-zinc-800">
+      {/* Demo on the left, code on the right */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 lg:min-h-[520px]">
+        <div className="lg:col-span-6 min-w-0 p-5 sm:p-8 flex flex-col justify-center border-b lg:border-b-0 lg:border-r k-border">
           {activeTab === "converter" && <ConverterDemo />}
           {activeTab === "grid" && <GridDemo />}
           {activeTab === "bahire" && <BahireDemo />}
           {activeTab === "clock" && <ClockDemo />}
         </div>
 
-        {/* Right Column: Code Snippet */}
-        <div className="col-span-1 lg:col-span-6 bg-zinc-950 p-6 flex flex-col justify-between font-mono text-sm relative">
-          <div className="absolute top-4 right-4 z-10">
+        <div className="lg:col-span-6 bg-[var(--code-bg)] text-[var(--code-fg)] flex flex-col font-mono text-sm min-w-0">
+          <div className="flex items-center justify-between border-b border-white/10 px-6 py-3 text-xs text-[var(--code-fg)]/60">
+            <span>example.js</span>
             <button
               onClick={handleCopyCode}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-all text-xs"
+              className="inline-flex items-center gap-1.5 hover:text-[var(--code-fg)] transition-colors"
+              aria-label="Copy example code"
             >
-              {copied ? (
-                <>
-                  <FiCheck className="text-emerald-400" />
-                  <span className="text-emerald-400">Copied!</span>
-                </>
-              ) : (
-                <>
-                  <FiCopy />
-                  <span>Copy Code</span>
-                </>
-              )}
+              {copied ? <FiCheck className="text-emerald-400" /> : <FiCopy />}
+              <span>{copied ? "Copied" : "Copy"}</span>
             </button>
           </div>
-
-          <div className="overflow-x-auto pt-6 lg:pt-8 text-zinc-300">
-            <pre className="text-xs leading-relaxed font-mono select-all">
+          <div className="flex-1 overflow-x-auto px-6 py-6">
+            <pre className="text-[0.82rem] leading-relaxed">
               <code>{CODE_TEMPLATES[activeTab]}</code>
             </pre>
           </div>
-
-          <div className="mt-8 pt-4 border-t border-zinc-900 flex justify-between items-center text-xs text-zinc-500">
-            <span>npm i kenat</span>
-            <span>index.js</span>
+          <div className="border-t border-white/10 px-6 py-3 text-xs text-[var(--code-fg)]/50">
+            npm install kenat
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+const TABS = [
+  { key: "converter", label: "Conversion" },
+  { key: "grid", label: "Month grid" },
+  { key: "bahire", label: "Bahire Hasab" },
+  { key: "clock", label: "Ethiopian time" },
+];
 
 /* ==================== DEMO SUB-COMPONENTS ==================== */
 
@@ -159,78 +150,72 @@ function ConverterDemo() {
   }, [gc]);
 
   const inputClass =
-    "w-full px-3 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-sky-500";
+    "w-full px-3 py-2 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-sky-600/60";
 
   return (
     <div className="w-full max-w-md mx-auto space-y-6">
-      <div className="text-center md:text-left">
-        <h3 className="text-lg font-bold flex items-center justify-center md:justify-start gap-2">
-          <FiCalendar className="text-sky-500" />
-          Date Conversion
-        </h3>
-        <p className="text-xs text-zinc-500 mt-1">Convert seamlessly between Ethiopian (EC) and Gregorian (GC) calendars.</p>
-      </div>
+      <h3 className="text-2xl font-semibold tracking-[-0.02em]">Date conversion</h3>
 
-      <div className="space-y-4">
+      <div className="border-b k-border">
         {/* EC to GC */}
-        <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-850 bg-zinc-50/50 dark:bg-zinc-900/20">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block mb-2">Ethiopian (EC) → Gregorian (GC)</span>
+        <div className="border-t k-border py-5">
+          <span className="text-sm k-muted block mb-2.5">Ethiopian → Gregorian</span>
           <div className="grid grid-cols-3 gap-2">
             <input
               type="number"
               value={ec.year}
               onChange={(e) => setEc({ ...ec, year: parseInt(e.target.value || "1") })}
               className={inputClass}
-              placeholder="Year"
+              placeholder="Year" aria-label="Year"
             />
             <input
               type="number"
               value={ec.month}
               onChange={(e) => setEc({ ...ec, month: parseInt(e.target.value || "1") })}
               className={inputClass}
-              placeholder="Month"
+              placeholder="Month" aria-label="Month"
             />
             <input
               type="number"
               value={ec.day}
               onChange={(e) => setEc({ ...ec, day: parseInt(e.target.value || "1") })}
               className={inputClass}
-              placeholder="Day"
+              placeholder="Day" aria-label="Day"
             />
           </div>
-          <p className={`mt-3 text-sm font-mono font-semibold flex items-center gap-1 ${gcResult.ok ? 'text-sky-600 dark:text-sky-400' : 'text-red-600 dark:text-red-400'}`}>
-            {!gcResult.ok && <FiXCircle />} GC Date: <span className="underline decoration-dotted">{gcResult.text}</span>
+          <p aria-live="polite" className={`mt-3 flex items-baseline gap-2 ${gcResult.ok ? '' : 'text-red-700 dark:text-red-400'}`}>
+            {!gcResult.ok && <FiXCircle className="self-center" />}<span className="text-sm k-subtle">Gregorian</span> <span className={`font-mono text-lg font-semibold tabular ${gcResult.ok ? 'k-accent' : ''}`}>{gcResult.text}</span>
           </p>
         </div>
 
         {/* GC to EC */}
-        <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-850 bg-zinc-50/50 dark:bg-zinc-900/20">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block mb-2">Gregorian (GC) → Ethiopian (EC)</span>
+        <div className="border-t k-border py-5">
+          <span className="text-sm k-muted block mb-2.5">Gregorian → Ethiopian</span>
           <div className="grid grid-cols-3 gap-2">
             <input
               type="number"
               value={gc.year}
               onChange={(e) => setGc({ ...gc, year: parseInt(e.target.value || "1") })}
               className={inputClass}
-              placeholder="Year"
+              placeholder="Year" aria-label="Year"
             />
             <input
               type="number"
               value={gc.month}
               onChange={(e) => setGc({ ...gc, month: parseInt(e.target.value || "1") })}
               className={inputClass}
-              placeholder="Month"
+              placeholder="Month" aria-label="Month"
             />
             <input
               type="number"
               value={gc.day}
               onChange={(e) => setGc({ ...gc, day: parseInt(e.target.value || "1") })}
               className={inputClass}
-              placeholder="Day"
+              placeholder="Day" aria-label="Day"
             />
           </div>
-          <p className={`mt-3 text-sm font-mono font-semibold flex items-center gap-1 ${ecResult.ok ? 'text-purple-600 dark:text-purple-400' : 'text-red-600 dark:text-red-400'}`}>
-            {!ecResult.ok && <FiXCircle />} EC Date: <span className="underline decoration-dotted">{ecResult.text}</span>
+          <p aria-live="polite" className={`mt-3 flex items-baseline gap-2 ${ecResult.ok ? '' : 'text-red-700 dark:text-red-400'}`}>
+            {!ecResult.ok && <FiXCircle className="self-center" />}<span className="text-sm k-subtle">Ethiopian</span> <span className={`font-mono text-lg font-semibold tabular ${ecResult.ok ? 'k-accent' : ''}`}>{ecResult.text}</span>
           </p>
         </div>
       </div>
@@ -272,19 +257,20 @@ function GridDemo() {
 
   return (
     <div className="w-full max-w-sm mx-auto space-y-4">
-      <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
-        <button onClick={goPrevMonth} className="p-1 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
+      <div className="flex items-center justify-between border-b k-border pb-3">
+        <button onClick={goPrevMonth} aria-label="Previous month" className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
           <FiChevronLeft className="text-lg" />
         </button>
-        <span className="font-mono text-sm font-bold">
-          {monthNames.amharic[gridData.month - 1]} {gridData.year}
+        <span className="flex items-baseline gap-2">
+          <span className="k-am text-xl">{monthNames.amharic[gridData.month - 1]}</span>
+          <span className="k-muted text-lg tabular">{gridData.year}</span>
         </span>
-        <button onClick={goNextMonth} className="p-1 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
+        <button onClick={goNextMonth} aria-label="Next month" className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
           <FiChevronRight className="text-lg" />
         </button>
       </div>
 
-      <div className="grid grid-cols-7 text-center text-[10px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+      <div className="grid grid-cols-7 text-center text-xs k-accent mb-1">
         {gridData.headers.map((h, i) => (
           <div key={i}>{h.slice(0, 2)}</div>
         ))}
@@ -300,29 +286,29 @@ function GridDemo() {
               key={i}
               title={isHoliday ? day.holidays.map((h) => h.name).join(", ") : undefined}
               className={clsx(
-                "aspect-square flex flex-col justify-center items-center rounded border transition-colors",
+                "aspect-square flex flex-col justify-center items-center rounded-lg transition-colors",
                 isToday
-                  ? "bg-sky-500 text-white border-sky-600 font-semibold"
+                  ? "bg-sky-500 text-white font-semibold"
                   : isHoliday
-                  ? "bg-indigo-100 text-indigo-900 border-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-200 dark:border-indigo-800/80"
-                  : "bg-zinc-50 dark:bg-zinc-900/40 border-zinc-100 dark:border-zinc-900/80 hover:bg-zinc-100 dark:hover:bg-zinc-900/80"
+                  ? "text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-500/10 font-semibold ring-1 ring-inset ring-purple-300 dark:ring-purple-500/40"
+                  : "hover:bg-[var(--surface)]"
               )}
             >
-              <span className="font-bold">{day.ethiopian.day}</span>
-              <span className="text-[8px] opacity-70">{day.gregorian.day}</span>
+              <span className="text-sm font-medium leading-none tabular">{day.ethiopian.day}</span>
+              <span className="text-[9px] opacity-70 tabular mt-0.5">{day.gregorian.day}</span>
             </div>
           );
         })}
       </div>
 
-      <div className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-3">
+      <div className="text-xs k-muted flex items-center gap-6 border-t k-border pt-3">
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded bg-sky-500"></span>
+          <span className="w-2.5 h-2.5 rounded-[1px] bg-sky-500"></span>
           <span>Today</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded bg-indigo-500"></span>
-          <span>Holiday</span>
+          <span className="w-2.5 h-2.5 rounded-[1px] ring-1 ring-inset ring-purple-400 bg-purple-100 dark:bg-purple-500/20"></span>
+          <span>Holiday</span><span className="ml-auto k-subtle">Gregorian day beneath</span>
         </div>
       </div>
     </div>
@@ -352,52 +338,43 @@ function BahireDemo() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-4">
-      <div className="text-center md:text-left">
-        <h3 className="text-lg font-bold flex items-center justify-center md:justify-start gap-2">
-          <FiActivity className="text-purple-500" />
-          Bahire Hasab Calculations
-        </h3>
-        <p className="text-xs text-zinc-500 mt-1">Compute Ethiopian movable feasts, fasts, and calendar variables.</p>
-      </div>
+    <div className="w-full max-w-md mx-auto space-y-5">
+      <h3 className="text-2xl font-semibold tracking-[-0.02em]">Bahire Hasab</h3>
 
-      <div className="flex items-center gap-3">
-        <label className="text-xs font-mono text-zinc-500 uppercase tracking-wider">Year:</label>
+      <label className="flex items-center gap-3 text-sm k-muted">
+        Ethiopian year
         <input
           type="number"
           value={year}
           onChange={(e) => setYear(parseInt(e.target.value || "1"))}
-          className="flex-1 px-3 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-purple-500"
-          placeholder="Ethiopian Year"
+          className="w-28 px-3 py-2 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-[var(--fg)] font-mono text-sm focus:outline-none focus:ring-2 focus:ring-sky-600/60"
         />
-      </div>
+      </label>
 
       {bahireData && (
-        <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-          <div className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/10">
-            <span className="text-[10px] text-zinc-500 block mb-1">Evangelist (ወንጌላዊ)</span>
-            <span className="font-bold text-zinc-800 dark:text-zinc-200">{bahireData.evangelist.name}</span>
-          </div>
-          <div className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/10">
-            <span className="text-[10px] text-zinc-500 block mb-1">Wenber (ወንበር)</span>
-            <span className="font-bold text-zinc-800 dark:text-zinc-200">{bahireData.wenber}</span>
-          </div>
-          <div className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/10">
-            <span className="text-[10px] text-zinc-500 block mb-1">New Year Day</span>
-            <span className="font-bold text-zinc-800 dark:text-zinc-200">{bahireData.newYear.dayName}</span>
-          </div>
-          <div className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/10">
-            <span className="text-[10px] text-zinc-500 block mb-1">Nineveh Fast</span>
-            <span className="font-bold text-zinc-850 dark:text-zinc-200">{formatDate(bahireData.nineveh)}</span>
-          </div>
-          <div className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/10 col-span-2 flex justify-between items-center">
-            <div>
-              <span className="text-[10px] text-zinc-500 block mb-0.5">Easter (ትንሳኤ)</span>
-              <span className="font-bold text-indigo-600 dark:text-indigo-400">{formatDate(bahireData.movableFeasts.fasika.ethiopian)}</span>
+        <dl className="border-b k-border">
+          {[
+            ["Evangelist", "ወንጌላዊ", bahireData.evangelist.name, true],
+            ["Wenber", "ወንበር", bahireData.wenber, false],
+            ["New Year falls on", "ዘመን መለወጫ", bahireData.newYear.dayName, true],
+            ["Fast of Nineveh", "ነነዌ", formatDate(bahireData.nineveh), false],
+          ].map(([en, am, value, geez]) => (
+            <div key={en} className="flex items-baseline justify-between gap-4 border-t k-border py-3">
+              <dt className="text-sm k-muted">
+                {en} <span className="k-am k-subtle">{am}</span>
+              </dt>
+              <dd className={geez ? "k-am text-lg" : "font-mono text-sm tabular"}>{value}</dd>
             </div>
-            <span className="text-[10px] border border-indigo-200 dark:border-indigo-950 px-2 py-0.5 rounded bg-indigo-50/50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300">Movable Feast</span>
+          ))}
+          <div className="flex items-baseline justify-between gap-4 border-t k-border py-3">
+            <dt className="text-sm k-muted">
+              Easter <span className="k-am k-subtle">ትንሣኤ</span>
+            </dt>
+            <dd className="font-mono text-lg font-semibold k-accent tabular">
+              {formatDate(bahireData.movableFeasts.fasika.ethiopian)}
+            </dd>
           </div>
-        </div>
+        </dl>
       )}
     </div>
   );
@@ -405,73 +382,15 @@ function BahireDemo() {
 
 // 4. Clock Demo
 function ClockDemo() {
-  const [now, setNow] = useState(() => new Date());
-  const [ethTime, setEthTime] = useState(() => Time.fromGregorian(now.getHours(), now.getMinutes()));
-  const [useGeez, setUseGeez] = useState(true);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const current = new Date();
-      setNow(current);
-      setEthTime(Time.fromGregorian(current.getHours(), current.getMinutes()));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatNum = (num) => (useGeez ? toGeez(num) : num.toString().padStart(2, "0"));
-
   return (
-    <div className="w-full max-w-sm mx-auto flex flex-col items-center gap-6">
+    <div className="w-full max-w-sm mx-auto flex flex-col items-center gap-5">
       <div className="text-center">
-        <h3 className="text-lg font-bold flex items-center justify-center gap-2">
-          <FiClock className="text-emerald-500" />
-          Geez Clock System
-        </h3>
-        <p className="text-xs text-zinc-500 mt-1">Ethiopian 12h clock starts at sunrise (6:00 AM Gregorian is 12:00 in Ethiopia).</p>
+        <h3 className="text-2xl font-semibold tracking-[-0.02em]">Ethiopian time</h3>
+        <p className="text-sm k-muted mt-2 max-w-xs">
+          The Ethiopian day starts at sunrise, so 6:00 AM Gregorian reads as 12:00.
+        </p>
       </div>
-
-      <div className="flex flex-col items-center gap-4">
-        {/* Analog Clock representation wrapper */}
-        <div className="relative w-40 h-40 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900 flex items-center justify-center shadow-inner">
-          <Clock value={now} renderNumbers={false} size={150} className="pointer-events-none" />
-          {/* Overlay Ge'ez markers */}
-          {[12, 3, 6, 9].map((val) => {
-            const label = useGeez ? toGeez(val) : val.toString();
-            return (
-              <span
-                key={val}
-                className={clsx(
-                  "absolute font-mono text-xs font-bold text-zinc-400 dark:text-zinc-600",
-                  val === 12 && "top-2",
-                  val === 3 && "right-3",
-                  val === 6 && "bottom-2",
-                  val === 9 && "left-3"
-                )}
-              >
-                {label}
-              </span>
-            );
-          })}
-        </div>
-
-        {/* Digital display */}
-        <div className="text-center font-mono space-y-1">
-          <div className="text-2xl font-bold tracking-wider">
-            {formatNum(ethTime.hour)}:{formatNum(ethTime.minute)}:{formatNum(now.getSeconds())}
-          </div>
-          <div className="text-xs text-zinc-500">
-            {ethTime.period} • {useGeez ? "ግዕዝ" : "Arabic"}
-          </div>
-        </div>
-
-        {/* Switch */}
-        <button
-          onClick={() => setUseGeez(!useGeez)}
-          className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 px-2 py-1 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 transition-colors"
-        >
-          Toggle: {useGeez ? "Ge'ez Numbers" : "Standard Numbers"}
-        </button>
-      </div>
+      <EthiopianTimePanel size={220} compact />
     </div>
   );
 }

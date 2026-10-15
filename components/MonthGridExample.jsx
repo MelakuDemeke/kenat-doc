@@ -15,7 +15,7 @@ function HolidayModal({ holidays, onClose }) {
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-8 max-w-md w-full relative"
+        className="k-card shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)] p-8 max-w-md w-full relative"
         onClick={(e) => e.stopPropagation()}
       >
         {holidays.map((holiday, index) => (
@@ -116,11 +116,11 @@ export default function MonthGridExample() {
   if (!gridData) return <div className="text-center p-4">Loading...</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg">
+    <div className="max-w-4xl mx-auto p-6 k-card">
       <div className="flex items-center justify-between mb-6 text-zinc-900 dark:text-white">
         <button
           onClick={goPrevMonth}
-          className="p-2 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md"
+          className="p-2 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
         >
           <FiChevronLeft className="text-2xl" />
         </button>
@@ -130,7 +130,7 @@ export default function MonthGridExample() {
             onChange={(e) =>
               setDate((d) => ({ ...d, month: Number(e.target.value) }))
             }
-            className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base text-zinc-900 dark:text-white"
+            className="px-3 py-1.5 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-base text-zinc-900 dark:text-white"
           >
             {amharicMonths.map((m) => (
               <option key={m.value} value={m.value}>
@@ -143,7 +143,7 @@ export default function MonthGridExample() {
             onChange={(e) =>
               setDate((d) => ({ ...d, year: Number(e.target.value) }))
             }
-            className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base text-zinc-900 dark:text-white"
+            className="px-3 py-1.5 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-base text-zinc-900 dark:text-white"
           >
             {yearOptions.map((y) => (
               <option key={y} value={y}>
@@ -154,7 +154,7 @@ export default function MonthGridExample() {
         </div>
         <button
           onClick={goNextMonth}
-          className="p-2 rounded-full bg-white/20 hover:bg-white/30 dark:hover:bg-white/10 backdrop-blur-md"
+          className="p-2 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
         >
           <FiChevronRight className="text-2xl" />
         </button>
@@ -166,7 +166,7 @@ export default function MonthGridExample() {
           <select
             value={activeMode}
             onChange={handleModeChange}
-            className="px-3 py-1.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-sm text-zinc-900 dark:text-white"
+            className="px-3 py-1.5 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-sm text-zinc-900 dark:text-white"
           >
             <option value="none">Custom Filter</option>
             <option value="christian">Christian</option>
@@ -222,9 +222,9 @@ export default function MonthGridExample() {
               key={i}
               onClick={() => isHoliday && setSelectedHolidays(day.holidays)}
               className={clsx(
-                "relative rounded-xl p-2 border backdrop-blur-md transition shadow-inner overflow-hidden",
+                "relative rounded-lg p-2 border transition overflow-hidden",
                 isToday
-                  ? "!bg-emerald-500 text-white ring-2 ring-emerald-300 dark:!bg-emerald-900 dark:ring-emerald-400 shadow-lg z-10"
+                  ? "!bg-sky-500 !text-white ring-2 ring-sky-300 dark:ring-sky-400 z-10"
                   : isHoliday
                   ? "bg-indigo-200 text-indigo-900 border-indigo-300 dark:!bg-indigo-900 dark:text-white dark:border-indigo-500 shadow-md cursor-pointer"
                   : "bg-white/10 dark:bg-zinc-800/30 hover:bg-white/20 dark:hover:bg-zinc-700/50"

@@ -7,8 +7,8 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <div className="bg-gray-100 dark:bg-zinc-900 text-zinc-900 dark:text-white selection:bg-purple-500/50 relative overflow-x-hidden min-h-[60vh]">
-      <main className="relative z-10 container mx-auto px-4 py-16 max-w-3xl">
-        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-2">
+      <main className="relative z-10 container mx-auto px-5 pt-24 pb-16 max-w-3xl">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] pb-2">
           Privacy Policy for Kenat
         </h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2">
@@ -18,16 +18,16 @@ export default function PrivacyPage() {
           Official policy URL:{" "}
           <a
             className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
-            href="https://kenat-doc.vercel.app/privacy"
+            href="https://kenat.et/privacy"
           >
-            https://kenat-doc.vercel.app/privacy
+            https://kenat.et/privacy
           </a>
           . Account deletion (for app store data safety forms):{" "}
           <a
             className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
-            href="https://kenat-doc.vercel.app/privacy#account-deletion"
+            href="https://kenat.et/privacy#account-deletion"
           >
-            https://kenat-doc.vercel.app/privacy#account-deletion
+            https://kenat.et/privacy#account-deletion
           </a>
           .
         </p>

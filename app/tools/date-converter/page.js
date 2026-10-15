@@ -30,8 +30,8 @@ function EthiopianToGregorian() {
     };
 
     return (
-        <div className="p-6 rounded-2xl bg-white/30 dark:bg-zinc-800/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg transition-all transform hover:-translate-y-2 duration-300">
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">
+        <div className="p-6 k-card">
+            <h2 className="text-2xl font-semibold tracking-[-0.02em] mb-6">
                 Ethiopian to Gregorian
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -40,28 +40,28 @@ function EthiopianToGregorian() {
                     placeholder="Year"
                     value={ecDate.year || ""}
                     onChange={(e) => handleInputChange("year", e.target.value)}
-                    className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600/60"
                 />
                 <input
                     type="number"
                     placeholder="Month"
                     value={ecDate.month || ""}
                     onChange={(e) => handleInputChange("month", e.target.value)}
-                    className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600/60"
                 />
                 <input
                     type="number"
                     placeholder="Day"
                     value={ecDate.day || ""}
                     onChange={(e) => handleInputChange("day", e.target.value)}
-                    className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600/60"
                 />
             </div>
 
             {convertedGc && (
-                <div className={`mt-6 text-center p-4 rounded-lg border ${convertedGc.ok ? 'bg-purple-500/10 dark:bg-purple-500/20 border-purple-500/20' : 'bg-red-500/10 dark:bg-red-500/20 border-red-500/20'}`}>
-                    <p className="text-lg text-zinc-600 dark:text-zinc-300">{convertedGc.ok ? 'Converted Date:' : 'Error:'}</p>
-                    <p className={`text-2xl font-bold flex items-center justify-center gap-2 ${convertedGc.ok ? 'text-purple-700 dark:text-purple-300' : 'text-red-700 dark:text-red-300'}`}>
+                <div aria-live="polite" className="mt-6 border-t k-border pt-5 flex items-baseline justify-between gap-4">
+                    <p className="k-muted">{convertedGc.ok ? 'Converted date' : 'Error'}</p>
+                    <p className={`flex items-center gap-2 ${convertedGc.ok ? 'font-mono text-2xl font-semibold k-accent tabular' : 'text-lg text-red-700 dark:text-red-400'}`}>
                         {!convertedGc.ok && <FiXCircle />} {convertedGc.text}
                     </p>
                 </div>
@@ -94,8 +94,8 @@ function GregorianToEthiopian() {
     };
 
     return (
-        <div className="p-6 rounded-2xl bg-white/30 dark:bg-zinc-800/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg transition-all transform hover:-translate-y-2 duration-300">
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">
+        <div className="p-6 k-card">
+            <h2 className="text-2xl font-semibold tracking-[-0.02em] mb-6">
                 Gregorian to Ethiopian
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -104,28 +104,28 @@ function GregorianToEthiopian() {
                     placeholder="Year"
                     value={gcDate.year || ""}
                     onChange={(e) => handleInputChange("year", e.target.value)}
-                    className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full p-3 bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600/60"
                 />
                 <input
                     type="number"
                     placeholder="Month"
                     value={gcDate.month || ""}
                     onChange={(e) => handleInputChange("month", e.target.value)}
-                    className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full p-3 bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600/60"
                 />
                 <input
                     type="number"
                     placeholder="Day"
                     value={gcDate.day || ""}
                     onChange={(e) => handleInputChange("day", e.target.value)}
-                    className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full p-3 bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600/60"
                 />
             </div>
 
             {convertedEc && (
-                <div className={`mt-6 text-center p-4 rounded-lg border ${convertedEc.ok ? 'bg-sky-500/10 dark:bg-sky-500/20 border-sky-500/20' : 'bg-red-500/10 dark:bg-red-500/20 border-red-500/20'}`}>
-                    <p className="text-lg text-zinc-600 dark:text-zinc-300">{convertedEc.ok ? 'Converted Date:' : 'Error:'}</p>
-                    <p className={`text-2xl font-bold flex items-center justify-center gap-2 ${convertedEc.ok ? 'text-sky-700 dark:text-sky-300' : 'text-red-700 dark:text-red-300'}`}>
+                <div aria-live="polite" className="mt-6 border-t k-border pt-5 flex items-baseline justify-between gap-4">
+                    <p className="k-muted">{convertedEc.ok ? 'Converted date' : 'Error'}</p>
+                    <p className={`flex items-center gap-2 ${convertedEc.ok ? 'font-mono text-2xl font-semibold k-accent tabular' : 'text-lg text-red-700 dark:text-red-400'}`}>
                         {!convertedEc.ok && <FiXCircle />} {convertedEc.text}
                     </p>
                 </div>
@@ -136,11 +136,11 @@ function GregorianToEthiopian() {
 
 export default function DateConverterPage() {
     return (
-        <div className="relative min-h-screen text-zinc-900 dark:text-white selection:bg-purple-500/50">
+        <div className="relative min-h-screen k-page">
             <SectionBackground rotation={10} />
-            <main className="container mx-auto px-4 py-16">
+            <main className="container mx-auto px-5 pt-24 pb-16">
                 <section className="text-center mb-12">
-                    <h1 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-4">
+                    <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] pb-2">
                         Date Converter
                     </h1>
                     <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 mt-4 max-w-3xl mx-auto">

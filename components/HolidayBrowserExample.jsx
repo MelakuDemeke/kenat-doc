@@ -23,7 +23,7 @@ export default function HolidayBrowserExample() {
   const [lang, setLang] = useState('amharic')
   const [error, setError] = useState('')
 
-  const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base'
+  const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-base'
 
   useEffect(() => {
     setError('')
@@ -61,7 +61,7 @@ export default function HolidayBrowserExample() {
   const ethMonthNames = lang === 'amharic' ? monthNames.amharic : monthNames.english;
 
   return (
-    <div className="max-w-4xl mx-auto my-10 p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg text-zinc-800 dark:text-zinc-100">
+    <div className="max-w-4xl mx-auto my-10 p-6 k-card text-zinc-800 dark:text-zinc-100">
       <h2 className="text-xl font-semibold mb-6 text-center"> Ethiopian Holiday Browser</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -106,7 +106,7 @@ export default function HolidayBrowserExample() {
           {`Showing ${filteredHolidays.length} of ${allHolidays.length} holidays for ${year} E.C.`}
         </p>
         <div className="space-y-3">
-          {error && <p className="text-center text-red-500">{error}</p>}
+          {error && <p className="text-center text-red-700 dark:text-red-400">{error}</p>}
           {filteredHolidays.map((holiday) => {
             // +++ START: Safely get Gregorian date +++
             // If holiday.gregorian doesn't exist, calculate it from the Ethiopian date.

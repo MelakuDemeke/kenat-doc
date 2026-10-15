@@ -1,92 +1,103 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { SectionBackground } from "../../../components/Landing/SectionBackground";
+import { useMemo, useState } from "react";
+import { Time, toGeez } from "kenat";
+import { FiArrowRight } from "react-icons/fi";
+import { EthiopianTimePanel } from "@/components/EthiopianTimePanel";
+import { dayPart } from "@/lib/dayPart";
+
+
+
+function toTwelveHour(h, m) {
+    const d = new Date();
+    d.setHours(h, m, 0, 0);
+    return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+}
 
 export default function TimeConverterPage() {
-    const [modernTime, setModernTime] = useState({ hour: "", minute: "" });
-    const [ethiopianTime, setEthiopianTime] = useState(null);
-    const [currentEthiopianTime, setCurrentEthiopianTime] = useState("");
+    const [value, setValue] = useState("17:30");
 
-    useEffect(() => {
-        const updateCurrentEthiopianTime = () => {
-            const now = new Date();
-            const hour = (now.getHours() + 6) % 12 || 12;
-            const minute = now.getMinutes();
-            const period = now.getHours() < 6 || now.getHours() >= 18 ? "ለሊት" : "ቀን";
-            setCurrentEthiopianTime(`${hour}:${minute.toString().padStart(2, "0")} ${period}`);
-        };
-
-        updateCurrentEthiopianTime();
-        const interval = setInterval(updateCurrentEthiopianTime, 60000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const convertToEthiopianTime = () => {
-        if (modernTime.hour !== "" && modernTime.minute !== "") {
-            const hour = (parseInt(modernTime.hour) + 6) % 12 || 12;
-            const period = parseInt(modernTime.hour) < 6 || parseInt(modernTime.hour) >= 18 ? "ለሊት" : "ቀን";
-            setEthiopianTime(`${hour}:${modernTime.minute} ${period}`);
-        } else {
-            setEthiopianTime(null);
-        }
-    };
+    const result = useMemo(() => {
+        const match = /^(\d{1,2}):(\d{2})$/.exec(value);
+        if (!match) return null;
+        const h = Number(match[1]);
+        const m = Number(match[2]);
+        if (h > 23 || m > 59) return null;
+        const eth = Time.fromGregorian(h, m);
+        return { h, m, eth, period: dayPart(h) };
+    }, [value]);
 
     return (
-        <div className="relative min-h-screen text-zinc-900 dark:text-white selection:bg-purple-500/50">
-            <SectionBackground rotation={170} />
-            <main className="container mx-auto px-4 py-16">
-                <section className="text-center mb-12">
-                    <h1 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-4">
+        <div className="relative min-h-screen k-page">
+            <main className="mx-auto w-full max-w-[72rem] px-5 sm:px-8 lg:px-12 pt-16 pb-24 lg:pt-24">
+                <header className="max-w-2xl">
+                    <h1 className="text-[2.6rem] sm:text-6xl font-semibold tracking-[-0.045em] leading-[1.02]">
                         Time Converter
                     </h1>
-                    <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 mt-4 max-w-3xl mx-auto">
-                        Convert modern 24-hour time to traditional Ethiopian time.
+                    <p className="mt-5 text-lg sm:text-xl k-muted leading-relaxed">
+                        Ethiopian time counts hours from sunrise and sunset, so 6:00 AM is 12:00 in the morning and
+                        6:00 PM is 12:00 at night. Convert any time below.
                     </p>
-                </section>
+                </header>
 
-                <div className="max-w-xl mx-auto p-6 rounded-2xl bg-white/30 dark:bg-zinc-800/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg transition-all transform hover:-translate-y-2 duration-300">
-                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">
-                        Modern to Ethiopian Time
-                    </h2>
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                        <input
-                            type="number"
-                            placeholder="Hour (0-23)"
-                            value={modernTime.hour}
-                            onChange={(e) => setModernTime({ ...modernTime, hour: e.target.value })}
-                            className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
-                        <input
-                            type="number"
-                            placeholder="Minute (0-59)"
-                            value={modernTime.minute}
-                            onChange={(e) => setModernTime({ ...modernTime, minute: e.target.value })}
-                            className="w-full p-3 bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-white/10 dark:border-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
-                    </div>
-                    <button
-                        onClick={convertToEthiopianTime}
-                        className="w-full px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg shadow-lg hover:bg-purple-600 transition-transform transform hover:scale-105"
-                    >
-                        Convert
-                    </button>
+                <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <section aria-labelledby="now-heading" className="k-card px-6 py-8">
+                        <h2 id="now-heading" className="text-sm font-medium k-muted mb-6">
+                            Right now
+                        </h2>
+                        <EthiopianTimePanel size={240} />
+                    </section>
 
-                    {ethiopianTime && (
-                        <div className="mt-6 text-center bg-purple-500/10 dark:bg-purple-500/20 p-4 rounded-lg border border-purple-500/20">
-                            <p className="text-lg text-zinc-600 dark:text-zinc-300">Converted Time:</p>
-                            <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">
-                                {ethiopianTime}
-                            </p>
+                    <section aria-labelledby="convert-heading" className="k-card p-6 sm:p-8 flex flex-col">
+                        <h2 id="convert-heading" className="text-sm font-medium k-muted">
+                            Convert a time
+                        </h2>
+
+                        <label className="mt-6 block">
+                            <span className="text-sm font-medium">Gregorian time</span>
+                            <input
+                                type="time"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                                className="mt-2 w-full rounded-xl border k-border bg-[var(--bg)] px-4 py-3 text-2xl font-semibold tabular tracking-[-0.02em] focus:outline-none focus:ring-2 focus:ring-sky-500/50"
+                            />
+                        </label>
+
+                        <div className="my-6 flex items-center gap-3 k-subtle" aria-hidden="true">
+                            <span className="h-px flex-1 bg-[var(--border)]" />
+                            <FiArrowRight className="rotate-90" />
+                            <span className="h-px flex-1 bg-[var(--border)]" />
                         </div>
-                    )}
 
-                    <div className="mt-6 text-center bg-purple-500/10 dark:bg-purple-500/20 p-4 rounded-lg border border-purple-500/20">
-                        <p className="text-lg text-zinc-600 dark:text-zinc-300">Current Ethiopian Time:</p>
-                        <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">
-                            {currentEthiopianTime}
-                        </p>
-                    </div>
+                        <div aria-live="polite" className="rounded-2xl bg-[var(--surface)] p-6">
+                            <p className="text-sm font-medium k-muted">Ethiopian time</p>
+                            {result ? (
+                                <>
+                                    <p className="mt-2 text-5xl font-semibold tracking-[-0.04em] tabular">
+                                        {result.eth.hour}:{String(result.eth.minute).padStart(2, "0")}
+                                        <span className="ml-3 text-2xl font-medium k-accent">
+                                            <span className="k-am">{result.period.am}</span> · {result.period.en}
+                                        </span>
+                                    </p>
+                                    <p className="mt-3 text-sm k-muted">
+                                        <span className="k-am">
+                                            {toGeez(result.eth.hour)}:{toGeez(result.eth.minute)}
+                                        </span>{" "}
+                                        in Ge&apos;ez numerals · {toTwelveHour(result.h, result.m)} Gregorian
+                                    </p>
+                                </>
+                            ) : (
+                                <p className="mt-2 text-lg k-muted">Enter a time to convert it.</p>
+                            )}
+                        </div>
+
+                        <pre className="mt-6 overflow-x-auto rounded-xl bg-[var(--code-bg)] px-4 py-3 font-mono text-[13px] leading-relaxed text-[var(--code-fg)]">
+                            <code>{`import { Time } from 'kenat'
+
+Time.fromGregorian(${result ? `${result.h}, ${result.m}` : "17, 30"})
+// → ${result ? JSON.stringify({ hour: result.eth.hour, minute: result.eth.minute, period: result.eth.period }) : "{ hour: 11, minute: 30, period: 'night' }"}`}</code>
+                        </pre>
+                    </section>
                 </div>
             </main>
         </div>
