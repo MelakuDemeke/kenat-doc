@@ -7,8 +7,8 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <div className="bg-gray-100 dark:bg-zinc-900 text-zinc-900 dark:text-white selection:bg-purple-500/50 relative overflow-x-hidden min-h-[60vh]">
-      <main className="relative z-10 container mx-auto px-4 py-16 max-w-3xl">
-        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-500 pb-2">
+      <main className="relative z-10 container mx-auto px-5 pt-24 pb-16 max-w-3xl">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] pb-2">
           Privacy Policy for Kenat
         </h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2">

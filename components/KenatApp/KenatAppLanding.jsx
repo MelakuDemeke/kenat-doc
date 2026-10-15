@@ -107,9 +107,7 @@ export function KenatAppLanding() {
   const [openFaq, setOpenFaq] = useState(0);
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 selection:bg-sky-500/30 relative overflow-x-hidden bg-grid-dots">
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/10 dark:bg-purple-500/5 rounded-full filter blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute top-[40%] right-1/4 w-[600px] h-[600px] bg-sky-500/10 dark:bg-sky-500/5 rounded-full filter blur-[120px] pointer-events-none -z-10" />
+    <div className="k-page min-h-screen relative overflow-x-clip">
 
       <a
         href="#main"
@@ -123,12 +121,9 @@ export function KenatAppLanding() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-6">
               <div>
-                <p className="kenat-reveal mb-3 font-mono text-[10px] uppercase tracking-widest text-sky-500 font-semibold">
-                  Ethiopian Calendar App
-                </p>
-                <h1 className="kenat-reveal kenat-reveal-delay-1 text-4xl font-extrabold tracking-tight leading-tight md:text-5xl lg:text-[2.75rem] lg:leading-[1.15]">
+                <h1 className="kenat-reveal kenat-reveal-delay-1 text-4xl font-semibold tracking-[-0.03em] leading-[1.05] md:text-5xl lg:text-6xl">
                   Master Your Time with the{" "}
-                  <span className="text-gradient-sky-purple">Best Ethiopian Calendar</span>{" "}
+                  <span className="k-accent">Best Ethiopian Calendar</span>{" "}
                   App.
                 </h1>
               </div>
@@ -152,7 +147,7 @@ export function KenatAppLanding() {
                 </a>
                 <a
                   href="#features"
-                  className="inline-flex items-center justify-center rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 px-8 py-3.5 text-sm font-semibold text-zinc-800 dark:text-white shadow-sm backdrop-blur-sm transition hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-white dark:hover:bg-zinc-900"
+                  className="inline-flex items-center justify-center k-btn k-btn-ghost"
                 >
                   Explore features
                 </a>
@@ -160,11 +155,7 @@ export function KenatAppLanding() {
             </div>
 
             <div className="kenat-reveal kenat-reveal-delay-4 flex justify-center lg:justify-end">
-              <div className="relative group p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md shadow-sm overflow-hidden w-full max-w-sm">
-                <span className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-300 dark:border-zinc-700 pointer-events-none group-hover:border-sky-500 transition-colors"></span>
-                <span className="absolute top-0 right-0 w-3 h-3 border-t border-r border-zinc-300 dark:border-zinc-700 pointer-events-none group-hover:border-sky-500 transition-colors"></span>
-                <span className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-zinc-300 dark:border-zinc-700 pointer-events-none group-hover:border-sky-500 transition-colors"></span>
-                <span className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-zinc-300 dark:border-zinc-700 pointer-events-none group-hover:border-sky-500 transition-colors"></span>
+              <div className="relative p-8 k-card bg-[var(--bg)] w-full max-w-sm">
 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -178,7 +169,7 @@ export function KenatAppLanding() {
                   <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
                     Android App
                   </span>
-                  <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-sky-500">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium k-accent">
                     <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
                     Available now
                   </span>
@@ -188,21 +179,17 @@ export function KenatAppLanding() {
           </div>
         </section>
 
-        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800" />
 
         <section id="features" className="scroll-mt-24 space-y-12">
-          <div className="text-center space-y-2">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-sky-500 font-semibold">
-              Core Features
-            </span>
-            <h2 className="text-3xl font-extrabold tracking-tight">
+          <div className="space-y-3 max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">
               Built for accuracy &amp; heritage
             </h2>
-            <p className="text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto text-sm">
+            <p className="k-muted text-lg leading-relaxed">
               Core tools for everyone—plus Pro for sync, Telegram, themes, and an ad-free experience.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
               <FeatureCard
                 key={f.title}
@@ -215,21 +202,17 @@ export function KenatAppLanding() {
           </div>
         </section>
 
-        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800" />
 
         <section id="pro-benefits" className="scroll-mt-24 space-y-12">
-          <div className="text-center space-y-2">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-purple-500 font-semibold">
-              Kenat Pro
-            </span>
-            <h2 className="text-3xl font-extrabold tracking-tight">
+          <div className="space-y-3 max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">
               Unlock the Full Kenat Experience
             </h2>
-            <p className="text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto text-sm">
+            <p className="k-muted text-lg leading-relaxed">
               Pro adds cross-device cloud sync, Telegram, premium themes, and an ad-free experience—Bahire Hasab stays free for everyone.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {proBenefits.map((b) => (
               <FeatureCard
                 key={b.title}
@@ -242,40 +225,32 @@ export function KenatAppLanding() {
           </div>
         </section>
 
-        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800" />
 
         <section id="pricing" className="scroll-mt-24 space-y-12">
-          <div className="text-center space-y-2">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
-              Pricing
-            </span>
-            <h2 className="text-3xl font-extrabold tracking-tight">Simple, flexible pricing</h2>
+          <div className="space-y-3 max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">Simple, flexible pricing</h2>
           </div>
           <AppPricingCarousel />
         </section>
 
-        <div className="w-full border-t border-dashed border-zinc-200 dark:border-zinc-800" />
 
         <section id="faq" className="scroll-mt-24 space-y-12">
-          <div className="text-center space-y-2">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
-              FAQ
-            </span>
-            <h2 className="text-3xl font-extrabold tracking-tight">
+          <div className="space-y-3 max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">
               Frequently Asked Questions
             </h2>
           </div>
-          <div className="max-w-3xl mx-auto space-y-3">
+          <div className="max-w-3xl border-b k-border">
             {faqItems.map((item, i) => {
               const open = openFaq === i;
               return (
                 <div
                   key={item.q}
-                  className="relative overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md transition-all"
+                  className="border-t k-border"
                 >
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-zinc-900/80 transition-colors"
+                    className="flex w-full items-center justify-between gap-4 px-1 py-5 text-left text-lg font-semibold hover:text-[var(--accent)] transition-colors"
                     aria-expanded={open}
                     onClick={() => setOpenFaq(open ? -1 : i)}
                   >
@@ -288,7 +263,7 @@ export function KenatAppLanding() {
                     />
                   </button>
                   {open && (
-                    <div className="border-t border-zinc-200 dark:border-zinc-800 px-5 py-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    <div className="px-1 pb-6 leading-relaxed k-muted max-w-[62ch]">
                       {item.a}
                     </div>
                   )}

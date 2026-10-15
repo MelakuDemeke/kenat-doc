@@ -58,11 +58,11 @@ export default function TimeConverterExample() {
     // +++ END: Bug Fix +++
   }
 
-  const inputClass = 'w-full px-3 py-2.5 rounded-lg bg-white/20 dark:bg-zinc-700/60 border border-zinc-300 dark:border-zinc-600 backdrop-blur text-base text-center font-mono'
+  const inputClass = 'w-full px-3 py-2.5 rounded-lg bg-white/60 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-base text-center font-mono'
   const liveTimeEth = Time.fromGregorian(liveTime.getHours(), liveTime.getMinutes());
 
   return (
-    <div className="max-w-2xl mx-auto my-10 p-6 rounded-3xl border border-white/20 bg-white/10 dark:bg-zinc-800/40 backdrop-blur-md shadow-lg text-zinc-800 dark:text-zinc-100">
+    <div className="max-w-2xl mx-auto my-10 p-6 k-card text-zinc-800 dark:text-zinc-100">
       <h2 className="text-xl font-semibold mb-2 text-center flex items-center justify-center gap-2">
         <FiClock /> Time Converter
       </h2>
