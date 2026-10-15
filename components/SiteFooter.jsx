@@ -16,6 +16,14 @@ const quickLinks = [
   { label: "Privacy Policy", href: "/privacy" },
 ];
 
+const calendarLinks = [
+  { label: "Today's Ethiopian date", href: "/today" },
+  { label: "Ethiopian holidays", href: "/holidays" },
+  { label: "Ethiopian calendar", href: "/calendar" },
+  { label: "Enkutatash", href: "/holidays/enkutatash" },
+  { label: "Fasika", href: "/holidays/fasika" },
+];
+
 const libraries = [
   { label: "kenat", href: "https://github.com/MelakuDemeke/kenat" },
   { label: "kenat-ui", href: "https://github.com/MelakuDemeke/kenat-ui" },
@@ -35,7 +43,7 @@ export function SiteFooter() {
     <footer className="w-full border-t k-border bg-[var(--surface)] text-[var(--fg)]">
       <div className="mx-auto max-w-[88rem] px-5 sm:px-8 lg:px-12 pt-16 pb-10">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="space-y-5 lg:col-span-4">
+          <div className="space-y-5 lg:col-span-3">
             <div className="flex items-center gap-2.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo.png" alt="" className="h-7 w-auto" />
@@ -65,7 +73,18 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="Libraries" className="space-y-5 lg:col-span-3">
+          <nav aria-label="Ethiopian calendar" className="space-y-5 lg:col-span-2">
+            <h3 className={heading}>Calendar</h3>
+            <ul className="space-y-3">
+              {calendarLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <Link href={href} className={link}>{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Libraries" className="space-y-5 lg:col-span-2">
             <h3 className={heading}>Libraries</h3>
             <ul className="space-y-3">
               {libraries.map(({ label, href }) => (

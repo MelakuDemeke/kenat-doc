@@ -11,6 +11,19 @@ export default {
         title: 'Blog',
         type: 'page'
     },
+    today: {
+        title: 'Today',
+        type: 'page'
+    },
+    holidays: {
+        title: 'Holidays',
+        type: 'page'
+    },
+    calendar: {
+        title: 'Calendar',
+        type: 'page',
+        display: 'hidden'
+    },
     tools: {
         title: 'Tools',
         type: 'page'

@@ -8,6 +8,7 @@ import { clsx } from "clsx";
 import { useHasMounted } from "@/hooks/useHasMounted";
 import InteractivePlayground from "@/components/Landing/InteractivePlayground";
 import { SiteFooter } from "@/components/SiteFooter";
+import { DateQuickLinks } from "@/components/Dates/DateQuickLinks";
 
 import { TodayCard } from "@/components/Landing/TodayCard";
 import { AppsUsingKenat } from "@/components/Landing/AppsUsingKenat";
@@ -367,6 +368,9 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="border-t k-border">
+        <DateQuickLinks className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12 py-16 lg:py-20" />
+      </div>
       <SiteFooter />
     </div>
   );

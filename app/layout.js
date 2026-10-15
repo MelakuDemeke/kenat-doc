@@ -15,6 +15,11 @@ export const metadata = {
     template: "%s | Kenat",
   },
   description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
+  keywords: [
+    "Ethiopian calendar", "Ethiopian date today", "Ethiopian holidays", "Ethiopian date converter", "Enkutatash",
+    "Ethiopian time", "Bahire Hasab", "Ethiopian calendar library", "የኢትዮጵያ ቀን መቁጠሪያ",
+  ],
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" } },
   openGraph: {
     title: "Kenat Ethiopian Calendar Toolkit",
     description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
@@ -77,12 +82,9 @@ export default async function RootLayout({ children }) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "Kenat Ethiopian Calendar Toolkit",
+          "alternateName": ["Kenat", "Ethiopian Calendar"],
           "url": "https://kenat-doc.vercel.app",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://kenat-doc.vercel.app/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
+          "inLanguage": ["en", "am"]
         }`}} />
       </Head>
       <body>
