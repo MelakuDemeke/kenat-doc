@@ -9,7 +9,7 @@ import 'nextra-theme-docs/style.css'
 import './globals.css';
 
 export const metadata = {
-  metadataBase: new URL("https://kenat-doc.vercel.app"),
+  metadataBase: new URL("https://kenat.et"),
   title: {
     default: "Kenat Ethiopian Calendar Toolkit",
     template: "%s | Kenat",
@@ -23,7 +23,7 @@ export const metadata = {
   openGraph: {
     title: "Kenat Ethiopian Calendar Toolkit",
     description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
-    url: "https://kenat-doc.vercel.app",
+    url: "https://kenat.et",
     images: [{ url: "/ogimage.jpg", width: 1200, height: 630, type: "image/jpeg", alt: "Kenat: the Ethiopian calendar, computed for your code" }],
     type: "website",
   },
@@ -83,7 +83,7 @@ export default async function RootLayout({ children }) {
           "@type": "WebSite",
           "name": "Kenat Ethiopian Calendar Toolkit",
           "alternateName": ["Kenat", "Ethiopian Calendar"],
-          "url": "https://kenat-doc.vercel.app",
+          "url": "https://kenat.et",
           "inLanguage": ["en", "am"]
         }`}} />
       </Head>

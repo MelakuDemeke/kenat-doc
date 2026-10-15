@@ -18,16 +18,16 @@ export default function PrivacyPage() {
           Official policy URL:{" "}
           <a
             className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
-            href="https://kenat-doc.vercel.app/privacy"
+            href="https://kenat.et/privacy"
           >
-            https://kenat-doc.vercel.app/privacy
+            https://kenat.et/privacy
           </a>
           . Account deletion (for app store data safety forms):{" "}
           <a
             className="text-purple-600 underline decoration-purple-500/30 underline-offset-2 hover:text-purple-500 dark:text-sky-400 dark:decoration-sky-400/30 dark:hover:text-sky-300"
-            href="https://kenat-doc.vercel.app/privacy#account-deletion"
+            href="https://kenat.et/privacy#account-deletion"
           >
-            https://kenat-doc.vercel.app/privacy#account-deletion
+            https://kenat.et/privacy#account-deletion
           </a>
           .
         </p>
