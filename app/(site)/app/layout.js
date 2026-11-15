@@ -6,9 +6,9 @@ const jsonLd = {
   name: 'Ethiopian calendar | Kenat',
   alternateName: ['Kenat', 'Kenat Ethiopian calendar'],
   applicationCategory: 'LifestyleApplication',
-  operatingSystem: 'Android, iOS',
+  operatingSystem: 'Android, Windows 10, Windows 11',
   description:
-    'Ethiopian calendar app with accurate Ethiopic–Gregorian conversion, Bahire Hasab, holidays, and optional Pro sync and Telegram integration.',
+    'Ethiopian calendar app for Android and Windows with accurate Ethiopian–Gregorian conversion, Bahire Hasab, holidays and fasts, events and tasks, widgets, and optional Pro sync and Telegram integration.',
   image: `https://kenat.et${APP_ICON_PATH}`,
   offers: {
     '@type': 'Offer',
@@ -24,13 +24,13 @@ const jsonLd = {
 };
 
 export const metadata = {
-  title: 'Ethiopian calendar | Kenat — Android & iOS',
+  title: 'Ethiopian calendar | Kenat — Android & Windows',
   description:
-    'Kenat is the best Ethiopian calendar app for Android and iOS. Featuring accurate date conversion, Bahire Hasab, holiday tracking, and cloud sync. Upgrade to Pro for an ad-free experience, Telegram integration, and cross-device sync. Download the ultimate Ethiopic toolkit today.',
+    'Kenat is the Ethiopian calendar app for Android and Windows: both calendars on every day, holidays and fasts, Bahire Hasab, date conversion, events and tasks with Ethiopian repeats, and widgets. Pro adds an ad-free experience, Telegram integration and cross-device sync.',
   openGraph: {
     title: 'Ethiopian calendar | Kenat',
     description:
-      'Precision date conversion, Bahire Hasab, holidays, and Pro cloud sync. Download Kenat for Android and iOS.',
+      'Both calendars on every day, holidays, Bahire Hasab and your events. Get Kenat for Android and Windows.',
     url: 'https://kenat.et/app',
     siteName: 'Kenat',
     images: [
@@ -48,7 +48,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Ethiopian calendar | Kenat',
     description:
-      'Ethiopic–Gregorian conversion, Bahire Hasab, holidays, and Pro features. For Android & iOS.',
+      'Ethiopian–Gregorian conversion, Bahire Hasab, holidays and widgets. For Android and Windows.',
   },
 };
 

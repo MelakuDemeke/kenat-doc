@@ -1,278 +1,340 @@
-"use client";
-
-import { useState } from "react";
 import {
+  FiArrowRight,
+  FiBell,
+  FiCalendar,
+  FiCheckSquare,
+  FiChevronDown,
   FiCloud,
+  FiCommand,
+  FiGift,
+  FiHash,
   FiHeadphones,
   FiLayers,
+  FiMonitor,
+  FiRepeat,
   FiShield,
-  FiCalendar,
-  FiGift,
-  FiMoon,
-  FiRefreshCw,
-  FiBell,
-  FiChevronDown,
+  FiSun,
+  FiWatch,
 } from "react-icons/fi";
 import { FaTelegram } from "react-icons/fa";
-import { FeatureCard } from "@/components/Landing/FeatureCard";
-import { AppPricingCarousel } from "@/components/KenatApp/AppPricingCarousel";
+
 import { SiteFooter } from "@/components/SiteFooter";
+import { HeroBackdrop } from "@/components/Landing/HeroBackdrop";
+import { PhoneFrame, WindowFrame } from "@/components/KenatApp/DeviceFrames";
+import { DesktopTour } from "@/components/KenatApp/DesktopTour";
+import { AppPlans } from "@/components/KenatApp/AppPlans";
+import { StoreButtons } from "@/components/KenatApp/StoreButtons";
 
-const APP_ICON_SRC = "/kenat%20icon.png";
-const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
-const PLAY_STORE_BADGE_SRC = "/Google_Play_Store_badge_EN.svg";
+const PHONE_SCREENS = [
+  { key: "calendar", label: "Calendar", alt: "Kenat month view on Android with Ethiopian and Gregorian dates in each cell and events" },
+  { key: "bahire-hasab", label: "Bahire Hasab", alt: "Kenat Bahire Hasab screen showing the year's derivation from Amete Alem to Metqi" },
+  { key: "convert", label: "Convert", alt: "Kenat date converter showing Tikimt 27, 2019 and November 6, 2026" },
+  { key: "holidays", label: "Holidays", alt: "Kenat holidays list with Enkutatash, Meskel and Genna and their artwork" },
+  { key: "settings", label: "Settings", alt: "Kenat settings with a live preview of the calendar" },
+  { key: "widgets", label: "Home screen", alt: "Android home screen with Kenat photo, analog clock, month, countdown and progress widgets" },
+];
 
-const features = [
+const FEATURES = [
   {
-    icon: <FiCalendar size={20} />,
-    title: "Date Conversion",
-    desc: "Instant, bi-directional conversion between Ethiopic and Gregorian calendars.",
-    tag: "core",
+    Icon: FiRepeat,
+    title: "Date conversion",
+    desc: "Ethiopian to Gregorian and back, Pagume and leap years included, with the weekday and the holidays around any date.",
   },
   {
-    icon: <FiGift size={20} />,
-    title: "Cultural Holidays",
-    desc: "Full database of national and religious holidays—fasts, feasts, and public days.",
-    tag: "core",
+    Icon: FiGift,
+    title: "Holidays and fasts",
+    desc: "Public, Orthodox, Muslim and cultural holidays and every fasting period, each holiday with its own artwork.",
   },
   {
-    icon: <FiMoon size={20} />,
+    Icon: FiSun,
     title: "Bahire Hasab",
-    desc: "Full Bahire Hasab and movable feasts for any Ethiopian year—free in the app.",
-    tag: "bahire-hasab",
+    desc: "The movable feasts of any year, with the reckoning shown step by step. Free for everyone.",
   },
   {
-    icon: <FiRefreshCw size={20} />,
-    title: "Local Calendar Sync",
-    desc: "Sync Ethiopian dates, holidays, and personal events with Google or Apple Calendar.",
-    tag: "sync",
+    Icon: FiCheckSquare,
+    title: "Events and tasks",
+    desc: "Repeats that think in the Ethiopian calendar: every Meskerem 1, the 12th of each month, every Sunday.",
   },
   {
-    icon: <FiBell size={20} />,
+    Icon: FiWatch,
+    title: "Widgets and watch faces",
+    desc: "Home-screen widgets for the date, month, agenda, countdown, progress and an analog clock with Ge'ez numerals.",
+  },
+  {
+    Icon: FiBell,
     title: "Reminders",
-    desc: "Local notifications and reminders so fasts, feasts, and your own plans stay on your radar.",
-    tag: "notifications",
+    desc: "Notifications for your events, tasks and holidays, and the Ethiopian date in the status bar all day.",
+  },
+  {
+    Icon: FiHash,
+    title: "Ge'ez numerals and Ethiopian time",
+    desc: "Show numbers in Ge'ez and the time the Ethiopian way, with the day starting at dawn.",
+  },
+  {
+    Icon: FiCalendar,
+    title: "Your phone's calendar",
+    desc: "Events from Google or your phone's calendar appear beside the Ethiopian dates, in their own colours.",
   },
 ];
 
-const proBenefits = [
+const DESKTOP_EXTRAS = [
   {
-    icon: <FiShield size={20} />,
-    title: "Ad-Free Experience",
-    desc: "Focus on what matters without distractions or banner ads.",
-    tag: "pro",
+    Icon: FiMonitor,
+    title: "Today's date in the tray",
+    desc: "The tray icon is the Ethiopian day and month, so the date is one glance away all day.",
   },
   {
-    icon: <FiCloud size={20} />,
-    title: "Cross-Device Cloud Sync",
-    desc: "Automatically synchronize your personal events and preferences across all your devices.",
-    tag: "pro",
+    Icon: FiLayers,
+    title: "Widgets on the desktop",
+    desc: "Floating Today, month, clock and countdown widgets, plus Today, Agenda and Countdown on the Windows 11 Widgets Board.",
   },
   {
-    icon: <FaTelegram size={20} />,
-    title: "Telegram Integration",
-    desc: "Link your account to the Kenat Telegram Bot (@kenat_bot) to manage your schedule via Telegram.",
-    tag: "pro",
+    Icon: FiCommand,
+    title: "Built for the keyboard",
+    desc: "Arrows move the day, PgUp and PgDn change month, T jumps to today, Ctrl+N adds an event and Ctrl+F searches.",
   },
   {
-    icon: <FiLayers size={20} />,
-    title: "Premium Customization",
-    desc: "Unlock exclusive accent colors and UI themes—Amethyst, Gold, Deep Sea—to match your personality.",
-    tag: "pro",
-  },
-  {
-    icon: <FiHeadphones size={20} />,
-    title: "Priority Support",
-    desc: "Get at the front of the line for any technical help or feature requests.",
-    tag: "pro",
+    Icon: FiCloud,
+    title: "Same account as your phone",
+    desc: "Sign in with Google and your Kenat events and tasks come with you. Pro carries over too.",
   },
 ];
 
-const faqItems = [
+const PRO_BENEFITS = [
+  { Icon: FiShield, title: "No ads", desc: "Nothing between you and your calendar." },
+  { Icon: FiCloud, title: "Cross-device cloud sync", desc: "Your events and preferences on every device you sign in to." },
+  { Icon: FaTelegram, title: "Telegram integration", desc: "Manage your schedule from the Kenat bot, @kenat_bot." },
+  { Icon: FiLayers, title: "Premium customization", desc: "Exclusive accent colours and themes to match your style." },
+  { Icon: FiHeadphones, title: "Priority support", desc: "Your questions and feature requests go to the front of the line." },
+];
+
+const FAQ = [
+  {
+    q: "Is Kenat available for Windows?",
+    a: "Yes. Kenat for Windows is in the Microsoft Store for Windows 10 and 11. It has the same calendar, holidays, Bahire Hasab, converter, events and tasks as the phone app, plus the tray date, desktop widgets and keyboard shortcuts.",
+  },
+  {
+    q: "Does Kenat Pro work on Windows?",
+    a: "Yes. Sign in to the Windows app with the same Google account you use on your phone and Pro comes with it. There is nothing to buy again on the PC.",
+  },
+  {
+    q: "Will my events show on both my phone and my PC?",
+    a: "Sign in with the same account on both and your Kenat events and tasks stay in step. The events from your phone's own calendar show on the PC too, read-only.",
+  },
   {
     q: "What makes Kenat the best Ethiopian calendar app?",
-    a: "Kenat combines accurate bidirectional Ethiopic–Gregorian conversion, a full holiday database, Bahire Hasab, and native calendar integration in one polished app built for daily use.",
+    a: "Kenat combines accurate two-way Ethiopian–Gregorian conversion, a full holiday database, Bahire Hasab and native calendar integration in one app built for daily use.",
   },
   {
     q: "Can I pay with Telegram Stars?",
-    a: "Yes. Kenat Pro is 80 Stars (3 months), 160 Stars (6 months), or 200 Stars (1 year), or you can pay the listed ETB amounts. Checkout happens in Telegram; Star pricing in your currency follows Telegram's rates.",
+    a: "Yes. Kenat Pro is 80 Stars (3 months), 160 Stars (6 months) or 200 Stars (1 year), or you can pay the listed ETB amounts. Checkout happens in Telegram; Star pricing in your currency follows Telegram's rates.",
   },
   {
     q: "Does Kenat work offline?",
-    a: "Core conversion, holidays, and Bahire Hasab logic work on your device. Cloud sync and Telegram features require an internet connection.",
+    a: "Conversion, holidays and Bahire Hasab all work on your device. Cloud sync and Telegram features need an internet connection.",
   },
 ];
 
-export function KenatAppLanding() {
-  const [openFaq, setOpenFaq] = useState(0);
+const WRAP = "mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12";
 
+function SectionHead({ title, children }) {
   return (
-    <div className="k-page min-h-screen relative overflow-x-clip">
+    <header className="max-w-2xl">
+      <h2 className="text-3xl sm:text-[2.75rem] font-semibold tracking-[-0.035em] leading-[1.08] text-balance">{title}</h2>
+      {children && <p className="mt-4 text-lg k-muted leading-relaxed text-pretty">{children}</p>}
+    </header>
+  );
+}
 
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-sky-500 focus:px-4 focus:py-2 focus:text-white"
-      >
-        Skip to content
-      </a>
+function IconTile({ Icon }) {
+  return (
+    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--accent-soft)] k-accent text-lg" aria-hidden="true">
+      <Icon />
+    </span>
+  );
+}
 
-      <main id="main" className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
-        <section id="top" className="relative pt-12 pb-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="space-y-6">
-              <div>
-                <h1 className="kenat-reveal kenat-reveal-delay-1 text-4xl font-semibold tracking-[-0.03em] leading-[1.05] md:text-5xl lg:text-6xl">
-                  Master Your Time with the{" "}
-                  <span className="k-accent">Best Ethiopian Calendar</span>{" "}
-                  App.
-                </h1>
-              </div>
-              <p className="kenat-reveal kenat-reveal-delay-2 text-lg text-zinc-600 dark:text-zinc-400 max-w-xl">
-                Precision date conversion, cultural heritage, and modern synchronization in one beautiful package.
-              </p>
-              <div className="kenat-reveal kenat-reveal-delay-3 flex flex-wrap gap-4" id="download">
-                <a
-                  href={PLAY_STORE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Download Kenat on Google Play"
-                  className="inline-flex transition-transform hover:scale-[1.02] active:scale-95"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={PLAY_STORE_BADGE_SRC}
-                    alt="Get it on Google Play"
-                    className="h-14 w-auto"
-                  />
-                </a>
-                <a
-                  href="#features"
-                  className="inline-flex items-center justify-center k-btn k-btn-ghost"
-                >
-                  Explore features
-                </a>
-              </div>
+export function KenatAppLanding() {
+  return (
+    <div className="k-page relative min-h-screen overflow-x-clip">
+      <HeroBackdrop />
+
+      {/* ---------- Hero ---------- */}
+      <section className={`relative ${WRAP} pt-12 pb-16 lg:pt-20 lg:pb-24`}>
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10 items-center">
+          <div className="lg:col-span-5 flex flex-col gap-8 min-w-0">
+            <h1 className="text-[2.6rem] sm:text-6xl xl:text-[4.25rem] font-semibold leading-[1.02] tracking-[-0.045em] text-balance">
+              The Ethiopian calendar,{" "}
+              <span className="text-sky-600 dark:text-sky-400">on your phone and your desk.</span>
+            </h1>
+            <p className="max-w-[34rem] text-lg sm:text-xl k-muted leading-relaxed text-pretty">
+              Kenat shows every day in both calendars, with holidays, fasts, Bahire Hasab, your events and tasks. On
+              Android, and now on Windows.
+            </p>
+            <div className="flex flex-col gap-4">
+              <StoreButtons size="lg" />
+              <p className="text-sm k-subtle">Free to download · Android and Windows 10 and 11</p>
             </div>
+          </div>
 
-            <div className="kenat-reveal kenat-reveal-delay-4 flex justify-center lg:justify-end">
-              <div className="relative p-8 k-card bg-[var(--bg)] w-full max-w-sm">
+          <div className="lg:col-span-7 min-w-0">
+            <div className="relative isolate pb-[12%] pr-[9%] sm:pr-[11%]">
+              <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-400/25 blur-[90px] dark:bg-sky-500/15" />
+              <WindowFrame
+                src="/app/desktop/calendar.webp"
+                alt="Kenat for Windows: the month of Hidar with Gregorian dates in each cell, events, fasting bands and the day panel"
+                eager
+              />
+              <PhoneFrame
+                src="/app/phone/calendar.webp"
+                alt="Kenat on Android: the month of Tikimt with events in each day"
+                eager
+                className="absolute bottom-0 right-0 w-[27%] min-w-[96px]"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={APP_ICON_SRC}
-                  alt="Kenat Ethiopian Calendar app icon"
-                  width={280}
-                  height={280}
-                  className="mx-auto h-auto w-full max-w-[220px] rounded-2xl"
-                />
-                <div className="mt-6 flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-4">
-                  <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                    Android App
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium k-accent">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
-                    Available now
-                  </span>
+      {/* ---------- Phone ---------- */}
+      <section id="android" className="scroll-mt-24 border-t k-border">
+        <div className={`${WRAP} py-20 lg:py-28`}>
+          <SectionHead title="In your pocket">
+            The Android app keeps both calendars on one screen, puts the date on your home screen and in the status bar,
+            and reminds you before every fast and feast.
+          </SectionHead>
+          <ul className="mt-12 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-6 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
+            {PHONE_SCREENS.map((s) => (
+              <li key={s.key} className="w-[62%] max-w-[15rem] shrink-0 snap-center sm:w-[40%] lg:w-auto lg:max-w-none">
+                <PhoneFrame src={`/app/phone/${s.key}.webp`} alt={s.alt} />
+                <p className="mt-3 text-center text-sm font-medium k-muted">{s.label}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ---------- Desktop ---------- */}
+      <section id="windows" className="scroll-mt-24 border-t k-border bg-[var(--surface)]">
+        <div className={`${WRAP} py-20 lg:py-28`}>
+          <SectionHead title="At your desk">
+            Kenat for Windows is the same calendar laid out for a wide screen: a sidebar, the month in the middle and
+            your day on the right. It waits in the tray until you need it.
+          </SectionHead>
+          <div className="mt-12">
+            <DesktopTour />
+          </div>
+          <ul className="mt-16 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {DESKTOP_EXTRAS.map(({ Icon, title, desc }) => (
+              <li key={title} className="flex flex-col gap-4">
+                <IconTile Icon={Icon} />
+                <div>
+                  <h3 className="font-semibold tracking-[-0.01em]">{title}</h3>
+                  <p className="mt-1.5 k-muted leading-relaxed">{desc}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-        <section id="features" className="scroll-mt-24 space-y-12">
-          <div className="space-y-3 max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">
-              Built for accuracy &amp; heritage
-            </h2>
-            <p className="k-muted text-lg leading-relaxed">
-              Core tools for everyone—plus Pro for sync, Telegram, themes, and an ad-free experience.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {features.map((f) => (
-              <FeatureCard
-                key={f.title}
-                icon={f.icon}
-                title={f.title}
-                desc={f.desc}
-                tag={f.tag}
-              />
+              </li>
             ))}
+          </ul>
+          <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <StoreButtons />
+            <p className="text-sm k-subtle">Windows 10 (1809) and later · Widgets Board on Windows 11</p>
           </div>
-        </section>
+        </div>
+      </section>
 
-
-        <section id="pro-benefits" className="scroll-mt-24 space-y-12">
-          <div className="space-y-3 max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">
-              Unlock the Full Kenat Experience
-            </h2>
-            <p className="k-muted text-lg leading-relaxed">
-              Pro adds cross-device cloud sync, Telegram, premium themes, and an ad-free experience—Bahire Hasab stays free for everyone.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {proBenefits.map((b) => (
-              <FeatureCard
-                key={b.title}
-                icon={b.icon}
-                title={b.title}
-                desc={b.desc}
-                tag={b.tag}
-              />
+      {/* ---------- Features ---------- */}
+      <section id="features" className="scroll-mt-24 border-t k-border">
+        <div className={`${WRAP} py-20 lg:py-28`}>
+          <SectionHead title="Built on the Ethiopian calendar">
+            Not a skin on a Gregorian app. Months, weeks, repeats and movable feasts are computed natively by the open
+            source <a href="/doc" className="k-link">Kenat engine</a>.
+          </SectionHead>
+          <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURES.map(({ Icon, title, desc }) => (
+              <li
+                key={title}
+                className="k-card p-6 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-sky-300 dark:hover:border-sky-500/40"
+              >
+                <IconTile Icon={Icon} />
+                <h3 className="mt-5 text-lg font-semibold tracking-[-0.01em]">{title}</h3>
+                <p className="mt-1.5 k-muted leading-relaxed">{desc}</p>
+              </li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </div>
+      </section>
 
-
-        <section id="pricing" className="scroll-mt-24 space-y-12">
-          <div className="space-y-3 max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">Simple, flexible pricing</h2>
-          </div>
-          <AppPricingCarousel />
-        </section>
-
-
-        <section id="faq" className="scroll-mt-24 space-y-12">
-          <div className="space-y-3 max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em]">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          <div className="max-w-3xl border-b k-border">
-            {faqItems.map((item, i) => {
-              const open = openFaq === i;
-              return (
-                <div
-                  key={item.q}
-                  className="border-t k-border"
-                >
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between gap-4 px-1 py-5 text-left text-lg font-semibold hover:text-[var(--accent)] transition-colors"
-                    aria-expanded={open}
-                    onClick={() => setOpenFaq(open ? -1 : i)}
-                  >
-                    {item.q}
-                    <FiChevronDown
-                      size={16}
-                      className={`shrink-0 text-zinc-400 transition-transform duration-200 ${
-                        open ? "rotate-180 text-sky-500" : ""
-                      }`}
-                    />
-                  </button>
-                  {open && (
-                    <div className="px-1 pb-6 leading-relaxed k-muted max-w-[62ch]">
-                      {item.a}
+      {/* ---------- Pro ---------- */}
+      <section id="pro" className="scroll-mt-24 border-t k-border bg-[var(--surface)]">
+        <div className={`${WRAP} py-20 lg:py-28`}>
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-5">
+              <SectionHead title="Kenat Pro">
+                The calendar, holidays and Bahire Hasab are free. Pro removes ads and adds sync, Telegram and more. One
+                subscription covers your phone and your PC.
+              </SectionHead>
+              <ul className="mt-10 space-y-5">
+                {PRO_BENEFITS.map(({ Icon, title, desc }) => (
+                  <li key={title} className="flex gap-4">
+                    <IconTile Icon={Icon} />
+                    <div>
+                      <h3 className="font-semibold tracking-[-0.01em]">{title}</h3>
+                      <p className="mt-0.5 k-muted leading-relaxed">{desc}</p>
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="lg:col-span-7 lg:pt-3">
+              <AppPlans />
+              <p className="mt-6 text-sm k-subtle leading-relaxed">
+                Subscribe in the app. Pay in ETB, or with Telegram Stars at checkout in Telegram.
+              </p>
+            </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* ---------- FAQ ---------- */}
+      <section id="faq" className="scroll-mt-24 border-t k-border">
+        <div className={`${WRAP} py-20 lg:py-28 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10`}>
+          <div className="lg:col-span-4">
+            <SectionHead title="Questions" />
+          </div>
+          <div className="lg:col-span-8 k-card divide-y divide-[var(--border)] overflow-hidden">
+            {FAQ.map((item, i) => (
+              <details key={item.q} className="group" open={i === 0}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-5 sm:px-6 py-5 font-semibold tracking-[-0.01em] transition-colors hover:bg-[var(--surface)] [&::-webkit-details-marker]:hidden">
+                  {item.q}
+                  <FiChevronDown aria-hidden="true" className="shrink-0 k-subtle transition-transform duration-200 group-open:rotate-180 group-open:text-[var(--accent)]" />
+                </summary>
+                <p className="px-5 sm:px-6 pb-5 -mt-1 k-muted leading-relaxed max-w-[65ch]">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Closing CTA ---------- */}
+      <section className="px-5 sm:px-8 lg:px-12 pb-20 lg:pb-28">
+        <div className="mx-auto w-full max-w-[88rem] rounded-3xl bg-zinc-900 dark:ring-1 dark:ring-zinc-800 text-white px-7 sm:px-12 py-14 lg:py-16 grid grid-cols-1 gap-10 lg:grid-cols-12 items-end">
+          <div className="lg:col-span-7">
+            <h2 className="text-[2.2rem] sm:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+              Never convert a date in your head again.
+            </h2>
+            <p className="mt-4 max-w-xl text-lg text-zinc-300 leading-relaxed">
+              Get Kenat on your phone and your PC. Building something of your own? The engine behind it is open source.
+            </p>
+          </div>
+          <div className="lg:col-span-5 flex flex-col gap-5 lg:items-end">
+            <StoreButtons size="lg" className="lg:justify-end" />
+            <a href="/doc" className="inline-flex items-center gap-2 font-medium text-sky-400 hover:text-white transition-colors">
+              Kenat for developers <FiArrowRight aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   );
