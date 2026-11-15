@@ -13,7 +13,9 @@ export function PhoneFrame({ src, alt, className, eager = false }) {
   return (
     <div
       className={clsx(
-        "rounded-[13%/6%] bg-zinc-800 p-[2.4%] shadow-[0_1px_0_rgb(255_255_255/0.08)_inset,0_30px_60px_-30px_rgb(0_0_0/0.55)] ring-1 ring-zinc-900/80 dark:bg-zinc-800 dark:ring-zinc-700",
+        // Fixed bezel: percentage padding resolves against the parent's width,
+        // which made it thick when the phone sits inside a wider box.
+        "rounded-[12%/5.6%] bg-zinc-800 p-[4px] sm:p-[5px] shadow-[0_1px_0_rgb(255_255_255/0.08)_inset,0_30px_60px_-30px_rgb(0_0_0/0.55)] ring-1 ring-zinc-900/80 dark:bg-zinc-800 dark:ring-zinc-700",
         className
       )}
     >

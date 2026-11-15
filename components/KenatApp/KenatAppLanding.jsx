@@ -189,7 +189,7 @@ export function KenatAppLanding() {
                 src="/app/phone/calendar.webp"
                 alt="Kenat on Android: the month of Tikimt with events in each day"
                 eager
-                className="absolute bottom-0 right-0 w-[27%] min-w-[96px]"
+                className="absolute bottom-0 right-0 w-[24%] min-w-[90px]"
               />
             </div>
           </div>
