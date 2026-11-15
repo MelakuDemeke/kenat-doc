@@ -1,11 +1,14 @@
 import { getPageMap } from "nextra/page-map";
 import { BlogPostCard } from "@/components/BlogPostCard";
 import { SiteFooter } from "@/components/SiteFooter";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Blog | Kenat Ethiopian Calendar Toolkit",
-  description: "Release notes and updates for the Kenat Ethiopian calendar toolkit.",
-};
+export const metadata = pageMetadata({
+  title: "Kenat Blog: Releases and Ethiopian Calendar Updates",
+  description:
+    "Release notes, new features and behind-the-scenes updates from the Kenat Ethiopian calendar toolkit, the Kenat app for Android and Windows, and the libraries.",
+  path: "/blog",
+});
 
 async function getPosts() {
   const pageMap = await getPageMap("/blog");

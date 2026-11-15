@@ -19,4 +19,19 @@ function migrateNextraTurboToRootTurbopack(config) {
   return out;
 }
 
-export default migrateNextraTurboToRootTurbopack(withNextra({}));
+export default migrateNextraTurboToRootTurbopack(
+  withNextra({
+    async redirects() {
+      return [
+        // www.kenat.et and kenat.et both served 200, so Google indexed the site twice.
+        // Send every www URL to the apex domain that metadataBase and canonicals use.
+        {
+          source: "/:path*",
+          has: [{ type: "host", value: "www.kenat.et" }],
+          destination: "https://kenat.et/:path*",
+          permanent: true,
+        },
+      ];
+    },
+  })
+);

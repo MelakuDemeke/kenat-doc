@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import Link from "next/link";
 import { DatePageShell } from "@/components/Dates/DatePageShell";
 import {
@@ -20,7 +21,7 @@ export function yearCalendarMetadata(year, canonical) {
       `የ${year} ዓ.ም. ቀን መቁጠሪያ`, "Ethiopian calendar with Gregorian dates", "Ethiopian months", "Pagume",
     ],
     alternates: { canonical },
-    openGraph: { title, description, url: `${SITE_URL}${canonical}` },
+    openGraph: { title, description, siteName: "Kenat", images: [DEFAULT_OG_IMAGE], url: `${SITE_URL}${canonical}` },
   };
 }
 

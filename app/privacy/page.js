@@ -1,8 +1,11 @@
-export const metadata = {
-  title: "Privacy Policy | Kenat",
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Privacy Policy",
   description:
     "How Kenat collects, uses, and shares your information when you use the Kenat application.",
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DatePageShell, Fact, HolidayTable } from "@/components/Dates/DatePageShell";
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }) {
       "Ethiopian date converter", "Gregorian to Ethiopian",
     ],
     alternates: { canonical: `/date/${isoDate(g)}` },
-    openGraph: { title, description, url: `${SITE_URL}/date/${isoDate(g)}` },
+    openGraph: { title, description, siteName: "Kenat", images: [DEFAULT_OG_IMAGE], url: `${SITE_URL}/date/${isoDate(g)}` },
   };
 }
 

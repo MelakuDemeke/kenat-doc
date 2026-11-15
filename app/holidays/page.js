@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import Link from "next/link";
 import { DatePageShell, HolidayTable } from "@/components/Dates/DatePageShell";
 import { LiveDays } from "@/components/Dates/LiveDates";
@@ -21,7 +22,7 @@ export async function generateMetadata() {
       "next Ethiopian holiday", "Ethiopian holiday calendar", "የኢትዮጵያ በዓላት", "Ethiopian Orthodox holidays", "movable holidays Ethiopia",
     ],
     alternates: { canonical: "/holidays" },
-    openGraph: { title, description, url: `${SITE_URL}/holidays`, type: "website" },
+    openGraph: { title, description, siteName: "Kenat", images: [DEFAULT_OG_IMAGE], url: `${SITE_URL}/holidays`, type: "website" },
   };
 }
 

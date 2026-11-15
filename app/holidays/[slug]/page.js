@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DatePageShell, Fact, HolidayTable } from "@/components/Dates/DatePageShell";
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }) {
       description,
       keywords: [`Ethiopian holidays ${year}`, `Ethiopian holidays ${span.slice(0, 4)}`, `${year} Ethiopian calendar holidays`, `Fasika ${year}`, `Ethiopian Easter ${+span.slice(0, 4) + 1}`],
       alternates: { canonical: `/holidays/${year}` },
-      openGraph: { title, description, url: `${SITE_URL}/holidays/${year}` },
+      openGraph: { title, description, siteName: "Kenat", images: [DEFAULT_OG_IMAGE], url: `${SITE_URL}/holidays/${year}` },
     };
   }
 
@@ -59,7 +60,7 @@ export async function generateMetadata({ params }) {
       `${meta.short} date`,
     ],
     alternates: { canonical: `/holidays/${slug}` },
-    openGraph: { title, description, url: `${SITE_URL}/holidays/${slug}`, type: "article" },
+    openGraph: { title, description, siteName: "Kenat", images: [DEFAULT_OG_IMAGE], url: `${SITE_URL}/holidays/${slug}`, type: "article" },
   };
 }
 

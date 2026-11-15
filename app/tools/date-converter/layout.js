@@ -1,22 +1,13 @@
-export const metadata = {
-    title: "Date Converter - Ethiopian to Gregorian and Vice Versa",
-    description:
-        "Convert any date between Ethiopian and Gregorian calendars. Start with today's date or input any date to see the conversion instantly.",
-    keywords: [
-        "Ethiopian calendar",
-        "Gregorian calendar",
-        "date converter",
-        "today in Ethiopian",
-        "Ethiopian date today",
-        "convert Ethiopian to Gregorian",
-        "convert Gregorian to Ethiopian",
-        "Ethiopian calendar toolkit",
-        "date conversion tool",
-        "Ethiopian date converter",
-        "Gregorian date converter",
-    ],
-};
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Ethiopian Date Converter: Ethiopian ↔ Gregorian",
+  description:
+    "Convert any date from the Ethiopian calendar to Gregorian, or Gregorian to Ethiopian, instantly. Handles Pagume and leap years. Free, no sign-up.",
+  path: "/tools/date-converter",
+  keywords: ["Ethiopian date converter", "convert Ethiopian to Gregorian", "Gregorian to Ethiopian", "Ethiopian calendar converter", "የቀን መቀየሪያ"],
+});
 
 export default function DateConverterLayout({ children }) {
-    return <>{children}</>;
+  return children;
 }

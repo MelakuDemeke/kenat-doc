@@ -4,6 +4,36 @@ import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
 import { FaTelegram } from 'react-icons/fa';
 import { Geist, Geist_Mono, Noto_Sans_Ethiopic } from 'next/font/google'
+import { DEFAULT_OG_IMAGE, SITE_URL } from '@/lib/seo'
+
+// WebSite + Organization: gives Google the site name ("Kenat") and logo for results.
+const SITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "Kenat",
+      alternateName: ["Kenat Ethiopian Calendar Toolkit", "kenat.et", "ቀናት"],
+      url: `${SITE_URL}/`,
+      inLanguage: ["en", "am"],
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Kenat",
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/logo.png`,
+      sameAs: [
+        "https://github.com/MelakuDemeke/kenat",
+        "https://www.npmjs.com/package/kenat",
+        "https://play.google.com/store/apps/details?id=me.melaku.kenat",
+        "https://t.me/kenat_bot",
+      ],
+    },
+  ],
+}
 
 import 'nextra-theme-docs/style.css'
 import './globals.css';
@@ -19,19 +49,22 @@ export const metadata = {
     "Ethiopian calendar", "Ethiopian date today", "Ethiopian holidays", "Ethiopian date converter", "Enkutatash",
     "Ethiopian time", "Bahire Hasab", "Ethiopian calendar library", "የኢትዮጵያ ቀን መቁጠሪያ",
   ],
+  applicationName: "Kenat",
+  authors: [{ name: "Melaku Demeke", url: "https://github.com/MelakuDemeke" }],
+  creator: "Melaku Demeke",
+  category: "technology",
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" } },
+  // Site-wide fallbacks only: no title or url here, so a page that forgets its own
+  // openGraph never advertises itself as the homepage. Pages use pageMetadata() from lib/seo.
   openGraph: {
-    title: "Kenat Ethiopian Calendar Toolkit",
-    description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs. Date conversion, holidays, Bahire Hasab, and more.",
-    url: "https://kenat.et",
-    images: [{ url: "/ogimage.jpg", width: 1200, height: 630, type: "image/jpeg", alt: "Kenat: the Ethiopian calendar, computed for your code" }],
+    siteName: "Kenat",
+    locale: "en_US",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kenat Ethiopian Calendar Toolkit",
-    description: "Kenat provides a robust, standalone library for all your Ethiopian calendar needs.",
-    images: ["/ogimage.jpg"],
+    images: [DEFAULT_OG_IMAGE.url],
   },
 }
 
@@ -77,15 +110,7 @@ export default async function RootLayout({ children }) {
       <Head
         backgroundColor={{ light: '#ffffff', dark: '#09090b' }}
       >
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: `{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": "Kenat Ethiopian Calendar Toolkit",
-          "alternateName": ["Kenat", "Ethiopian Calendar"],
-          "url": "https://kenat.et",
-          "inLanguage": ["en", "am"]
-        }`}} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_JSON_LD) }} />
       </Head>
       <body>
         <div hidden dangerouslySetInnerHTML={{ __html: DIRECTION_CONTRACT }} />
