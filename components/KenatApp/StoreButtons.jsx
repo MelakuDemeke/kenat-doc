@@ -3,11 +3,9 @@ import { FaWindows } from "react-icons/fa";
 
 export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=me.melaku.kenat";
 
-// Opens the Microsoft Store app on Windows at Kenat's listing (package family
-// name). Swap for the https://apps.microsoft.com/detail/<product id> link once
-// the web listing is public, so it also works from other systems.
-export const MICROSOFT_STORE_URL =
-  "ms-windows-store://pdp/?PFN=AddisCode.EthiopianCalendarKenat_2fbrtmxr0h1zy";
+// Kenat's Microsoft Store listing (product 9NX55Z649M50). The web page offers
+// to open the Store app on Windows and works from any browser.
+export const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9NX55Z649M50";
 
 /** Google Play badge and a matching Microsoft Store button, same height. */
 export function StoreButtons({ className, size = "md" }) {
@@ -25,7 +23,9 @@ export function StoreButtons({ className, size = "md" }) {
       </a>
       <a
         href={MICROSOFT_STORE_URL}
-        title="Opens the Microsoft Store app on Windows"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Get Kenat from Microsoft"
         className={clsx(
           h,
           "inline-flex items-center gap-2.5 rounded-[9px] bg-black px-3.5 text-white ring-1 ring-inset ring-zinc-600 transition-transform hover:-translate-y-px"
