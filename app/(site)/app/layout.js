@@ -24,7 +24,8 @@ const jsonLd = {
 };
 
 export const metadata = {
-  title: 'Ethiopian calendar | Kenat — Android & Windows',
+  title: { absolute: 'Kenat: Ethiopian Calendar App for Android & Windows' },
+  alternates: { canonical: '/app' },
   description:
     'Kenat is the Ethiopian calendar app for Android and Windows: both calendars on every day, holidays and fasts, Bahire Hasab, date conversion, events and tasks with Ethiopian repeats, and widgets. Pro adds an ad-free experience, Telegram integration and cross-device sync.',
   openGraph: {

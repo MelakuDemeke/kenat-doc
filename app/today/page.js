@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import Link from "next/link";
 import { DatePageShell, Fact, HolidayTable } from "@/components/Dates/DatePageShell";
 import { LiveDays, LiveEthiopianDate, LiveEthiopianTime } from "@/components/Dates/LiveDates";
@@ -23,7 +24,7 @@ export async function generateMetadata() {
       "የዛሬ ቀን", "ዛሬ ስንት ነው", "Ethiopian time now", "what year is it in Ethiopia", "current Ethiopian year",
     ],
     alternates: { canonical: "/today" },
-    openGraph: { title, description, url: `${SITE_URL}/today`, type: "website" },
+    openGraph: { title, description, siteName: "Kenat", images: [DEFAULT_OG_IMAGE], url: `${SITE_URL}/today`, type: "website" },
   };
 }
 
