@@ -25,7 +25,7 @@ export function BlogPostCard({ href, title, description, date, image }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image}
-            alt=""
+            alt={title}
             className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
         </div>

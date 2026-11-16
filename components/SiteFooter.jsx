@@ -46,7 +46,7 @@ export function SiteFooter() {
           <div className="space-y-5 lg:col-span-3">
             <div className="flex items-center gap-2.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="" className="h-7 w-auto" />
+              <img src="/logo.png" alt="Kenat logo" className="h-7 w-auto" />
               <span className="font-semibold text-xl tracking-tight">Kenat</span>
             </div>
             <p className="text-[0.95rem] k-muted leading-relaxed max-w-xs">
