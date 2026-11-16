@@ -2,6 +2,7 @@ import { Layout, Navbar, ThemeSwitch } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { FaGithub, FaTelegram } from 'react-icons/fa';
 import { Geist, Geist_Mono, Noto_Sans_Ethiopic } from 'next/font/google'
 import { DEFAULT_OG_IMAGE, SITE_URL } from '@/lib/seo'
@@ -126,6 +127,7 @@ export default async function RootLayout({ children }) {
           {children}
         </Layout>
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   )
