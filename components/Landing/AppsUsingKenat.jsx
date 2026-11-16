@@ -59,7 +59,7 @@ export function AppsUsingKenat() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={app.icon}
-                  alt=""
+                  alt={`${app.name} app icon`}
                   width={52}
                   height={52}
                   loading="lazy"

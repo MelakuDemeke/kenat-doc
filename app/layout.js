@@ -2,7 +2,7 @@ import { Layout, Navbar, ThemeSwitch } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { Analytics } from '@vercel/analytics/next'
-import { FaTelegram } from 'react-icons/fa';
+import { FaGithub, FaTelegram } from 'react-icons/fa';
 import { Geist, Geist_Mono, Noto_Sans_Ethiopic } from 'next/font/google'
 import { DEFAULT_OG_IMAGE, SITE_URL } from '@/lib/seo'
 
@@ -85,13 +85,15 @@ const banner = <Banner storageKey="kenat-info-2019">Kenat is a work in progress 
 const navbar = (
   <Navbar
     logo={<div className="flex items-center gap-2.5">
-      <img src="/logo.png" alt="" className="h-6 w-auto" />
+      <img src="/logo.png" alt="Kenat logo" className="h-6 w-auto" />
       <span className="font-semibold text-lg tracking-tight">Kenat</span>
     </div>}
 
     projectLink='https://github.com/MelakuDemeke/kenat'
+    // Icon-only links need text for crawlers and screen readers.
+    projectIcon={<><FaGithub size={24} aria-hidden="true" /><span className="sr-only">Kenat on GitHub</span></>}
     chatLink='https://t.me/kenat_bot'
-    chatIcon={<FaTelegram size={24} />}
+    chatIcon={<><FaTelegram size={24} aria-hidden="true" /><span className="sr-only">Kenat on Telegram</span></>}
   >
     <ThemeSwitch />
   </Navbar>

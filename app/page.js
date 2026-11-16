@@ -5,7 +5,7 @@ export const metadata = pageMetadata({
   title: "Kenat: Ethiopian Calendar Library & Date Converter",
   absoluteTitle: true,
   description:
-    "Kenat is an open-source Ethiopian calendar toolkit: Ethiopian ↔ Gregorian date conversion, holidays, Bahire Hasab and Ge'ez numerals for JavaScript, Python, Dart and PHP.",
+    "Open-source Ethiopian calendar toolkit: Ethiopian ↔ Gregorian date conversion, holidays, Bahire Hasab and Ge'ez numerals for JavaScript, Python, Dart and PHP.",
   path: "/",
 });
 

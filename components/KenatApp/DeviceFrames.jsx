@@ -50,7 +50,7 @@ export function WindowFrame({ src, alt, className, eager = false, children }) {
       <div className="flex h-8 items-center justify-between pl-3.5 text-[11px] text-zinc-400" aria-hidden="true">
         <span className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/kenat%20icon.png" alt="" width={14} height={14} className="h-3.5 w-3.5 rounded-[3px]" />
+          <img src="/kenat%20icon.png" alt="Kenat app icon" width={14} height={14} className="h-3.5 w-3.5 rounded-[3px]" />
           Kenat
         </span>
         <span className="flex h-full">
