@@ -1,0 +1,48 @@
+# Kenat
+
+> Kenat (Amharic: ቀናት, "days") is a free, open-source (MIT) Ethiopian calendar toolkit. It converts dates between the Ethiopian and Gregorian calendars, lists Ethiopian holidays, computes Bahire Hasab (the Ethiopian Orthodox calculation of movable fasts and feasts), converts Ethiopian time and writes Ge'ez numerals. The same engine is published for JavaScript/TypeScript (npm: kenat), React (kenat-ui), Python (pip: kenat), Dart/Flutter (pub: kenat), PHP (composer: melakudemeke/kenat-php) and the command line (kenat-cli). Kenat is also an Ethiopian calendar app for Android and Windows. Created and maintained by Melaku Demeke.
+
+Key facts about the Ethiopian calendar, as computed by Kenat:
+
+- 13 months: twelve of 30 days and Pagume, of 5 days or 6 in a leap year.
+- An Ethiopian year is a leap year when year mod 4 = 3 (for example 2015 and 2019 E.C.).
+- Ethiopian New Year (Meskerem 1, Enkutatash) is September 11, or September 12 in the year after an Ethiopian leap year.
+- The Ethiopian year is 7 years behind the Gregorian year from Meskerem 1 to December 31, and 8 years behind from January 1 to the next Ethiopian New Year.
+- Ethiopian time counts two 12-hour cycles starting at 6:00 AM and 6:00 PM (7:00 AM standard time is 1:00 in the morning Ethiopian time).
+
+## Live Ethiopian date pages
+
+- [Today's Ethiopian date](https://kenat.et/today): today's date in the Ethiopian and Gregorian calendars, with Ethiopian time and the next holiday.
+- [Ethiopian holidays](https://kenat.et/holidays): every Ethiopian public, Orthodox and Muslim holiday this year with Gregorian dates.
+- [Ethiopian calendar](https://kenat.et/calendar): the full current Ethiopian year, all 13 months, with Gregorian dates.
+
+## Free tools
+
+- [Ethiopian date converter](https://kenat.et/tools/date-converter): convert Ethiopian ↔ Gregorian dates.
+- [Ethiopian time converter](https://kenat.et/tools/time-converter): convert 24-hour time to Ethiopian time and back.
+- [Bahire Hasab calculator](https://kenat.et/tools/bahire-hasab): movable feasts (Nineveh, Lent, Fasika) for any Ethiopian year.
+- [Holiday browser](https://kenat.et/tools/holiday-browser): Ethiopian holidays by month and year.
+- [Month grid](https://kenat.et/tools/month-grid): any Ethiopian month as a calendar grid.
+
+## Documentation
+
+- [Introduction](https://kenat.et/doc): what Kenat is and what it covers.
+- [Installation](https://kenat.et/doc/installation): npm, pip, dart pub and Composer.
+- [Getting started](https://kenat.et/doc/GettingStarted): create and convert Ethiopian dates.
+- [Usage examples](https://kenat.et/doc/usage): conversion, arithmetic, month grids and holidays.
+- [Kenat class API](https://kenat.et/doc/apiref): full API reference.
+- [Formatting](https://kenat.et/doc/formating): Amharic/English formats and Ge'ez numerals.
+- [Holiday system](https://kenat.et/doc/HolidaySystem): fixed and movable holidays and tags.
+- [Bahire Hasab](https://kenat.et/doc/bahireHasab): how the Ethiopian Orthodox computus works.
+- [Kenat UI](https://kenat.et/doc/Kenat-UI/Installation): headless React hooks for Ethiopian calendar components.
+- [Kenat CLI](https://kenat.et/doc/kenat-cli/introduction): the Ethiopian calendar in the terminal.
+
+## App
+
+- [Kenat app](https://kenat.et/app): Ethiopian calendar app for Android and Windows.
+
+## Source
+
+- [GitHub: kenat](https://github.com/MelakuDemeke/kenat)
+- [npm: kenat](https://www.npmjs.com/package/kenat)
+- [Blog](https://kenat.et/blog): release notes and updates.
