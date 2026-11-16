@@ -1,4 +1,6 @@
 import { pageMetadata } from "@/lib/seo";
+import { FaqSection } from "@/components/FaqSection";
+import { DATE_CONVERTER_FAQS } from "@/lib/faqs";
 
 export const metadata = pageMetadata({
   title: "Ethiopian Date Converter: Ethiopian ↔ Gregorian",
@@ -9,5 +11,10 @@ export const metadata = pageMetadata({
 });
 
 export default function DateConverterLayout({ children }) {
-  return children;
+  return (
+    <>
+      {children}
+      <FaqSection faqs={DATE_CONVERTER_FAQS} className="mx-auto w-full max-w-[72rem] px-5 sm:px-8 lg:px-12 py-16" />
+    </>
+  );
 }

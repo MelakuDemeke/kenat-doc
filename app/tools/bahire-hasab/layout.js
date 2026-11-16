@@ -1,4 +1,6 @@
 import { pageMetadata } from "@/lib/seo";
+import { FaqSection } from "@/components/FaqSection";
+import { BAHIRE_HASAB_FAQS } from "@/lib/faqs";
 
 export const metadata = pageMetadata({
   title: "Bahire Hasab Calculator: Ethiopian Fasts and Feasts",
@@ -9,5 +11,10 @@ export const metadata = pageMetadata({
 });
 
 export default function BahireHasabLayout({ children }) {
-  return children;
+  return (
+    <>
+      {children}
+      <FaqSection faqs={BAHIRE_HASAB_FAQS} className="mx-auto w-full max-w-[72rem] px-5 sm:px-8 lg:px-12 py-16" />
+    </>
+  );
 }

@@ -160,7 +160,7 @@ function SectionHead({ title, children }) {
   );
 }
 
-export default function HomePage() {
+export default function HomePage({ faq }) {
   const [copied, copy] = useCopy();
 
   return (
@@ -367,6 +367,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {faq && (
+        <div className="border-t k-border">
+          <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12 py-20 lg:py-24">{faq}</div>
+        </div>
+      )}
 
       <div className="border-t k-border">
         <DateQuickLinks className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12 py-16 lg:py-20" />
