@@ -17,6 +17,7 @@ const jsonLd = {
   description: post.description,
   image: `${SITE_URL}${post.image}`,
   datePublished: post.date,
+  dateModified: post.date,
   url: `${SITE_URL}${post.path}`,
   mainEntityOfPage: `${SITE_URL}${post.path}`,
   author: { "@type": "Person", name: "Melaku Demeke", url: "https://github.com/MelakuDemeke" },

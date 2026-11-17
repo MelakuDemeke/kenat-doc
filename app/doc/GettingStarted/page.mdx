@@ -21,7 +21,7 @@ twitter:
     - /ogimage.jpg
 ---
 
-import { Tabs } from 'nextra/components'
+import { Tabs as CodeTabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 import { FaRocket, FaHammer, FaGift } from 'react-icons/fa'
 
@@ -50,7 +50,7 @@ If you provide an invalid date (e.g., out-of-range month/day, wrong format), Ken
 
 You can optionally pass time information (hour, minute, period) when creating a date:
 
-<Tabs
+<CodeTabs
   items={[ 
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -58,15 +58,15 @@ You can optionally pass time information (hour, minute, period) when creating a 
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     // Use 'day' or 'night' for the period property
     const withTime = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'day' });
     // or
     const withTimeNight = new Kenat(2017, 10, 5, { hour: 3, minute: 30, period: 'night' });
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     // Dart doesn't take year/month/day as separate constructor args — pass a
     // Time object as the second argument to fromEthiopian() instead.
@@ -78,16 +78,16 @@ You can optionally pass time information (hour, minute, period) when creating a 
     print(withTime.formatWithTime());      // ሰኔ 5 2017 03:30 ጠዋት
     print(withTimeNight.formatWithTime()); // ሰኔ 5 2017 03:30 ማታ
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     # Use 'day' or 'night' for the period property
     with_time = Kenat(2017, 10, 5, hour=3, minute=30, period='day')
     # or
     with_time_night = Kenat(2017, 10, 5, hour=3, minute=30, period='night')
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Kenat;
 
@@ -107,14 +107,14 @@ You can optionally pass time information (hour, minute, period) when creating a 
     echo $withTime->format(['includeTime' => true]);      // ሰኔ 5 2017 03:30 ጠዋት
     echo $withTimeNight->format(['includeTime' => true]); // ሰኔ 5 2017 03:30 ማታ
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ### Language Option
 
 Most methods accept a `lang` option to choose between Amharic and English output. Example:
 
-<Tabs
+<CodeTabs
   items={[ 
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -122,31 +122,31 @@ Most methods accept a `lang` option to choose between Amharic and English output
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     today.getEthiopian({ lang: 'english' })
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     // getEthiopian() itself has no lang option in Dart — the language
     // choice lives on the formatting methods instead.
     today.formatStandard('english'); // e.g. "Hamle 4 2018"
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     today.get_ethiopian(lang='english')
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     // getEthiopian() returns a plain EthiopianDate value object with no lang
     // option in PHP either — the language choice lives on format() instead.
     $today->format(['lang' => 'english']); // e.g. "Hamle 4 2018"
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ### Output Types
 
@@ -156,7 +156,7 @@ Date methods like `getEthiopian()` and `getGregorian()` return plain objects, no
 
 If you create a `Kenat` instance with no arguments, it will automatically represent the current system date.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -164,7 +164,7 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     import Kenat from 'kenat';
 
@@ -176,8 +176,8 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
     console.log('GC:', today.getGregorian());
     // Example Output GC: { year: 2025, month: 6, 13 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     import 'package:kenat/kenat.dart';
 
@@ -191,8 +191,8 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
       // Example Output GC: {year: 2026, month: 7, day: 11}
     }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from kenat import Kenat
 
@@ -204,8 +204,8 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
     print('GC:', today.get_gregorian())
     # Example Output GC: { 'year': 2025, 'month': 6, 'day': 13 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Kenat;
 
@@ -220,14 +220,14 @@ If you create a `Kenat` instance with no arguments, it will automatically repres
     echo "GC: {$gc->year}-{$gc->month}-{$gc->day}";
     // Example Output GC: 2026-7-12
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ### From a String
 
 You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -235,23 +235,23 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     const customDate = new Kenat('2016/10/05');
 
     console.log(customDate.getGregorian());
     // Output: { year: 2024, month: 6, day: 13 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     final customDate = Kenat('2016/10/05');
 
     print(customDate.getGregorian());
     // Output: {year: 2024, month: 6, day: 12}
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from kenat import Kenat
     
@@ -260,8 +260,8 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
     print(custom_date.get_gregorian())
     # Output: { 'year': 2024, 'month': 6, 'day': 13 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Kenat;
 
@@ -271,15 +271,15 @@ You can create a date from a string in `YYYY/MM/DD` or `YYYY-MM-DD` format.
     echo "{$gc->year}-{$gc->month}-{$gc->day}";
     // Output: 2024-6-13
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ### From a Native Date Object
 
 You can pass a native date object directly to the constructor: a JavaScript
 `Date`, a Python `datetime`, or a Dart `DateTime`.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -287,7 +287,7 @@ You can pass a native date object directly to the constructor: a JavaScript
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     const gcDate = new Date('2024-08-22');
     const fromDate = new Kenat(gcDate);
@@ -295,8 +295,8 @@ You can pass a native date object directly to the constructor: a JavaScript
     console.log(fromDate.getEthiopian());
     // Output: { year: 2016, month: 12, day: 13 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     // Unlike JS's Date, Dart's DateTime months are already 1-based
     // (August = 8), so there's no off-by-one to worry about.
@@ -306,8 +306,8 @@ You can pass a native date object directly to the constructor: a JavaScript
     print(fromDate.getEthiopian());
     // Output: {year: 2016, month: 12, day: 16}
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from datetime import datetime
     from kenat import Kenat
@@ -318,8 +318,8 @@ You can pass a native date object directly to the constructor: a JavaScript
     print(from_date.get_ethiopian())
     # Output: { 'year': 2016, 'month': 12, 'day': 13 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Kenat;
     use DateTimeImmutable;
@@ -332,14 +332,14 @@ You can pass a native date object directly to the constructor: a JavaScript
     echo "{$et->year}-{$et->month}-{$et->day}";
     // Output: 2016-12-13
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ### From Individual Components
 
 You can create a date by passing the year, month, and day as separate numbers.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -347,15 +347,15 @@ You can create a date by passing the year, month, and day as separate numbers.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     const fromComponents = new Kenat(2016, 1, 1);
 
     console.log(fromComponents.getGregorian());
     // Output: { year: 2023, month: 9, day: 11 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     // Dart's plain constructor takes a single Ethiopian map/string/DateTime,
     // not separate y/m/d args — use the fromEthiopian() factory instead.
@@ -364,8 +364,8 @@ You can create a date by passing the year, month, and day as separate numbers.
     print(fromComponents.getGregorian());
     // Output: {year: 2023, month: 9, day: 12}
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from kenat import Kenat
 
@@ -374,8 +374,8 @@ You can create a date by passing the year, month, and day as separate numbers.
     print(from_components.get_gregorian())
     # Output: { 'year': 2023, 'month': 9, 'day': 11 }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Kenat;
 
@@ -387,8 +387,8 @@ You can create a date by passing the year, month, and day as separate numbers.
     echo "{$gc->year}-{$gc->month}-{$gc->day}";
     // Output: 2023-9-11
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ---
 
@@ -396,7 +396,7 @@ You can create a date by passing the year, month, and day as separate numbers.
 
 Kenat also provides functions to get holidays for a given year.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -404,7 +404,7 @@ Kenat also provides functions to get holidays for a given year.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     import { getHolidaysForYear, HolidayTags } from 'kenat';
 
@@ -418,8 +418,8 @@ Kenat also provides functions to get holidays for a given year.
     console.log(`Found ${publicHolidays.length} public holidays in ${year} E.C.`);
     // Expected: Lists all holidays tagged as 'public'.
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     import 'package:kenat/kenat.dart';
 
@@ -435,8 +435,8 @@ Kenat also provides functions to get holidays for a given year.
       // Found 15 public holidays in 2017 E.C.
     }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from kenat import get_holidays_for_year, HolidayTags
 
@@ -448,8 +448,8 @@ Kenat also provides functions to get holidays for a given year.
     print(f"Found {len(public_holidays)} public holidays in {year} E.C.")
     # Expected: Lists all holidays tagged as 'public'.
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Holidays;
     use Kenat\HolidayTags;
@@ -464,5 +464,5 @@ Kenat also provides functions to get holidays for a given year.
     echo "Found " . count($publicHolidays) . " public holidays in {$year} E.C.";
     // Found 15 public holidays in 2017 E.C.
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>

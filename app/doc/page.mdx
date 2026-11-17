@@ -21,7 +21,7 @@ twitter:
     - /ogimage.jpg
 ---
 
-import { Tabs } from 'nextra/components'
+import { Tabs as CodeTabs } from 'nextra/components'
 import { SiJavascript, SiPython, SiDart, SiPhp } from 'react-icons/si'
 import { FiGlobe, FiTool, FiRefreshCw, FiCalendar, FiClock, FiZap, FiPackage, FiTrendingUp } from 'react-icons/fi'
 import { FaCalculator, FaSortNumericDown, FaLandmark, FaSchool } from 'react-icons/fa'
@@ -49,7 +49,7 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
 
 ## <FiZap className="inline-block mr-2" /> Example in Action
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -57,7 +57,7 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     import Kenat from 'kenat';
 
@@ -68,9 +68,9 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
     console.log(date.formatInGeezAmharic()); 
     // ግንቦት ፳፭ ፳፻፲፯
     ```
-  </Tabs.Tab>
+  </CodeTabs.Tab>
 
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     import 'package:kenat/kenat.dart';
 
@@ -83,9 +83,9 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
       // ሀምሌ ፬ ፳፻፲፰
     }
     ```
-  </Tabs.Tab>
+  </CodeTabs.Tab>
 
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from kenat import Kenat
 
@@ -96,9 +96,9 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
     print(date.format_in_geez_amharic())
     # ግንቦት ፳፭ ፳፻፲፯
     ```
-  </Tabs.Tab>
+  </CodeTabs.Tab>
 
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Kenat;
 
@@ -110,8 +110,8 @@ Whether you're building a web app, desktop utility, backend scheduler, or mobile
     echo $date->formatInGeezAmharic();
     // ሀምሌ ፬ ፳፻፲፰
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
 
 ---
 

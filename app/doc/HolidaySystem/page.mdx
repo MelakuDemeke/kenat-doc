@@ -21,7 +21,7 @@ twitter:
     - /ogimage.jpg
 ---
 
-import { Tabs } from 'nextra/components'
+import { Tabs as CodeTabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # The Ethiopian Holiday System in Kenat
@@ -126,10 +126,10 @@ const publicHolidaysEn = getHolidaysForYear(year, {
 });
 ```
 
-<Tabs
+<CodeTabs
   items={[<div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>, <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>, <div key="py" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPython size={16} /> Python</div>, <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ```js
     import { getHolidaysForYear, HolidayTags } from 'kenat';
 
@@ -162,8 +162,8 @@ const publicHolidaysEn = getHolidaysForYear(year, {
     const meskel = getHoliday('meskel', year);
     console.log(meskel);
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```dart
     import 'package:kenat/kenat.dart';
 
@@ -196,8 +196,8 @@ const publicHolidaysEn = getHolidaysForYear(year, {
       print(meskel?['name']); // መስቀል
     }
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```python
     from kenat import get_holidays_for_year, HolidayTags
 
@@ -216,8 +216,8 @@ const publicHolidaysEn = getHolidaysForYear(year, {
 
     print(f"Found {len(muslim_or_state_holidays)} holidays that are either Muslim or State holidays.")
     ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+  </CodeTabs.Tab>
+  <CodeTabs.Tab>
     ```php
     use Kenat\Holidays;
     use Kenat\HolidayTags;
@@ -249,5 +249,5 @@ const publicHolidaysEn = getHolidaysForYear(year, {
     $meskel = Holidays::getHoliday('meskel', $year);
     echo $meskel?->name; // መስቀል
     ```
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>

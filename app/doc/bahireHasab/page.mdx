@@ -21,7 +21,7 @@ twitter:
     - /ogimage.jpg
 ---
 
-import { Tabs } from 'nextra/components'
+import { Tabs as CodeTabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # Bahire Hasab (ባሕረ ሐሳብ)
@@ -158,7 +158,7 @@ If you pass an invalid year or holiday key, Kenat will throw an error (e.g., `Un
 
 ---
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -166,7 +166,7 @@ If you pass an invalid year or holiday key, Kenat will throw an error (e.g., `Un
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 
 ```js
 import { getBahireHasab } from 'kenat';
@@ -190,8 +190,8 @@ console.log(`${fasika.name}:`, fasika.ethiopian);
 // Fasika: { year: 2017, month: 8, day: 1 }
 ```
 
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 
 ```dart
 import 'package:kenat/kenat.dart';
@@ -222,8 +222,8 @@ void main() {
 }
 ```
 
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 
 ```python
 from kenat import get_bahire_hasab
@@ -247,8 +247,8 @@ print(f"{fasika['name']}:", fasika['ethiopian'])
 # Fasika: {'year': 2017, 'month': 8, 'day': 1}
 ```
 
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 
 ```php
 use Kenat\BahireHasab;
@@ -278,5 +278,5 @@ $easter = BahireHasab::getMovableHoliday('fasika', 2017);
 echo "{$easter->year}-{$easter->month}-{$easter->day}"; // 2017-8-12
 ```
 
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
