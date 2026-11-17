@@ -1,6 +1,8 @@
 import { pageMetadata } from "@/lib/seo";
 import { FaqSection } from "@/components/FaqSection";
+import { ToolGuide } from "@/components/ToolGuide";
 import { TIME_CONVERTER_FAQS } from "@/lib/faqs";
+import { TOOL_GUIDES } from "@/lib/toolGuides";
 
 export const metadata = pageMetadata({
   title: "Ethiopian Time Converter: 24-Hour to Ethiopian Time",
@@ -14,7 +16,10 @@ export default function TimeConverterLayout({ children }) {
   return (
     <>
       {children}
-      <FaqSection faqs={TIME_CONVERTER_FAQS} className="mx-auto w-full max-w-[72rem] px-5 sm:px-8 lg:px-12 py-16" />
+      <div className="mx-auto w-full max-w-[72rem] px-5 sm:px-8 lg:px-12 pb-20">
+        <ToolGuide guide={TOOL_GUIDES["time-converter"]} className="pt-16 border-t k-border" />
+        <FaqSection faqs={TIME_CONVERTER_FAQS} className="mt-16" />
+      </div>
     </>
   );
 }

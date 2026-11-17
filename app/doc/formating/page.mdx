@@ -21,7 +21,7 @@ twitter:
     - /ogimage.jpg
 ---
 
-import { Tabs } from 'nextra/components'
+import { Tabs as CodeTabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 
 # Formatting Ethiopian Dates with Kenat
@@ -49,7 +49,7 @@ Here are the primary functions available for formatting dates in JavaScript. All
 
 Formats a date into a standard "Month Day Year" string.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -57,7 +57,7 @@ Formats a date into a standard "Month Day Year" string.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 ```javascript
 import { Kenat, formatStandard } from 'kenat';
 
@@ -80,8 +80,8 @@ console.log(formatStandard(today));
 console.log(formatStandard(today, 'english'));
 // Output: Meskerem 10 2016
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```dart
 import 'package:kenat/kenat.dart';
 
@@ -105,8 +105,8 @@ print(formatStandard(today.getEthiopian()));
 print(formatStandard(today.getEthiopian(), 'english'));
 // Output: Meskerem 10 2016
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```python
 from kenat import Kenat
 from kenat.formatting import format_standard
@@ -121,8 +121,8 @@ print(format_standard(today))
 print(format_standard(today, lang='english'))
 # Output: Meskerem 10 2016
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```php
 use Kenat\Kenat;
 use Kenat\Formatting;
@@ -147,15 +147,15 @@ echo Formatting::formatStandard($today->getEthiopian());
 echo Formatting::formatStandard($today->getEthiopian(), 'english');
 // Output: Meskerem 10 2016
 ```
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
 
 
 ### Date Format with Weekday
 
 Includes the day of the week in the output.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -163,7 +163,7 @@ Includes the day of the week in the output.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 ```javascript
 import { Kenat, formatWithWeekday } from 'kenat';
 
@@ -182,8 +182,8 @@ console.log(formatWithWeekday(today, 'english', true));
 // Output: Tuesday, Meskerem ፲ ፳፻፲፮
 // Options: lang ('amharic'|'english'), useGeez (boolean)
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```dart
 import 'package:kenat/kenat.dart';
 
@@ -202,8 +202,8 @@ print(formatWithWeekday(today.getEthiopian(), 'english', true));
 // Output: Thursday, Meskerem ፲ ፳፻፲፮
 // Options: lang ('amharic'|'english'), useGeez (boolean)
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```python
 from kenat import Kenat
 from kenat.formatting import format_with_weekday
@@ -218,8 +218,8 @@ print(format_with_weekday(today))
 print(format_with_weekday(today, use_geez=True))
 # Output: ማክሰኞ, መስከረም ፲ ፳፻፲፮
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```php
 use Kenat\Kenat;
 use Kenat\Formatting;
@@ -239,15 +239,15 @@ echo Formatting::formatWithWeekday($today->getEthiopian(), 'english', true);
 // Output: Thursday, Meskerem ፲ ፳፻፲፮
 // Args: lang ('amharic'|'english'), useGeez (bool)
 ```
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
 
 
 ### Date Format with Time
 
 Combines a date and a Time object into a single string.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -255,7 +255,7 @@ Combines a date and a Time object into a single string.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 ```javascript
 import { Kenat, Time, formatWithTime } from 'kenat';
 
@@ -271,8 +271,8 @@ console.log(formatWithTime(today, time));
 // Output: መስከረም 10 2016 8:30 ቀን
 // Options: lang ('amharic'|'english'), useGeez (boolean)
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```dart
 import 'package:kenat/kenat.dart';
 
@@ -290,8 +290,8 @@ print(formatWithTime(today.getEthiopian(), time));
 // Output: መስከረም 10 2016 08:30 ጠዋት
 // Options: lang ('amharic'|'english')
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```python
 from kenat import Kenat, Time
 from kenat.formatting import format_with_time
@@ -302,8 +302,8 @@ time = Time(8, 30, 'day')
 print(format_with_time(today, time))
 # Output: መስከረም 10 2016 8:30 ቀን
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```php
 use Kenat\Kenat;
 use Kenat\Time;
@@ -323,15 +323,15 @@ echo Formatting::formatWithTime($today->getEthiopian(), $time);
 // Output: መስከረም 10 2016 08:30 ጠዋት
 // Args: lang ('amharic'|'english')
 ```
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
 
 
 ### Geez Numeral Date Format
 
 Formats the date using Ge'ez numerals for the day and year.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -339,7 +339,7 @@ Formats the date using Ge'ez numerals for the day and year.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 ```javascript
 import { Kenat, formatInGeezAmharic } from 'kenat';
 
@@ -353,8 +353,8 @@ console.log(today.formatInGeezAmharic());
 console.log(formatInGeezAmharic(today));
 // Output: መስከረም ፲ ፳፻፲፮
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```dart
 import 'package:kenat/kenat.dart';
 
@@ -368,8 +368,8 @@ print(today.formatInGeezAmharic());
 print(formatInGeezAmharic(today.getEthiopian()));
 // Output: መስከረም ፲ ፳፻፲፮
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```python
 from kenat import Kenat
 from kenat.formatting import format_in_geez_amharic
@@ -378,8 +378,8 @@ today = Kenat('2016/1/10')
 print(format_in_geez_amharic(today))
 # Output: መስከረም ፲ ፳፻፲፮
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```php
 use Kenat\Kenat;
 use Kenat\Formatting;
@@ -394,15 +394,15 @@ echo $today->formatInGeezAmharic();
 echo Formatting::formatInGeezAmharic($today->getEthiopian());
 // Output: መስከረም ፲ ፳፻፲፮
 ```
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
 
 
 ### Short Date Format
 
 Returns the date in a compact YYYY/MM/DD format.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -410,7 +410,7 @@ Returns the date in a compact YYYY/MM/DD format.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 ```javascript
 import { Kenat, formatShort } from 'kenat';
 
@@ -424,8 +424,8 @@ console.log(today.formatShort());
 console.log(formatShort(today));
 // Output: 2016/01/10
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```dart
 import 'package:kenat/kenat.dart';
 
@@ -439,8 +439,8 @@ print(today.formatShort());
 print(formatShort(today.getEthiopian()));
 // Output: 2016/01/10
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```python
 from kenat import Kenat
 from kenat.formatting import format_short
@@ -449,8 +449,8 @@ today = Kenat('2016/1/10')
 print(format_short(today))
 # Output: 2016/01/10
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```php
 use Kenat\Kenat;
 use Kenat\Formatting;
@@ -465,15 +465,15 @@ echo $today->formatShort();
 echo Formatting::formatShort($today->getEthiopian());
 // Output: 2016/01/10
 ```
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
 
 
 ### ISO Date String Format
 
 Returns an ISO-like string, with optional time.
 
-<Tabs
+<CodeTabs
   items={[
     <div key="javascript" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -481,7 +481,7 @@ Returns an ISO-like string, with optional time.
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-<Tabs.Tab>
+<CodeTabs.Tab>
 ```javascript
 import { Kenat, Time, toISODateString } from 'kenat';
 
@@ -501,8 +501,8 @@ console.log(today.toISOString());
 console.log(toISODateString(today, time));
 // Output: 2016-01-10T08:30
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```dart
 import 'package:kenat/kenat.dart';
 
@@ -524,8 +524,8 @@ print(todayWithTime.toISOString());
 print(toISODateString(today.getEthiopian(), { 'hour': 8, 'minute': 30, 'period': 'day' }));
 // Output: 2016-01-10T08:30
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```python
 from kenat import Kenat, Time
 from kenat.formatting import to_iso_date_string
@@ -541,8 +541,8 @@ time = Time(8, 30, 'day')
 print(to_iso_date_string(today, time))
 # Output: 2016-01-10T08:30
 ```
-</Tabs.Tab>
-<Tabs.Tab>
+</CodeTabs.Tab>
+<CodeTabs.Tab>
 ```php
 use Kenat\Kenat;
 use Kenat\Formatting;
@@ -566,7 +566,7 @@ echo $todayWithTime->toISOString();
 echo Formatting::toISODateString($today->getEthiopian(), ['hour' => 8, 'minute' => 30, 'period' => 'day']);
 // Output: 2016-01-10T08:30
 ```
-</Tabs.Tab>
-</Tabs>
+</CodeTabs.Tab>
+</CodeTabs>
 
 

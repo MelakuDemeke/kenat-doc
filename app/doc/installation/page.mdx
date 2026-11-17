@@ -21,14 +21,14 @@ twitter:
     - /ogimage.jpg
 ---
 
-import { Tabs } from 'nextra/components'
+import { Tabs as CodeTabs } from 'nextra/components'
 import { SiJavascript, SiDart, SiPython, SiPhp } from 'react-icons/si'
 import { FiPackage, FiTool, FiCheckCircle, FiDownload, FiRefreshCw, FiAlertTriangle, FiFolder } from 'react-icons/fi'
 import { FaFlask } from 'react-icons/fa'
 
 # <FiPackage className="inline-block mr-2" /> Installation
 
-<Tabs
+<CodeTabs
   items={[
     <div key="js" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiJavascript size={16} /> JavaScript</div>,
     <div key="dart" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiDart size={16} /> Dart</div>,
@@ -36,31 +36,31 @@ import { FaFlask } from 'react-icons/fa'
     <div key="php" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><SiPhp size={16} /> PHP</div>
   ]}
 >
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ## <FiTool className="inline-block mr-2" /> Install with a Package Manager
 
-    <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
-      <Tabs.Tab>
+    <CodeTabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+      <CodeTabs.Tab>
         ```bash
         npm install kenat
         ```
-      </Tabs.Tab>
-      <Tabs.Tab>
+      </CodeTabs.Tab>
+      <CodeTabs.Tab>
         ```bash
         pnpm add kenat
         ```
-      </Tabs.Tab>
-      <Tabs.Tab>
+      </CodeTabs.Tab>
+      <CodeTabs.Tab>
         ```bash
         yarn add kenat
         ```
-      </Tabs.Tab>
-      <Tabs.Tab>
+      </CodeTabs.Tab>
+      <CodeTabs.Tab>
         ```bash
         bun add kenat
         ```
-      </Tabs.Tab>
-    </Tabs>
+      </CodeTabs.Tab>
+    </CodeTabs>
 
     ## <FiCheckCircle className="inline-block mr-2" /> Supported Environments
 
@@ -131,13 +131,13 @@ import { FaFlask } from 'react-icons/fa'
     ## <FiAlertTriangle className="inline-block mr-2" /> Error Handling
 
     If you provide invalid input (e.g., out-of-range date, wrong format), Kenat will throw an error describing the issue.
-  </Tabs.Tab>
+  </CodeTabs.Tab>
 
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ## <FiTool className="inline-block mr-2" /> Install with a Package Manager
 
-    <Tabs items={['dart pub add', 'pubspec.yaml']}>
-      <Tabs.Tab>
+    <CodeTabs items={['dart pub add', 'pubspec.yaml']}>
+      <CodeTabs.Tab>
         ```bash
         dart pub add kenat
         ```
@@ -147,8 +147,8 @@ import { FaFlask } from 'react-icons/fa'
         ```bash
         flutter pub add kenat
         ```
-      </Tabs.Tab>
-      <Tabs.Tab>
+      </CodeTabs.Tab>
+      <CodeTabs.Tab>
         Add it manually to `pubspec.yaml`:
 
         ```yaml
@@ -161,8 +161,8 @@ import { FaFlask } from 'react-icons/fa'
         ```bash
         dart pub get
         ```
-      </Tabs.Tab>
-    </Tabs>
+      </CodeTabs.Tab>
+    </CodeTabs>
 
     ## <FiCheckCircle className="inline-block mr-2" /> Supported Environments
 
@@ -232,9 +232,9 @@ import { FaFlask } from 'react-icons/fa'
     ## <FiAlertTriangle className="inline-block mr-2" /> Error Handling
 
     Invalid input (e.g., an out-of-range date, a malformed string) raises a typed error such as `InvalidEthiopianDateError` or `InvalidDateFormatError`, each of which also exposes `toJson()` for structured logging.
-  </Tabs.Tab>
+  </CodeTabs.Tab>
 
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ## <FiTool className="inline-block mr-2" /> Install with a Package Manager
 
     ```bash
@@ -265,9 +265,9 @@ import { FaFlask } from 'react-icons/fa'
     ```bash
     Sene 21 2017
     ```
-  </Tabs.Tab>
+  </CodeTabs.Tab>
 
-  <Tabs.Tab>
+  <CodeTabs.Tab>
     ## <FiTool className="inline-block mr-2" /> Install with Composer
 
     ```bash
@@ -334,5 +334,5 @@ import { FaFlask } from 'react-icons/fa'
     ## <FiAlertTriangle className="inline-block mr-2" /> Error Handling
 
     Invalid input (e.g., an out-of-range date, a malformed string) throws a typed exception from `Kenat\Exceptions`, such as `InvalidEthiopianDateException` or `InvalidDateFormatException`.
-  </Tabs.Tab>
-</Tabs>
+  </CodeTabs.Tab>
+</CodeTabs>
