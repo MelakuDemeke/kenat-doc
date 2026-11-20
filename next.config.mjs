@@ -21,6 +21,8 @@ function migrateNextraTurboToRootTurbopack(config) {
 
 export default migrateNextraTurboToRootTurbopack(
   withNextra({
+    // Self-contained server bundle (.next/standalone) for the VPS: node server.js.
+    output: "standalone",
     async redirects() {
       return [
         // www.kenat.et and kenat.et both served 200, so Google indexed the site twice.

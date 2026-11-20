@@ -1,0 +1,70 @@
+name: Deploy to VPS
+
+# Builds the standalone Next.js server on GitHub and ships it to the VPS
+# (kenat.et, nginx -> 127.0.0.1:3300, systemd unit "kenat").
+#
+# The SSH key in VPS_SSH_KEY is locked on the server to /usr/local/bin/kenat-deploy,
+# which reads the release tarball from stdin, flips /var/www/kenat/current,
+# restarts the service, health-checks it and rolls back if it fails.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: next-${{ hashFiles('package-lock.json') }}-
+
+      - name: Build
+        run: npm run build
+
+      - name: Assemble release
+        run: |
+          test -f .next/standalone/server.js
+          cp -r .next/static .next/standalone/.next/static
+          cp -r public .next/standalone/public
+          tar -czf release.tgz -C .next/standalone .
+          ls -lh release.tgz
+
+      - name: Ship to VPS
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            root@88.99.82.244 < release.tgz
+
+      - name: Check live site
+        run: |
+          for path in / /doc /today /api/downloads; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "https://kenat.et$path")
+            echo "$path $code"
+            [ "$code" = "200" ] || exit 1
+          done
